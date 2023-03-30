@@ -2,7 +2,7 @@
 
 ## Quickstart
 
-All new types are functions inside of the `global` object, usually they are formatted like this: `global.more_recipe_types.<mod>.<type>({args})`. For more info look at the section below.
+All new types are functions inside of the `global` object. Usually, if you want to call them, add this to the `recipes` event: `global.more_recipe_types.<mod>.<type>(event, {args})`. For more info look at the section below.
 
 ## Types
 
