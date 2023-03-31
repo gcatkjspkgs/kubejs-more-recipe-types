@@ -19,11 +19,11 @@ global.more_recipe_types.powah.energizing(event, [<Input items>], <Output item>,
 #### Dissolution Chamber
 
 ```js
-global.more_recipe_types.industrialforegoing.dissolution_chamber(event, [<Input items>], Fluid.of(<Input fluid>, <Amount (1b by default)>), <Output item>, <Output fluid (nothing by default)>, <Time in ticks (20 by default)>)
+global.more_recipe_types.industrialforegoing.dissolution_chamber(event, [<Input items>], Fluid.of(<Input fluid>, <Amount>), <Output item>, <Output fluid (nothing by default)>, <Time in ticks (20 by default)>)
 ```
 
 #### Fluid Extractor
 
 ```js
-global.more_recipe_types.industrialforegoing.fluid_extractor(event, <Input block>, Fluid.of(<Output fluid>, <Amount (1b by default)>), <Block damage chance (float, 0% by default)>, <Result block ("minecraft:air" by default)>)
+global.more_recipe_types.industrialforegoing.fluid_extractor(event, <Input block>, Fluid.of(<Output fluid>, <Amount>), <Block damage chance (float, 0% by default)>, <Result block ("minecraft:air" by default)>)
 ```
