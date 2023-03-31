@@ -4,7 +4,7 @@ function arrConvert(i) {
 }
 function ingredientsConvert(i) {
 	let ingredients = []
-	i.forEach(item => {ingredients.push(Ingredient.of(item).toJson())})
+	i.forEach(item => {ingredients.push(Ingredient.of(item))})
 	return ingredients
 }
 function fluidConvert(i) {
@@ -23,7 +23,7 @@ onEvent("loaded", e => {
 					type: "powah:energizing",
 
 					ingredients: ingredientsConvert(input),
-					result: Ingredient.of(output).toJson(),
+					result: Ingredient.of(output),
 
 					energy: energy
 				})
@@ -41,12 +41,12 @@ onEvent("loaded", e => {
 					type: "industrialforegoing:dissolution_chamber",
 					
 					input: ingredientsConvert(input),
-					inputFluid: `{FluidName:"${inputFluid.id}",Amount:${inputFluid.amount}}`,
+					inputFluid: `{FluidName:"${inputFluid.id}",Amount:${inputFluid.getAmount()}}`,
 					
 					processingTime: time,
 		
-					output: Ingredient.of(output).toJson(),
-					outputFluid: `{FluidName:"${outputFluid!=undefined ? outputFluid.id : ""}",Amount:${outputFluid!=undefined ? outputFluid.amount : 0}}`
+					output: Ingredient.of(output),
+					outputFluid: `{FluidName:"${outputFluid!=null ? outputFluid.id : ""}",Amount:${outputFluid!=null ? outputFluid.getAmount() : 0}}`
 				})
 			},
 			fluid_extractor: (event, input, output, breakchance, result) => {
@@ -57,9 +57,9 @@ onEvent("loaded", e => {
 				event.custom({
 					type: "industrialforegoing:fluid_extractor",
 		
-					input: Ingredient.of(input).toJson(),
+					input: Ingredient.of(input),
 					result: result,
-					output: `{FluidName:"${output.id}",Amount:${output.amount}}`,
+					output: `{FluidName:"${output.id}",Amount:${output.getAmount()}}`,
 					
 					breakChance: breakchance,
 					defaultRecipe: false
