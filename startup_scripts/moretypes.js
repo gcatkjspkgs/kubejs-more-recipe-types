@@ -4,7 +4,7 @@ function arrConvert(i) {
 }
 function ingredientsConvert(i) {
 	let ingredients = []
-	i.forEach(item => {ingredients.push(Ingredient.of(item))})
+	i.forEach(item => {ingredients.push(Ingredient.of(item).toJson())})
 	return ingredients
 }
 function fluidConvert(i) {
@@ -23,7 +23,7 @@ onEvent("loaded", e => {
 					type: "powah:energizing",
 
 					ingredients: ingredientsConvert(input),
-					result: Ingredient.of(output),
+					result: Ingredient.of(output).toJson(),
 
 					energy: energy
 				})
@@ -45,7 +45,7 @@ onEvent("loaded", e => {
 					
 					processingTime: time,
 		
-					output: Ingredient.of(output),
+					output: Ingredient.of(output).toJson(),
 					outputFluid: `{FluidName:"${outputFluid!=undefined ? outputFluid.id : ""}",Amount:${outputFluid!=undefined ? outputFluid.amount : 0}}`
 				})
 			},
@@ -57,7 +57,7 @@ onEvent("loaded", e => {
 				event.custom({
 					type: "industrialforegoing:fluid_extractor",
 		
-					input: Ingredient.of(input),
+					input: Ingredient.of(input).toJson(),
 					result: result,
 					output: `{FluidName:"${output.id}",Amount:${output.amount}}`,
 					
