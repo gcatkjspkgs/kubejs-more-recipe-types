@@ -32,7 +32,7 @@ onEvent("loaded", e => {
 
 		industrialforegoing: {
 			dissolution_chamber: (event, input, inputFluid, output, outputFluid, time) => {
-				input = arrConvert(input).slice(0, 6)
+				input = arrConvert(input).slice(0, 8)
 				inputFluid = fluidConvert(inputFluid)
 				outputFluid = fluidConvert(outputFluid)
 				if (time==null) time = 20
