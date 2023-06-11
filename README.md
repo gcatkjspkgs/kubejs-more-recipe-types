@@ -6,6 +6,20 @@ All new types are functions inside of the `global` object. They should be called
 
 ## Types
 
+### Applied Energistics 2
+
+#### Grinder
+
+```js
+global.more_recipe_types.appliedenergistics2.grinder(event, <Input item>, [<Output items>], <Turns (4 by default)>)
+```
+
+#### Inscriber
+
+```js
+global.more_recipe_types.appliedenergistics2.inscriber(event, [<Top input item>, <Middle input item>, <Bottom input item> (all air by default)], <Output item>, <Keep top and bottom (false by default)>)
+```
+
 ### Powah
 
 #### Energizing

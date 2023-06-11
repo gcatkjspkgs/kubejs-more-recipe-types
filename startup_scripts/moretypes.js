@@ -14,6 +14,43 @@ function fluidConvert(i) {
 
 onEvent("loaded", e => {
 	global.more_recipe_types = {
+		appliedenergistics2: {
+			grinder: (event, input, output, turns) => {
+				output = ingredientsConvert(arrConvert(output).slice(0, 3))
+				if (turns==null) turns=4
+
+				event.custom({
+					type: "appliedenergistics2:grinder",
+
+					input: Ingredient.of(input),
+					result: {
+						primary: output[0],
+						optional: output.slice(1, 3)
+					},
+
+					turns: turns
+				})
+			},
+			inscriber: (event, input, output, keep) => {
+				input = ingredientsConvert(arrConvert(input).slice(0, 3))
+				input_names = ["top", "middle", "bottom"]
+				ingredients = {}
+				for (let i = 0; i < input.length; i++) {
+					if (input[i] != "" && input[i] != "minecraft:air") {
+						ingredients[input_names[i]] = input[i]
+					}
+				}
+				
+				event.custom({
+					type: "appliedenergistics2:inscriber",
+					mode: keep ? "inscribe" : "press",
+
+					ingredients: ingredients,
+					result: Ingredient.of(output)
+				})
+			}
+		},
+		
 		powah: {
 			energizing: (event, input, output, energy) => {
 				input = arrConvert(input).slice(0, 6)
