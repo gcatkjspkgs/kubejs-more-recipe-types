@@ -20,6 +20,32 @@ global.more_recipe_types.appliedenergistics2.grinder(event, <Input item>, [<Outp
 global.more_recipe_types.appliedenergistics2.inscriber(event, [<Top input item>, <Middle input item>, <Bottom input item> (all air by default)], <Output item>, <Keep top and bottom (false by default)>)
 ```
 
+### Astral Sorcery
+
+#### Block Transmutation (Starlight Transmutation)
+
+```js
+global.more_recipe_types.astralsorcery.block_transmutation(event, [<Input block>], <Output block>, <Starlight>)
+```
+
+#### Infuser (Starlight Infusion)
+
+```js
+global.more_recipe_types.astralsorcery.infuser(event, <Input item>, <Output item>, <Duration (100 by default)>, <Consumption chance (float, 0.1 by default)>, [>Consume multiple fluids (False by default)>, <Accept chalice input (False by default)>, <Copy NBT to output (False by default)>](Array can contain any number of elements), <Input fluid id name ("astralsorcery:liquid_starlight" by default)>)
+```
+
+#### Lightwell
+
+```js
+global.more_recipe_types.astralsorcery.lightwell(event, <Input item>, <Output fluid id name>, <Production multiplier (float, 1 by default)>, <Shatter multiplier (float, lower = faster shatter, 10 by default)>, <color (white color by default)>)
+```
+
+#### liquid Interaction
+
+```js
+global.more_recipe_types.astralsorcery.liquid_interaction(event, [Fluid.of(<Input fluid 1>, <Amount>), <Chance consume fluid 1 (float, 100% by default)>], [Fluid.of(<Input fluid 2>, <Amount>), <Chance consume fluid 2 (float, 100% by default)>], <Output item>, <weight (1 by default)>)
+```  
+
 ### Powah
 
 #### Energizing
