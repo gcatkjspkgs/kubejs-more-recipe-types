@@ -40,11 +40,55 @@ global.more_recipe_types.astralsorcery.infuser(event, <Input item>, <Output item
 global.more_recipe_types.astralsorcery.lightwell(event, <Input item>, <Output fluid id name>, <Production multiplier (float, 1 by default)>, <Shatter multiplier (float, lower = faster shatter, 10 by default)>, <color (white color by default)>)
 ```
 
-#### liquid Interaction
+#### Liquid Interaction
 
 ```js
 global.more_recipe_types.astralsorcery.liquid_interaction(event, [Fluid.of(<Input fluid 1>, <Amount>), <Chance consume fluid 1 (float, 100% by default)>], [Fluid.of(<Input fluid 2>, <Amount>), <Chance consume fluid 2 (float, 100% by default)>], <Output item>, <weight (1 by default)>)
 ```  
+
+### Botania
+
+#### Brew (Botanical Brewery)
+
+```js
+global.more_recipe_types.botania.brew(event, [<Input items>], <Output Brew id name (example: "botania:haste")>)
+```
+
+#### Elven Trade
+
+```js
+global.more_recipe_types.botania.elven_trade(event, [<Input items>], [<Output items>])
+```
+
+#### Mana Infusion
+
+```js
+global.more_recipe_types.botania.mana_infusion(event, <Output items>, <Output item>, <Mana (1000 by default)>, "Catalyst")
+```
+
+#### Petal Aplothecary
+
+```js
+global.more_recipe_types.botania.petal_apothecary(event, [<Input items>], <Output item>)
+```
+
+#### Pure Daisy
+
+```js
+global.more_recipe_types.botania.pure_daisy(event, <Input block>, <Output block>)
+```
+
+#### Runic Altar
+
+```js
+global.more_recipe_types.botania.runic_altar(event, [<Input items>], <Output item>, <Mana (5000 by default)>)
+```
+
+#### Terra Plate (Terrestrial Agglomeration)
+
+```js
+global.more_recipe_types.botania.terra_plate(event, [<Input items>], <Output item>, <Mana (100000 by default)>)
+```
 
 ### Powah
 
