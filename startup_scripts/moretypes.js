@@ -222,6 +222,59 @@ onEvent("loaded", e => {
 			}
 		},
 		
+		botanypots: {
+			crop: (event, inputSeed, SoilCategories, output, growthTicks, displayBlock) => {
+				if (growthTicks==null) growthTicks = 1200
+				if (displayBlock==null) displayBlock = inputSeed
+				let results = []
+				output.forEach(roll => {
+					results.push({
+						output: Ingredient.of(roll[0]),
+						chance: typeof roll[1]==='undefined' ? 1 : roll[1],
+						minRolls: typeof roll[2]==='undefined' ? 1 : roll[2],
+						maxRolls: typeof roll[3]==='undefined' ? 1 : roll[3]
+					})
+				})
+
+				event.custom({
+				   	type: "botanypots:crop",
+					
+					seed: Ingredient.of(inputSeed).id,
+					results: results,
+					
+				    categories: arrConvert(SoilCategories),
+				   	growthTicks: growthTicks,
+				   	display: blockConvert(displayBlock)
+				})
+			},
+			fertilizer: (event, fertilizer, minTicks, maxTicks) => {
+				if (minTicks==null) minTicks = 100
+				if (maxTicks==null) maxTicks = minTicks + 100
+
+				event.custom({
+					type: "botanypots:fertilizer",
+					
+					fertilizer: Ingredient.of(fertilizer),
+					minTicks: minTicks,
+					maxTicks: maxTicks
+				})
+			},
+			soil: (event, inputSoil, SoilCategories, growthModifier, displayBlock) => {
+				if (growthModifier==null) growthModifier = 0
+				if (displayBlock==null) displayBlock = inputSoil
+
+				event.custom({
+					type: "botanypots:soil",
+					
+					input: Ingredient.of(inputSoil),
+					
+					categories: arrConvert(SoilCategories),
+					growthModifier: growthModifier,
+					display: blockConvert(displayBlock)
+				})
+			}
+		},
+		
 		powah: {
 			energizing: (event, input, output, energy) => {
 				input = arrConvert(input).slice(0, 6)

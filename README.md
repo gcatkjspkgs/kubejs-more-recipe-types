@@ -90,6 +90,26 @@ global.more_recipe_types.botania.runic_altar(event, [<Input items>], <Output ite
 global.more_recipe_types.botania.terra_plate(event, [<Input items>], <Output item>, <Mana (100000 by default)>)
 ```
 
+### Botany Pots
+
+#### Crop
+
+```js
+global.more_recipe_types.botanypots.crop(event, <Input seed>, [<Soil categories>], [[<Output item>, <Chance (float, 1 by default)>, <Min rolls (1 by default)>, <Max Rolls (1 by default)>], ...], <Growth ticks (1200 by default)>, <Display block (Input seed by default. Change if seed is item!)>)
+```
+
+#### Fertilizer
+
+```js
+global.more_recipe_types.botanypots.fertilizer(event, <Input Fertilizer>, <Min ticks (100 by default)>, <Max ticks (Min ticks + 100 by default)>)
+```
+
+#### Soil
+
+```js
+global.more_recipe_types.botanypots.soil(event, <Input soil>, [<Soil categories>], <Growth modifier (float between -1 and 1, 0 by default)>, <Display block (Input soil by default. Change if soil is item!)>)
+```
+
 ### Powah
 
 #### Energizing
