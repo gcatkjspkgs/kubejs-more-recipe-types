@@ -7,20 +7,23 @@ function ingredientsConvert(i) {
 	i.forEach(item => {ingredients.push(Ingredient.of(item))})
 	return ingredients
 }
-function blockIngredientsConvert(i) {
-	let ingredients = []
-	i.forEach(block => {
-		if (block.substring(0, 1) == "#") {
-			ingredients.push({tag: block.substring(1)})
-		} else {
-			ingredients.push({block: block})
-		}
-	})
-	return ingredients
-}
 function fluidConvert(i) {
 	if (typeof i == "string") i = Fluid.of(i, 1000)
 	return i
+}
+function blockConvert(i) {
+	i.substring(0, 1)==="#" ? i = {tag: i.substring(1)} : i = {block: i}
+	return i
+}
+function blockConvertWithType(i) {
+	let block = blockConvert(i)
+	i.substring(0, 1)==="#" ? block["type"] = "tag" : block["type"] = "block"
+	return block
+}
+function blockIngredientsConvert(i) {
+	let ingredients = []
+	i.forEach(block => {ingredients.push(blockConvert(block))})
+	return ingredients
 }
 
 let i
@@ -143,6 +146,78 @@ onEvent("loaded", e => {
 					},
 					
 					weight: weight
+				})
+			}
+		},
+		
+		botania: {
+			brew: (event, input, outputBrew) => {
+				event.custom({
+					type: "botania:brew",
+
+					brew: outputBrew,
+					ingredients: ingredientsConvert(arrConvert(input))
+				})
+			},
+			elven_trade: (event, input, output) => {
+				event.custom({
+					type: "botania:elven_trade",
+
+					ingredients: ingredientsConvert(arrConvert(input)),
+					output: ingredientsConvert(arrConvert(output))
+				})
+			},
+			mana_infusion: (event, input, output, mana, catalyst) => {
+				if (mana==null) mana = 1000
+
+				event.custom({
+					type: "botania:mana_infusion",
+
+					input: Ingredient.of(input),
+					output: Ingredient.of(output),
+
+					mana: mana,
+					catalyst: catalyst==null ? null : blockConvertWithType(catalyst)
+				})
+			},
+			petal_apothecary: (event, input, output) => {
+				event.custom({
+					type: "botania:petal_apothecary",
+					
+					ingredients: ingredientsConvert(arrConvert(input)),
+					output: Ingredient.of(output)
+				})
+			},
+			pure_daisy: (event, input, output) => {
+				event.custom({
+					type: "botania:pure_daisy",
+
+					input: blockConvertWithType(input),
+					output: {name: output}
+				})
+			},
+			runic_altar: (event, input, output, mana) => {
+				if (mana==null) mana = 5000
+
+				event.custom({
+					type: "botania:runic_altar",
+
+					ingredients: ingredientsConvert(arrConvert(input)),
+					output: Ingredient.of(output),
+
+					mana: mana
+				})
+			},
+			terra_plate: (event, input, output, mana) => {
+				if (mana==null) mana = 100000
+
+				event.custom({
+					type: "botania:terra_plate",
+
+					ingredients: ingredientsConvert(arrConvert(input)),
+					result: Ingredient.of(output),
+
+					mana: mana
 				})
 			}
 		},
