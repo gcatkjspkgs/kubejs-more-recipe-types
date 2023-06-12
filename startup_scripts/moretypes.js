@@ -82,6 +82,7 @@ onEvent("loaded", e => {
 				if (duration==null) duration = 100
 				if (consumptionChance==null) consumptionChance = 0.1
 				if (settings==null) settings = [false, true, false]
+				settings = settings.slice(0, 3)
 				settings = settings.concat([false, true, false].slice(settings.length, 3))
 				if (inputFluid==null) inputFluid = "astralsorcery:liquid_starlight"
 				
