@@ -25,13 +25,13 @@ global.more_recipe_types.appliedenergistics2.inscriber(event, [<Top input item>,
 #### Block Transmutation (Starlight Transmutation)
 
 ```js
-global.more_recipe_types.astralsorcery.block_transmutation(event, [<Input block>], <Output block>, <Starlight>)
+global.more_recipe_types.astralsorcery.block_transmutation(event, [<Input block (can use multiple)>], <Output block>, <Starlight>)
 ```
 
 #### Infuser (Starlight Infusion)
 
 ```js
-global.more_recipe_types.astralsorcery.infuser(event, <Input item>, <Output item>, <Duration (100 by default)>, <Consumption chance (float, 0.1 by default)>, [>Consume multiple fluids (False by default)>, <Accept chalice input (False by default)>, <Copy NBT to output (False by default)>](Array can contain any number of elements), <Input fluid id name ("astralsorcery:liquid_starlight" by default)>)
+global.more_recipe_types.astralsorcery.infuser(event, <Input item>, <Output item>, <Duration (100 by default)>, <Consumption chance (float, 0.1 by default)>, [>Consume multiple fluids (False by default)>, <Accept chalice input (True by default)>, <Copy NBT to output (False by default)>](Array can contain any number of booleans), <Input fluid id name ("astralsorcery:liquid_starlight" by default)>)
 ```
 
 #### Lightwell
