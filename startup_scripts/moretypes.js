@@ -46,8 +46,8 @@ onEvent("loaded", e => {
 			},
 			inscriber: (event, input, output, keep) => {
 				input = ingredientsConvert(arrConvert(input).slice(0, 3))
-				input_names = ["top", "middle", "bottom"]
-				ingredients = {}
+				let input_names = ["top", "middle", "bottom"]
+				let ingredients = {}
 				for (i = 0; i < input.length; i++) {
 					if (input[i] != "" && input[i] != "minecraft:air") {
 						ingredients[input_names[i]] = input[i]
@@ -119,8 +119,8 @@ onEvent("loaded", e => {
 			liquid_interaction: (event, inputFluid1, inputFluid2, output, weight) => {
 				inputFluid1 = arrConvert(inputFluid1)
 				inputFluid2 = arrConvert(inputFluid2)
-				fluid1 = fluidConvert(inputFluid1[0])
-				fluid2 = fluidConvert(inputFluid2[0])
+				let fluid1 = fluidConvert(inputFluid1[0])
+				let fluid2 = fluidConvert(inputFluid2[0])
 				if (typeof inputFluid1[1]==='undefined') inputFluid1.push(1)
 				if (typeof inputFluid2[1]==='undefined') inputFluid2.push(1)
 				if (weight==null) weight = 1
