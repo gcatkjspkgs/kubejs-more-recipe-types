@@ -49,7 +49,7 @@ onEvent("loaded", e => {
 				let input_names = ["top", "middle", "bottom"]
 				let ingredients = {}
 				for (i = 0; i < input.length; i++) {
-					if (input[i] != "" && input[i] != "minecraft:air") {
+					if (input[i] !== "" && input[i] !== "minecraft:air") {
 						ingredients[input_names[i]] = input[i]
 					}
 				}
@@ -66,13 +66,12 @@ onEvent("loaded", e => {
 
 		astralsorcery: {
 			block_transmutation: (event, input, output, starlight) => {
-				input = arrConvert(input)
 				if (starlight==null) starlight = 200
 
 				event.custom({
 					type: "astralsorcery:block_transmutation",
 
-					input: blockIngredientsConvert(input),
+					input: blockIngredientsConvert(arrConvert(input)),
 					output: {block: output},
 
 					starlight: starlight
