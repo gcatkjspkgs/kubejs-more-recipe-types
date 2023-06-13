@@ -11,18 +11,15 @@ function fluidConvert(i) {
 	if (typeof i == "string") i = Fluid.of(i, 1000)
 	return i
 }
-function blockConvert(i) {
-	i.substring(0, 1)==="#" ? i = {tag: i.substring(1)} : i = {block: i}
-	return i
-}
-function blockConvertWithType(i) {
-	let block = blockConvert(i)
-	i.substring(0, 1)==="#" ? block["type"] = "tag" : block["type"] = "block"
+function blockConvert(i, withType) {
+	let block
+	i.substring(0, 1)==="#" ? block = {tag: i.substring(1)} : block = {block: i}
+	if (withType) i.substring(0, 1)==="#" ? block["type"] = "tag" : block["type"] = "block"
 	return block
 }
-function blockIngredientsConvert(i) {
+function blockIngredientsConvert(i, withType) {
 	let ingredients = []
-	i.forEach(block => {ingredients.push(blockConvert(block))})
+	i.forEach(block => {ingredients.push(blockConvert(block, withType))})
 	return ingredients
 }
 
@@ -74,7 +71,7 @@ onEvent("loaded", e => {
 				event.custom({
 					type: "astralsorcery:block_transmutation",
 
-					input: blockIngredientsConvert(arrConvert(input)),
+					input: blockIngredientsConvert(arrConvert(input), false),
 					output: {block: output},
 
 					starlight: starlight
@@ -177,7 +174,7 @@ onEvent("loaded", e => {
 					output: Ingredient.of(output),
 
 					mana: mana,
-					catalyst: catalyst==null ? null : blockConvertWithType(catalyst)
+					catalyst: catalyst==null ? null : blockConvert(catalyst, true)
 				})
 			},
 			petal_apothecary: (event, input, output) => {
@@ -192,7 +189,7 @@ onEvent("loaded", e => {
 				event.custom({
 					type: "botania:pure_daisy",
 
-					input: blockConvertWithType(input),
+					input: blockConvert(input, true),
 					output: {name: output}
 				})
 			},
@@ -244,7 +241,7 @@ onEvent("loaded", e => {
 					
 				    categories: arrConvert(SoilCategories),
 				   	growthTicks: growthTicks,
-				   	display: blockConvert(displayBlock)
+				   	display: blockConvert(displayBlock, false)
 				})
 			},
 			fertilizer: (event, fertilizer, minTicks, maxTicks) => {
@@ -270,7 +267,7 @@ onEvent("loaded", e => {
 					
 					categories: arrConvert(SoilCategories),
 					growthModifier: growthModifier,
-					display: blockConvert(displayBlock)
+					display: blockConvert(displayBlock, false)
 				})
 			}
 		},
