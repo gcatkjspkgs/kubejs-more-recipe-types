@@ -147,6 +147,33 @@ onEvent("loaded", e => {
 				})
 			}
 		},
+
+		boss_tools: {
+			blasting: (event, input, output, cookTime) => {
+				if (cookTime==null) cookTime = 200
+
+				event.custom({
+					type: "boss_tools:blasting",
+
+					input: {ingredient: Ingredient.of(input)},
+					output: Ingredient.of(output),
+
+					cookTime: cookTime
+				})
+			},
+			compressing: (event, input, output, cookTime) => {
+				if (cookTime==null) cookTime = 200
+
+				event.custom({
+					type: "boss_tools:compressing",
+
+					input: {ingredient: Ingredient.of(input)},
+					output: Ingredient.of(output),
+
+					cookTime: cookTime
+				})
+			}
+		},
 		
 		botania: {
 			brew: (event, input, outputBrew) => {

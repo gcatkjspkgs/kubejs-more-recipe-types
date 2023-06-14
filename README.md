@@ -46,6 +46,20 @@ global.more_recipe_types.astralsorcery.lightwell(event, <Input item>, <Output fl
 global.more_recipe_types.astralsorcery.liquid_interaction(event, [Fluid.of(<Input fluid 1>, <Amount>), <Chance consume fluid 1 (float, 100% by default)>], [Fluid.of(<Input fluid 2>, <Amount>), <Chance consume fluid 2 (float, 100% by default)>], <Output item>, <weight (1 by default)>)
 ```  
 
+### (Space) Boss Tools
+
+#### Blasting
+
+```js
+global.more_recipe_types.boss_tools.blasting(event, <Input item>, <Output item>, <Cook time (200 by default)>)
+```
+
+#### Compressing
+
+```js
+global.more_recipe_types.boss_tools.compressing(event, <Input item>, <Output item>, <Cook time (200 by default)>)
+```
+
 ### Botania
 
 #### Brew (Botanical Brewery)
