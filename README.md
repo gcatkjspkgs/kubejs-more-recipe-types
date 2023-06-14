@@ -110,6 +110,56 @@ global.more_recipe_types.botanypots.fertilizer(event, <Input Fertilizer>, <Min t
 global.more_recipe_types.botanypots.soil(event, <Input soil>, [<Soil categories>], <Growth modifier (float between -1 and 1, 0 by default)>, <Display block (Input soil by default. Change if soil is item!)>)
 ```
 
+### Elemental Craft
+
+#### Binding (Element Binding)
+
+```js
+global.more_recipe_types.elementalcraft.binding(event, [<Input items>], <Output item>, <Element Type>, <Element Amount (1000 by default)>)
+```
+
+#### Crystallization (Gem Crystallization)
+
+```js
+global.more_recipe_types.elementalcraft.crystallization(event, [<Gem input item>, <Crystal input item>, <Shard input item>], [[<Output item>, <Weight (1 by default)>, <Quality (null by default)>], ...], <Element Type>, <Element Amount (1000 by default)>)
+```
+
+#### Grinding
+
+```js
+global.more_recipe_types.elementalcraft.grinding(event, <Input item>, <Output item>, <Element Amount (1000 by default)>)
+```
+
+#### Tool Infusion (Element Infusion)
+
+```js
+global.more_recipe_types.elementalcraft.tool_infusion(event, <Input item>, <Tool infusion type (e.g.: "elementalcraft:fire_aspect")>, <Element Amount (1000 by default)>)
+```
+
+#### Infusion (Element Infusion)
+
+```js
+global.more_recipe_types.elementalcraft.infusion(event, <Input item>, <Output Item>, <Element Type>, <Element Amount (1000 by default)>)
+```
+
+#### Inscription (Rune Inscription)
+
+```js
+global.more_recipe_types.elementalcraft.inscription(event, [<Slate input item>, <3 other input items>], [<Output item>, <nbt>], <Element Type>, <Element Amount (1000 by default)>)
+```
+
+#### Pure Infusion
+
+```js
+global.more_recipe_types.elementalcraft.pureinfusion(event, [<middle input item>, <Water input item>, <Fire input item>, <Earth input item>, <Air input item>], <Output Item>, <Element Amount (1000 by default)>)
+```
+
+#### Spell Craft
+
+```js
+global.more_recipe_types.elementalcraft.spell_craft(event, [<Gem input item>, <Crystal input item>], [<Output item>, <nbt>])
+```
+
 ### Powah
 
 #### Energizing

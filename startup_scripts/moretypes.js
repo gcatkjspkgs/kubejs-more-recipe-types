@@ -31,7 +31,8 @@ onEvent("loaded", e => {
 			grinder: (event, input, output, turns) => {
 				output = ingredientsConvert(arrConvert(output).slice(0, 3))
 				if (turns==null) turns = 4
-
+				console.log(Ingredient.of(input))
+				
 				event.custom({
 					type: "appliedenergistics2:grinder",
 
@@ -207,7 +208,7 @@ onEvent("loaded", e => {
 			},
 			terra_plate: (event, input, output, mana) => {
 				if (mana==null) mana = 100000
-
+				
 				event.custom({
 					type: "botania:terra_plate",
 
@@ -272,10 +273,136 @@ onEvent("loaded", e => {
 			}
 		},
 		
+		elementalcraft: {
+			binding: (event, input, output, elementType, elementAmount) => {
+				if (elementAmount==null) elementAmount = 1000
+
+				event.custom({
+					type: "elementalcraft:binding",
+					
+					ingredients: ingredientsConvert(arrConvert(input)),
+					output: Ingredient.of(output),
+					
+					element_type: elementType,
+					element_amount: elementAmount
+				})
+			},
+			crystallization: (event, input, output, elementType, elementAmount) => {
+				input = ingredientsConvert(arrConvert(input))
+				if (elementAmount==null) elementAmount = 1000
+				let results = []
+				output.forEach(result => {
+					let resultItem = Ingredient.of(result[0])
+					results.push({
+						result: {id: resultItem.id, Count: resultItem.getCount()},
+						weight: typeof result[1]==='undefined' ? 1 : result[1],
+						quality: typeof result[2]==='undefined' ? null : result[2]
+					})
+				})
+				
+				event.custom({
+					type: "elementalcraft:crystallization",
+					
+					ingredients: {
+						gem: input[0],
+						crystal: input[1],
+						shard: input[2]
+					},
+					outputs: results,
+					
+					element_type: elementType,
+					element_amount: elementAmount
+				})
+			},
+			grinding: (event, input, output, elementAmount) => {
+				if (elementAmount==null) elementAmount = 1000
+
+				event.custom({
+					type: "elementalcraft:grinding",
+					
+					input: Ingredient.of(input),
+					output: Ingredient.of(output),
+					
+					element_amount: elementAmount,
+				})
+			},
+			tool_infusion: (event, input, toolInfusionType, elementAmount) => {
+				if (elementAmount==null) elementAmount = 1000
+
+				event.custom({
+					type: "elementalcraft:tool_infusion",
+					
+					input: Ingredient.of(input),
+					
+					tool_infusion: toolInfusionType,
+					element_amount: elementAmount,
+				})
+			},
+			infusion: (event, input, output, elementType, elementAmount) => {
+				if (elementAmount==null) elementAmount = 1000
+
+				event.custom({
+					type: "elementalcraft:infusion",
+
+					input: Ingredient.of(input),
+					output: Ingredient.of(output),
+
+					element_type: elementType,
+					element_amount: elementAmount,
+				})
+			},
+			inscription: (event, input, output, elementType, elementAmount) => {
+				input = ingredientsConvert(arrConvert(input).slice(0, 4))
+				output = arrConvert(output)
+				let outputItem = Ingredient.of(output[0])
+				if (typeof output[1]!=='undefined') outputItem["nbt"] = output[1]
+				if (elementAmount==null) elementAmount = 1000
+
+				event.custom({
+					type: "elementalcraft:inscription",
+					
+					slate: input[0],
+					ingredients: input.slice(1),
+					output: outputItem,
+					
+					element_type: elementType,
+					element_amount: elementAmount
+				})
+			},
+			pureinfusion: (event, input, output, elementAmount) => {
+				input = arrConvert(input).slice(0, 5)
+				if (elementAmount==null) elementAmount = 1000
+
+				event.custom({
+					type: "elementalcraft:pureinfusion",
+
+					ingredients: ingredientsConvert(input),
+					output: Ingredient.of(output),
+
+					element_amount: elementAmount,
+				})
+			},
+			spell_craft: (event, input, output) => {
+				input = ingredientsConvert(arrConvert(input))
+				output = arrConvert(output)
+				let outputItem = Ingredient.of(output[0])
+				if (typeof output[1]!=='undefined') outputItem["nbt"] = output[1]
+
+				
+				event.custom({
+					type: "elementalcraft:spell_craft",
+					
+					gem: input[0],
+					crystal: input[1],
+					output: outputItem,
+				})
+			}
+		},
+		
 		powah: {
 			energizing: (event, input, output, energy) => {
 				input = arrConvert(input).slice(0, 6)
-				if (energy==null) energy=100
+				if (energy==null) energy = 100
 
 				event.custom({
 					type: "powah:energizing",
