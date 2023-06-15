@@ -425,6 +425,104 @@ onEvent("loaded", e => {
 				})
 			}
 		},
+
+		industrialforegoing: {
+			dissolution_chamber: (event, input, inputFluid, output, outputFluid, time) => {
+				input = arrConvert(input).slice(0, 8)
+				inputFluid = fluidConvert(inputFluid)
+				outputFluid = fluidConvert(outputFluid)
+				if (time==null) time = 20
+
+				event.custom({
+					type: "industrialforegoing:dissolution_chamber",
+
+					input: ingredientsConvert(input),
+					inputFluid: `{FluidName:"${inputFluid.id}",Amount:${inputFluid.getAmount()}}`,
+
+					processingTime: time,
+
+					output: Ingredient.of(output),
+					outputFluid: `{FluidName:"${outputFluid!=null ? outputFluid.id : ""}",Amount:${outputFluid!=null ? outputFluid.getAmount() : 0}}`
+				})
+			},
+			fluid_extractor: (event, input, output, breakchance, result) => {
+				output = fluidConvert(output)
+				if (breakchance==null) breakchance = 0
+				if (result==null) result = "minecraft:air"
+
+				event.custom({
+					type: "industrialforegoing:fluid_extractor",
+
+					input: Ingredient.of(input),
+					result: result,
+					output: `{FluidName:"${output.id}",Amount:${output.getAmount()}}`,
+
+					breakChance: breakchance,
+					defaultRecipe: false
+				})
+			},
+			laser_drill: (event, output, catalyst, rarities, fluidRecipe, entity) => {
+				fluidRecipe ? output = fluidConvert(output) : output = Ingredient.of(output)
+				if (fluidRecipe!==true) fluidRecipe = false
+				if (typeof entity!=="string") entity = "minecraft:empty"
+				
+				let mineIn = []
+				if (typeof rarities[0]==='undefined') rarities = [["", "", ""]]
+				rarities.forEach(rarity => {
+					if (!(Array.isArray(rarity[0]))) rarity[0] = []
+					if (!(Array.isArray(rarity[1]))) rarity[1] = []
+					
+					if (!(Array.isArray(rarity[0][0]))) rarity[0][0] = []
+					if (typeof rarity[0][2]!=="string") rarity[0][2] = "minecraft:worldgen/biome"
+					let typeList = rarity[0][1] !== true
+					
+					if (typeof rarity[1][0]!=="number") rarity[1][0] = 0
+					if (typeof rarity[1][1]!=="number") rarity[1][1] = 64
+					if (typeof rarity[2]!=="number") rarity[2] = 1
+					
+					let whitelist = {}
+					let blacklist = {}
+					if (typeList) whitelist = {type: rarity[0][1], values: arrConvert(rarity[0][0])}
+					if (!(typeList)) blacklist = {type: rarity[0][1], values: arrConvert(rarity[0][0])}
+					
+					mineIn.push({
+						whitelist: whitelist,
+						blacklist: blacklist,
+						depth_min: rarity[1][0],
+						depth_max: rarity[1][1],
+						weight: rarity[2]
+					})
+				})
+
+				let recipe = {
+					type: fluidRecipe ? "industrialforegoing:laser_drill_fluid" : "industrialforegoing:laser_drill_ore",
+
+					output: fluidRecipe ? `{FluidName:"${output.id}",Amount:${output.getAmount()}}` : output,
+
+					pointer: 0,
+					catalyst: Ingredient.of(catalyst),
+
+					rarity: mineIn
+				}
+				if (fluidRecipe) recipe["entity"] = entity
+				
+				event.custom(recipe)
+			},
+			stonework_generate: (event, output, water, lava) => {
+				water = arrConvert(water)
+				lava = arrConvert(lava)
+				event.custom({
+					type: "industrialforegoing:stonework_generate",
+
+					output: Ingredient.of(output),
+
+					waterNeed: typeof water[0]!=="number" ? 1000 : water[0],
+					waterConsume: typeof water[1]!=="number" ? 0 : water[1],
+					lavaNeed: typeof lava[0]!=="number" ? 1000 : lava[0],
+					lavaConsume: typeof lava[1]!=="number" ? 0 : lava[1]
+				})
+			}
+		},
 		
 		powah: {
 			energizing: (event, input, output, energy) => {
@@ -438,43 +536,6 @@ onEvent("loaded", e => {
 					result: Ingredient.of(output),
 
 					energy: energy
-				})
-			}
-		},
-
-		industrialforegoing: {
-			dissolution_chamber: (event, input, inputFluid, output, outputFluid, time) => {
-				input = arrConvert(input).slice(0, 8)
-				inputFluid = fluidConvert(inputFluid)
-				outputFluid = fluidConvert(outputFluid)
-				if (time==null) time = 20
-
-				event.custom({
-					type: "industrialforegoing:dissolution_chamber",
-					
-					input: ingredientsConvert(input),
-					inputFluid: `{FluidName:"${inputFluid.id}",Amount:${inputFluid.getAmount()}}`,
-					
-					processingTime: time,
-		
-					output: Ingredient.of(output),
-					outputFluid: `{FluidName:"${outputFluid!=null ? outputFluid.id : ""}",Amount:${outputFluid!=null ? outputFluid.getAmount() : 0}}`
-				})
-			},
-			fluid_extractor: (event, input, output, breakchance, result) => {
-				output = fluidConvert(output)
-				if (breakchance==null) breakchance = 0
-				if (result==null) result = "minecraft:air"
-
-				event.custom({
-					type: "industrialforegoing:fluid_extractor",
-		
-					input: Ingredient.of(input),
-					result: result,
-					output: `{FluidName:"${output.id}",Amount:${output.getAmount()}}`,
-					
-					breakChance: breakchance,
-					defaultRecipe: false
 				})
 			}
 		}

@@ -174,14 +174,6 @@ global.more_recipe_types.elementalcraft.pureinfusion(event, [<middle input item>
 global.more_recipe_types.elementalcraft.spell_craft(event, [<Gem input item>, <Crystal input item>], [<Output item>, <nbt>])
 ```
 
-### Powah
-
-#### Energizing
-
-```js
-global.more_recipe_types.powah.energizing(event, [<Input items>], <Output item>, <Energy (100 by default)>)
-```
-
 ### Industrial Foregoing
 
 #### Dissolution Chamber
@@ -194,4 +186,24 @@ global.more_recipe_types.industrialforegoing.dissolution_chamber(event, [<Input 
 
 ```js
 global.more_recipe_types.industrialforegoing.fluid_extractor(event, <Input block>, Fluid.of(<Output fluid>, <Amount>), <Block damage chance (float, 0% by default)>, <Result block ("minecraft:air" by default)>)
+```
+
+#### Laser Drill (Ore / Fluid)
+
+```js
+global.more_recipe_types.industrialforegoing.laser_drill(event, <Output item / Fluid.of(<Output Fluid>, <Amount>)>, <Catalyst Item>, [[[[<List values (empty by default)>], <List Blacklist ? (else whitelist, false by default)>, <List type ("minecraft:worldgen/biome" by default)>], [<Min depth (0 by default)>, <Max depth (64 by default)>], <Weight (1 by default)>], ...], <Fluid recipe ? (false by default)>, <Entity (only if Fluid recipe, no entity by default)>)
+```
+
+#### Stonework Generate
+
+```js
+global.more_recipe_types.industrialforegoing.stonework_generate(event, <Output Item>, [<Water requirement (1000 by default)>, <Water usage (0 by default)>], [<Lava requirement (1000 by default)>, <Lava usage (0 by default)>])
+```
+
+### Powah
+
+#### Energizing
+
+```js
+global.more_recipe_types.powah.energizing(event, [<Input items>], <Output item>, <Energy (100 by default)>)
 ```
