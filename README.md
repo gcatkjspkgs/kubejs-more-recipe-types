@@ -174,6 +174,40 @@ global.more_recipe_types.elementalcraft.pureinfusion(event, [<middle input item>
 global.more_recipe_types.elementalcraft.spell_craft(event, [<Gem input item>, <Crystal input item>], [<Output item>, <nbt>])
 ```
 
+### FTB Industrial Contraptions
+
+#### Antimatter Boost
+
+```js
+global.more_recipe_types.ftbic.antimatter_boost(event, <Input item>, <Boost (1000 by default)>)
+```
+
+#### Basic Generator Fuel
+
+```js
+global.more_recipe_types.ftbic.basic_generator_fuel(event, <Input item>, <Burn ticks (1 tick = 10 zaps, 200 by default)>)
+```
+
+#### Other Machines
+
+Supported types:
+
+- canning
+- compressing
+- extruding
+- macerating
+- rolling
+- seperating
+
+```js
+global.more_recipe_types.ftbic.<type>(event, [<Input items>], [<Output Items>])
+```
+
+Some notes:
+
+- To use nbt in input items use Item.of(<Input item>, <nbt>)
+- To use chance in output items use Item.of(<Input item>).withChance(<Chance>)
+
 ### Industrial Foregoing
 
 #### Dissolution Chamber

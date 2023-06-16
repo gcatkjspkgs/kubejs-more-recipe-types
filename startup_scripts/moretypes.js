@@ -22,6 +22,26 @@ function blockIngredientsConvert(i, withType) {
 	i.forEach(block => {ingredients.push(blockConvert(block, withType))})
 	return ingredients
 }
+function addFTBICRecipes(event, input, output, type) {
+	let ingredients = []
+	input.forEach(item => {
+		let ingredient = Ingredient.of(item)
+		let ingredientJson = {ingredient: {item: ingredient.id}, count: ingredient.getCount()}
+		
+		if (ingredient.nbt!=null){
+			ingredientJson["ingredient"]["type"] = "forge:nbt"
+			ingredientJson["ingredient"]["nbt"] = String(ingredient.nbt)
+		}
+		ingredients.push(ingredientJson)
+	})
+
+	event.custom({
+		type: type,
+
+		inputItems: ingredients,
+		outputItems: ingredientsConvert(arrConvert(output))
+	})
+}
 
 let i
 
@@ -423,6 +443,53 @@ onEvent("loaded", e => {
 					crystal: input[1],
 					output: outputItem,
 				})
+			}
+		},
+
+		ftbic: {
+			antimatter_boost: (event, input, boost) => {
+				if (typeof boost!=="number") boost = 1000
+
+				event.custom({
+					type: "ftbic:antimatter_boost",
+					
+					ingredient: Ingredient.of(input),
+					boost: boost
+				})
+			},
+			basic_generator_fuel: (event, input, ticks) => {
+				if (typeof ticks!=="number") ticks = 200
+
+				event.custom({
+					type: "ftbic:basic_generator_fuel",
+					
+					ingredient: Ingredient.of(input),
+					ticks: ticks
+				})
+			},
+			canning: (event, input, output) => {
+				input = arrConvert(input).slice(0, 2)
+				addFTBICRecipes(event, input, output, "ftbic:canning")
+			},
+			compressing: (event, input, output) => {
+				input = arrConvert(input)
+				addFTBICRecipes(event, input, output, "ftbic:compressing")
+			},
+			extruding: (event, input, output) => {
+				input = arrConvert(input)
+				addFTBICRecipes(event, input, output, "ftbic:extruding")
+			},
+			macerating: (event, input, output) => {
+				input = arrConvert(input)
+				addFTBICRecipes(event, input, output, "ftbic:macerating")
+			},
+			rolling: (event, input, output) => {
+				input = arrConvert(input)
+				addFTBICRecipes(event, input, output, "ftbic:rolling")
+			},
+			separating: (event, input, output) => {
+				input = arrConvert(input)
+				addFTBICRecipes(event, input, output, "ftbic:separating")
 			}
 		},
 
