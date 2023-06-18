@@ -234,6 +234,67 @@ global.more_recipe_types.industrialforegoing.laser_drill(event, <Output item / F
 global.more_recipe_types.industrialforegoing.stonework_generate(event, <Output Item>, [<Water requirement (1000 by default)>, <Water usage (0 by default)>], [<Lava requirement (1000 by default)>, <Lava usage (0 by default)>])
 ```
 
+### PneumaticCraft: Repressurized
+
+#### Amadron (Amadron Tablet)
+
+```js
+global.more_recipe_types.pneumaticcraft.amadron(event, [<Input item / Fluid.of(<Input fluid>, <Amount>)>, <Input is Fluid ? (false by default)>], [<Output item / Fluid.of(<Output fluid>, <Amount>)>, <Output is Fluid ? (false by default)>])
+```
+
+#### Assembly Laser (Assembly Controller)
+
+```js
+global.more_recipe_types.pneumaticcraft.assembly_laser(event, <Input item>, <Output item>, <Type is Drill ? (false by default)>)
+```
+
+#### Explosion Crafting
+
+```js
+global.more_recipe_types.pneumaticcraft.explosion_crafting(event, <Input item>, [<Output items>], <Loss rate (0 - 100, 20 by default)>)
+```
+
+#### Heat Frame Cooling
+
+```js
+global.more_recipe_types.pneumaticcraft.heat_frame_cooling(event, [<Input fluid>, <Amount>], <Output item>, <Max temperature (0°C by default)>, [<Bonus output multiplier per degree (0 by default)>, <Bonus output max multiplier (0 by default)>])
+```
+
+#### (Block) Heat Properties
+```js
+global.more_recipe_types.pneumaticcraft.heat_properties(event, <Input block>, [<Output block from Cooling>, <Output block from Heating>], <Block temperature (25°C by default)>, <Thermal Resictance (20 by default)>, <Heat Capacity (1000 by default)>)
+```
+
+#### Fluid Mixer´
+
+```js
+global.more_recipe_types.pneumaticcraft.fluid_mixer(event, [<Input Fluid 1>, <Amount (1000 by default)>], <Input Fluid 2>, <Amount (1000 by default)>], Fluid.of(<Output Fluid>, <Amount>), <Output item>, <Pressure (1 by default)>, <Time in ticks (200 by default)>)
+```
+
+#### Fuel Quality
+
+```js
+global.more_recipe_types.pneumaticcraft.fuel_quality(event, <Input fluid>, <Air per bucket (100000 by default)>, <Burn rate (float, 1 by default)>)
+```
+
+#### Pressure Chamber
+
+```js
+global.more_recipe_types.pneumaticcraft.pressure_chamber(event, [<Input items>], [<Output items>], <Pressure (1 by default)>)
+```
+
+#### Refinery (Refinery Controller)
+
+```js
+global.more_recipe_types.pneumaticcraft.refinery(event, [<Input fluid>, <Amount (1000 by default)>], [Fluid.of(<Output Fluid>, <Amount>), ... (atleast two fluids)], [<Min temperature>, <Max temperature>])
+```
+
+#### Thermo Plant (Thermopneumatic Processing Plant)
+
+```js
+global.more_recipe_types.pneumaticcraft.thermo_plant(event, <Input item>, [<Input fluid>, <Amount>], <Output item>, Fluid.of(<Ouput fluid>, <Amount>), [<Min temperature>, <Max temperature>], <Pressure>, <Speed (float, 1 by default)>, <is Exothermic ? (false by default)>)   
+```
+
 ### Powah
 
 #### Energizing
