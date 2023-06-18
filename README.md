@@ -205,8 +205,8 @@ global.more_recipe_types.ftbic.<type>(event, [<Input items>], [<Output Items>])
 
 Some notes:
 
-- To use nbt in input items use Item.of("<Input item>", "<nbt>")
-- To use chance in output items use Item.of("<Input item>").withChance("<Chance>")
+- To use nbt in input items use Item.of("Input item", "nbt")
+- To use chance in output items use Item.of("Input item").withChance("Chance")
 
 ### Industrial Foregoing
 
