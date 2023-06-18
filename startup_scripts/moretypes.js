@@ -19,8 +19,13 @@ function fluidsConvert(i) {
 function fluidConvertWithTag(i, amount) {
 	let fluid
 	i.substring(0, 1)==="#" ? fluid = {tag: i.substring(1)} : fluid = {fluid: i}
-	fluid["amount"] = amount
+	fluid["amount"] = typeof amount == "number" ? amount : 1000 
 	return fluid
+}
+function fluidsConvertWithTag(i) {
+	let fluids = []
+	i.forEach(fluid => {fluids.push(fluidConvertWithTag(arrConvert(fluid)[0], arrConvert(fluid)[1]))})
+	return fluids
 }
 function blockConvert(i, withType) {
 	let block
@@ -53,6 +58,15 @@ function addFTBICRecipes(event, input, output, type) {
 		outputItems: ingredientsConvert(arrConvert(output))
 	})
 }
+function SMIngredientConvert(i) {
+	let values = []
+	i = arrConvert(i)
+	arrConvert(i[0]).forEach(value => {
+		values.push(Ingredient.of(value).toJson())
+	})
+	if (typeof i[1]!="number") i[1] = 1
+	return {value: values, count: i[1]}
+}
 
 let i
 
@@ -62,7 +76,6 @@ onEvent("loaded", e => {
 			grinder: (event, input, output, turns) => {
 				output = ingredientsConvert(arrConvert(output).slice(0, 3))
 				if (typeof turns!="number") turns = 4
-				console.log(Ingredient.of(input))
 
 				event.custom({
 					type: "appliedenergistics2:grinder",
@@ -658,7 +671,6 @@ onEvent("loaded", e => {
 			},
 			heat_frame_cooling: (event, input, output, max_temp, bonusOutput) => {
 				input = arrConvert(input)
-				if (typeof input[1]!="number") input[1] = 1000
 				if (typeof max_temp!="number") max_temp = 273
 				if (!Array.isArray(bonusOutput)) bonusOutput = []
 				if (typeof bonusOutput[0]!="number") bonusOutput[0] = 0
@@ -701,11 +713,9 @@ onEvent("loaded", e => {
 				outputItem = Ingredient.of(outputItem)
 				input1 = arrConvert(input1)
 				input2 = arrConvert(input2)
-				if (typeof input1[1]!="number") input1[1] = 1000
-				if (typeof input2[1]!="number") input2[1] = 1000
 				if (typeof time!="number") time = 200
 				if (typeof pressure!="number") pressure = 1
-				
+
 				recipe = {
 					type: "pneumaticcraft:fluid_mixer",
 
@@ -715,25 +725,22 @@ onEvent("loaded", e => {
 					pressure: pressure,
 					time: time
 				}
-				
+
 				if (outputFluid!=null && outputFluid.id!=="minecraft:empty") recipe["fluid_output"] = outputFluid
 				if (outputItem!=null && outputItem.id!=="minecraft:air") recipe["item_output"] = outputItem
-				
-				console.log(recipe)
-				
+
 				event.custom(recipe)
 			},
 			fuel_quality: (event, input, air_per_bucket, burn_rate) => {
 				input = arrConvert(input)
-				if (typeof input[1]!="number") input[1] = 1000
 				if (typeof air_per_bucket!="number") air_per_bucket = 100000
 				if (typeof burn_rate!="number") burn_rate = 1
 
 				event.custom({
 					type: "pneumaticcraft:fuel_quality",
-					
+
 					fluid: Object.assign(fluidConvertWithTag(input[0], input[1]), {type: "pneumaticcraft:fluid"}),
-					
+
 					air_per_bucket: air_per_bucket,
 					burn_rate: burn_rate
 				})
@@ -750,31 +757,29 @@ onEvent("loaded", e => {
 					if (item.getCount()!==1) itemJson["type"] = "pneumaticcraft:stacked_item"
 					input[input.indexOf(item)] = itemJson
 				})
-				
+
 				event.custom({
 					type: "pneumaticcraft:pressure_chamber",
-					
+
 					inputs: input,
 					results: ingredientsConvert(arrConvert(output)),
-					
+
 					pressure: pressure
 				})
 			},
 			refinery: (event, input, output, temperature) => {
-				console.log(fluidsConvert(arrConvert(output)))
 				input = arrConvert(input)
-				if (typeof input[1]!="number") input[1] = 1000
 
 				let temperatures = {}
 				if (typeof temperature[0]=="number") temperatures["min_temp"] = temperature[0]
 				if (typeof temperature[1]=="number") temperatures["max_temp"] = temperature[1]
-				
+
 				event.custom({
 					type: "pneumaticcraft:refinery",
-					
+
 					input: Object.assign(fluidConvertWithTag(input[0], input[1]), {type: "pneumaticcraft:fluid"}),
 					results: fluidsConvert(arrConvert(output).slice(0, 4)),
-					
+
 					temperature: temperatures,
 				})
 			},
@@ -782,42 +787,41 @@ onEvent("loaded", e => {
 				inputItem = Ingredient.of(inputItem)
 				let itemJson = {item: inputItem.id, count: inputItem.getCount()}
 				if (inputItem.getCount()!==1) inputItem = Object.assign(itemJson, {type: "pneumaticcraft:stacked_item"})
-				
+
 				inputFluid = arrConvert(inputFluid)
-				if (typeof inputFluid[1]!="number") inputFluid[1] = 1000
 				let inputFluidConverted = inputFluid[0].substring(0, 1)==="#" ?  fluidConvert("minecraft:water") : fluidConvert(inputFluid[0], inputFluid[1])
-				
+
 				outputItem = Ingredient.of(outputItem)
 				outputFluid = fluidConvert(outputFluid)
-				
+
 				if (typeof speed!="number") speed = 1
 				temperature = arrConvert(temperature)
-				
+
 				let recipe = {
 					type: "pneumaticcraft:thermo_plant",
 					speed: speed,
 					exothermic: exothermic===true
 				}
-				
+
 				if (inputItem!=null && inputItem.id!=="minecraft:air") recipe["item_input"] = inputItem
 				if (inputFluid!=null && inputFluidConverted.id!=="minecraft:empty") {
 					recipe["fluid_input"] = Object.assign(fluidConvertWithTag(inputFluid[0], inputFluid[1]), {type: "pneumaticcraft:fluid"})
 				}
-				
+
 				if (outputItem!=null && outputItem.id!=="minecraft:air") recipe["item_output"] = outputItem
 				if (outputFluid!=null && outputFluid.id!=="minecraft:empty") recipe["fluid_output"] = outputFluid
-				
+
 				let temperatures = {}
 				if (typeof temperature[0]=="number") temperatures["min_temp"] = temperature[0]
 				if (typeof temperature[1]=="number") temperatures["max_temp"] = temperature[1]
 				if (temperatures!=={} || temperature===[]) recipe["temperature"] = temperatures
-				
+
 				if (typeof pressure=="number") recipe["pressure"] = pressure
-				
+
 				event.custom(recipe)
 			}
 		},
-		
+
 		powah: {
 			energizing: (event, input, output, energy) => {
 				input = arrConvert(input).slice(0, 6)
@@ -830,6 +834,125 @@ onEvent("loaded", e => {
 					result: Ingredient.of(output),
 
 					energy: energy
+				})
+			}
+		},
+
+		silents_mechanisms: {
+			alloy_smelting: (event, input, output, time) => {
+				input = arrConvert(input).slice(0, 4)
+				let ingredients = []
+				input.forEach(item => {
+					ingredients.push(SMIngredientConvert(item))
+				})
+
+				if (typeof time!="number") time = 200
+
+				console.log({
+					type: "silents_mechanisms:alloy_smelting",
+
+					ingredients: ingredients,
+					result: Ingredient.of(output),
+
+					process_time: time
+				})
+				
+				event.custom({
+					type: "silents_mechanisms:alloy_smelting",
+
+					ingredients: ingredients,
+					result: Ingredient.of(output),
+
+					process_time: time
+				})
+			},
+			compressing: (event, input, output, time) => {
+				if (typeof time!="number") time = 200
+
+				event.custom({
+					type: "silents_mechanisms:compressing",
+
+					ingredient: SMIngredientConvert(arrConvert(input)),
+					result: Ingredient.of(output).toJson(),
+
+					process_time: time
+				})
+			},
+			crushing: (event, input, output, time) => {
+				output = arrConvert(output).slice(0, 4)
+				if (typeof time!="number") time = 200
+
+				event.custom({
+					type: "silents_mechanisms:crushing",
+
+					ingredient: Ingredient.of(input).toJson(),
+					results: ingredientsConvert(output),
+
+					process_time: time
+				})
+			},
+			drying: (event, input, output, time) => {
+				if (typeof time!="number") time = 200
+
+				event.custom({
+					type: "silents_mechanisms:drying",
+
+					ingredient: Ingredient.of(input).toJson(),
+					result: Ingredient.of(output).toJson(),
+
+					process_time: time
+				})
+			},
+			infusing: (event, inputItem, inputFluid, output, time) => {
+				inputFluid = arrConvert(inputFluid)
+				if (typeof time!="number") time = 200
+
+				event.custom({
+					type: "silents_mechanisms:infusing",
+
+					ingredient: Ingredient.of(inputItem).toJson(),
+					fluid: fluidConvertWithTag(inputFluid[0], inputFluid[1]),
+					result: Ingredient.of(output).toJson(),
+
+					process_time: time
+				})
+			},
+			mixing: (event, input, output, time) => {
+				if (typeof time!="number") time = 200
+				
+				event.custom({
+					type: "silents_mechanisms:mixing",
+
+					ingredients: fluidsConvertWithTag(arrConvert(input).slice(0, 4)),
+					result: fluidConvert(output).toJson(),
+
+					process_time: time
+				})
+			},
+			refining: (event, input, output, time) => {
+				input = arrConvert(input)
+				if (typeof time!="number") time = 200
+
+				event.custom({
+					type: "silents_mechanisms:refining",
+					
+					ingredient: fluidConvertWithTag(input[0], input[1]),
+					results: fluidsConvert(arrConvert(output).slice(0, 4)),
+					
+					process_time: time
+				})
+			},
+			solidifying: (event, input, output, time) => {
+				input = arrConvert(input)
+				if (typeof time!="number") time = 200
+
+				event.custom({
+					type: "silents_mechanisms:solidifying",
+
+					ingredient: fluidConvertWithTag(input[0], input[1]),
+					result: Ingredient.of(output),
+
+					process_time: time
 				})
 			}
 		}

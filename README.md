@@ -303,3 +303,53 @@ global.more_recipe_types.pneumaticcraft.thermo_plant(event, <Input item>, [<Inpu
 ```js
 global.more_recipe_types.powah.energizing(event, [<Input items>], <Output item>, <Energy (100 by default)>)
 ```
+
+### Silent's Mechanism's
+
+#### Alloy Smelting
+
+```js
+global.more_recipe_types.silents_mechanisms.alloy_smelting(event, [[[<Input item>, ...], <Amount>], ...], <Output item>, <Time in ticks (200 by default)>)
+```
+
+#### Compressing
+
+```js
+global.more_recipe_types.silents_mechanisms.compressing(event, [[<Input item>, ...], <Amount>], <Output item>, <Time in ticks (200 by default)>)
+```
+
+#### Crushing
+
+```js
+global.more_recipe_types.silents_mechanisms.crushing(event, <Input item>, [<Output items>], <Time in ticks (200 by default)>)
+```
+
+#### Drying
+
+```js
+global.more_recipe_types.silents_mechanisms.drying(event, <Input item>, <Output item>, <Time in ticks (200 by default)>)
+```
+
+#### Infusing
+
+```js
+global.more_recipe_types.silents_mechanisms.infusing(event, <Input item>, [<Input fluid>, <Amount (1000 by default)>], <Output item>, <Time in ticks (200 by default)>)
+```
+
+#### Mixing
+
+```js
+global.more_recipe_types.silents_mechanisms.mixing(event, [[<Input fluid>, <Amount (1000 by default)>], ...], Fluid.of(<Output fluid>, <Amount>), <Time in ticks (200 by default)>)
+```
+
+#### Refining
+
+```js
+global.more_recipe_types.silents_mechanisms.refining(event, [<Input fluid>, <Amount (1000 by default)>], [Fluid.of(<Output fluid>, <Amount>), ...], <Time in ticks (200 by default)>)
+```
+
+#### Solidifying
+
+```js
+global.more_recipe_types.silents_mechanisms.solidifying(event, [<Input fluid>, <Amount (1000 by default)>], <Output item>, <Time in ticks (200 by default)>)
+```
