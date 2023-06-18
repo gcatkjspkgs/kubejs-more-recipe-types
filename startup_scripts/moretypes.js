@@ -61,7 +61,7 @@ onEvent("loaded", e => {
 		appliedenergistics2: {
 			grinder: (event, input, output, turns) => {
 				output = ingredientsConvert(arrConvert(output).slice(0, 3))
-				if (turns==null) turns = 4
+				if (typeof turns!="number") turns = 4
 				console.log(Ingredient.of(input))
 
 				event.custom({
@@ -88,7 +88,7 @@ onEvent("loaded", e => {
 
 				event.custom({
 					type: "appliedenergistics2:inscriber",
-					mode: keep ? "inscribe" : "press",
+					mode: keep===true ? "inscribe" : "press",
 
 					ingredients: ingredients,
 					result: Ingredient.of(output)
@@ -98,7 +98,7 @@ onEvent("loaded", e => {
 
 		astralsorcery: {
 			block_transmutation: (event, input, output, starlight) => {
-				if (starlight==null) starlight = 200
+				if (typeof starlight!="number") starlight = 200
 
 				event.custom({
 					type: "astralsorcery:block_transmutation",
@@ -110,12 +110,12 @@ onEvent("loaded", e => {
 				})
 			},
 			infuser: (event, input, output, duration, consumptionChance, settings, inputFluid) => {
-				if (duration==null) duration = 100
-				if (consumptionChance==null) consumptionChance = 0.1
-				if (settings==null) settings = [false, true, false]
+				if (typeof duration!="number") duration = 100
+				if (typeof consumptionChance!="number") consumptionChance = 0.1
+				if (!Array.isArray(settings)) settings = [false, true, false]
 				settings = settings.slice(0, 3)
 				settings = settings.concat([false, true, false].slice(settings.length, 3))
-				if (inputFluid==null) inputFluid = "astralsorcery:liquid_starlight"
+				if (typeof inputFluid!="string") inputFluid = "astralsorcery:liquid_starlight"
 
 				event.custom({
 					type: "astralsorcery:infuser",
@@ -132,9 +132,9 @@ onEvent("loaded", e => {
 				})
 			},
 			lightwell: (event, input, outputFluid, productionMultiplier, shatterMultiplier, color) => {
-				if (productionMultiplier==null) productionMultiplier = 1
-				if (shatterMultiplier==null) shatterMultiplier = 10
-				if (color==null) color = -2236929
+				if (typeof productionMultiplier!="number") productionMultiplier = 1
+				if (typeof shatterMultiplier!="number") shatterMultiplier = 10
+				if (typeof color!="number") color = -2236929
 
 				event.custom({
 					type: "astralsorcery:lightwell",
@@ -152,9 +152,9 @@ onEvent("loaded", e => {
 				inputFluid2 = arrConvert(inputFluid2)
 				let fluid1 = fluidConvert(inputFluid1[0])
 				let fluid2 = fluidConvert(inputFluid2[0])
-				if (typeof inputFluid1[1]==='undefined') inputFluid1.push(1)
-				if (typeof inputFluid2[1]==='undefined') inputFluid2.push(1)
-				if (weight==null) weight = 1
+				if (typeof inputFluid1[1]=='undefined') inputFluid1.push(1)
+				if (typeof inputFluid2[1]=='undefined') inputFluid2.push(1)
+				if (typeof weight!="number") weight = 1
 
 				event.custom({
 					type: "astralsorcery:liquid_interaction",
@@ -181,7 +181,7 @@ onEvent("loaded", e => {
 
 		boss_tools: {
 			blasting: (event, input, output, cookTime) => {
-				if (cookTime==null) cookTime = 200
+				if (typeof cookTime!="number") cookTime = 200
 
 				event.custom({
 					type: "boss_tools:blasting",
@@ -193,7 +193,7 @@ onEvent("loaded", e => {
 				})
 			},
 			compressing: (event, input, output, cookTime) => {
-				if (cookTime==null) cookTime = 200
+				if (typeof cookTime!="number") cookTime = 200
 
 				event.custom({
 					type: "boss_tools:compressing",
@@ -224,7 +224,7 @@ onEvent("loaded", e => {
 				})
 			},
 			mana_infusion: (event, input, output, mana, catalyst) => {
-				if (mana==null) mana = 1000
+				if (typeof mana!="number") mana = 1000
 
 				event.custom({
 					type: "botania:mana_infusion",
@@ -233,7 +233,7 @@ onEvent("loaded", e => {
 					output: Ingredient.of(output),
 
 					mana: mana,
-					catalyst: catalyst==null ? null : blockConvert(catalyst, true)
+					catalyst: typeof catalyst!="string" ? null : blockConvert(catalyst, true)
 				})
 			},
 			petal_apothecary: (event, input, output) => {
@@ -253,7 +253,7 @@ onEvent("loaded", e => {
 				})
 			},
 			runic_altar: (event, input, output, mana) => {
-				if (mana==null) mana = 5000
+				if (typeof mana!="number") mana = 5000
 
 				event.custom({
 					type: "botania:runic_altar",
@@ -265,7 +265,7 @@ onEvent("loaded", e => {
 				})
 			},
 			terra_plate: (event, input, output, mana) => {
-				if (mana==null) mana = 100000
+				if (typeof mana!="number") mana = 100000
 
 				event.custom({
 					type: "botania:terra_plate",
@@ -280,15 +280,15 @@ onEvent("loaded", e => {
 
 		botanypots: {
 			crop: (event, inputSeed, SoilCategories, output, growthTicks, displayBlock) => {
-				if (growthTicks==null) growthTicks = 1200
-				if (displayBlock==null) displayBlock = inputSeed
+				if (typeof growthTicks!="number") growthTicks = 1200
+				if (typeof displayBlock!="string") displayBlock = inputSeed
 				let results = []
 				output.forEach(roll => {
 					results.push({
 						output: Ingredient.of(roll[0]),
-						chance: typeof roll[1]==='undefined' ? 1 : roll[1],
-						minRolls: typeof roll[2]==='undefined' ? 1 : roll[2],
-						maxRolls: typeof roll[3]==='undefined' ? 1 : roll[3]
+						chance: typeof roll[1]=='undefined' ? 1 : roll[1],
+						minRolls: typeof roll[2]=='undefined' ? 1 : roll[2],
+						maxRolls: typeof roll[3]=='undefined' ? 1 : roll[3]
 					})
 				})
 
@@ -304,8 +304,8 @@ onEvent("loaded", e => {
 				})
 			},
 			fertilizer: (event, fertilizer, minTicks, maxTicks) => {
-				if (minTicks==null) minTicks = 100
-				if (maxTicks==null) maxTicks = minTicks + 100
+				if (typeof minTicks!="number") minTicks = 100
+				if (typeof maxTicks!="number") maxTicks = minTicks + 100
 
 				event.custom({
 					type: "botanypots:fertilizer",
@@ -316,8 +316,8 @@ onEvent("loaded", e => {
 				})
 			},
 			soil: (event, inputSoil, SoilCategories, growthModifier, displayBlock) => {
-				if (growthModifier==null) growthModifier = 0
-				if (displayBlock==null) displayBlock = inputSoil
+				if (typeof growthModifier!="number") growthModifier = 0
+				if (typeof displayBlock!="string") displayBlock = inputSoil
 
 				event.custom({
 					type: "botanypots:soil",
@@ -333,7 +333,7 @@ onEvent("loaded", e => {
 
 		elementalcraft: {
 			binding: (event, input, output, elementType, elementAmount) => {
-				if (elementAmount==null) elementAmount = 1000
+				if (typeof elementAmount!="number") elementAmount = 1000
 
 				event.custom({
 					type: "elementalcraft:binding",
@@ -347,14 +347,14 @@ onEvent("loaded", e => {
 			},
 			crystallization: (event, input, output, elementType, elementAmount) => {
 				input = ingredientsConvert(arrConvert(input))
-				if (elementAmount==null) elementAmount = 1000
+				if (typeof elementAmount!="number") elementAmount = 1000
 				let results = []
 				output.forEach(result => {
 					let resultItem = Ingredient.of(result[0])
 					results.push({
 						result: {id: resultItem.id, Count: resultItem.getCount()},
-						weight: typeof result[1]==='undefined' ? 1 : result[1],
-						quality: typeof result[2]==='undefined' ? null : result[2]
+						weight: typeof result[1]=='undefined' ? 1 : result[1],
+						quality: typeof result[2]=='undefined' ? null : result[2]
 					})
 				})
 
@@ -373,7 +373,7 @@ onEvent("loaded", e => {
 				})
 			},
 			grinding: (event, input, output, elementAmount) => {
-				if (elementAmount==null) elementAmount = 1000
+				if (typeof elementAmount!="number") elementAmount = 1000
 
 				event.custom({
 					type: "elementalcraft:grinding",
@@ -385,7 +385,7 @@ onEvent("loaded", e => {
 				})
 			},
 			tool_infusion: (event, input, toolInfusionType, elementAmount) => {
-				if (elementAmount==null) elementAmount = 1000
+				if (typeof elementAmount!="number") elementAmount = 1000
 
 				event.custom({
 					type: "elementalcraft:tool_infusion",
@@ -397,7 +397,7 @@ onEvent("loaded", e => {
 				})
 			},
 			infusion: (event, input, output, elementType, elementAmount) => {
-				if (elementAmount==null) elementAmount = 1000
+				if (typeof elementAmount!="number") elementAmount = 1000
 
 				event.custom({
 					type: "elementalcraft:infusion",
@@ -413,8 +413,8 @@ onEvent("loaded", e => {
 				input = ingredientsConvert(arrConvert(input).slice(0, 4))
 				output = arrConvert(output)
 				let outputItem = Ingredient.of(output[0])
-				if (typeof output[1]!=='undefined') outputItem["nbt"] = output[1]
-				if (elementAmount==null) elementAmount = 1000
+				if (typeof output[1]!='undefined') outputItem["nbt"] = output[1]
+				if (typeof elementAmount!="number") elementAmount = 1000
 
 				event.custom({
 					type: "elementalcraft:inscription",
@@ -429,7 +429,7 @@ onEvent("loaded", e => {
 			},
 			pureinfusion: (event, input, output, elementAmount) => {
 				input = arrConvert(input).slice(0, 5)
-				if (elementAmount==null) elementAmount = 1000
+				if (typeof elementAmount!="number") elementAmount = 1000
 
 				event.custom({
 					type: "elementalcraft:pureinfusion",
@@ -444,7 +444,7 @@ onEvent("loaded", e => {
 				input = ingredientsConvert(arrConvert(input))
 				output = arrConvert(output)
 				let outputItem = Ingredient.of(output[0])
-				if (typeof output[1]!=='undefined') outputItem["nbt"] = output[1]
+				if (typeof output[1]!='undefined') outputItem["nbt"] = output[1]
 
 
 				event.custom({
@@ -459,7 +459,7 @@ onEvent("loaded", e => {
 
 		ftbic: {
 			antimatter_boost: (event, input, boost) => {
-				if (typeof boost!=="number") boost = 1000
+				if (typeof boost!="number") boost = 1000
 
 				event.custom({
 					type: "ftbic:antimatter_boost",
@@ -469,7 +469,7 @@ onEvent("loaded", e => {
 				})
 			},
 			basic_generator_fuel: (event, input, ticks) => {
-				if (typeof ticks!=="number") ticks = 200
+				if (typeof ticks!="number") ticks = 200
 
 				event.custom({
 					type: "ftbic:basic_generator_fuel",
@@ -509,7 +509,7 @@ onEvent("loaded", e => {
 				input = arrConvert(input).slice(0, 8)
 				inputFluid = fluidConvert(inputFluid)
 				outputFluid = fluidConvert(outputFluid)
-				if (time==null) time = 20
+				if (typeof time!="number") time = 20
 
 				event.custom({
 					type: "industrialforegoing:dissolution_chamber",
@@ -525,8 +525,8 @@ onEvent("loaded", e => {
 			},
 			fluid_extractor: (event, input, output, breakchance, result) => {
 				output = fluidConvert(output)
-				if (breakchance==null) breakchance = 0
-				if (result==null) result = "minecraft:air"
+				if (typeof breakchance!="number") breakchance = 0
+				if (typeof result!="string") result = "minecraft:air"
 
 				event.custom({
 					type: "industrialforegoing:fluid_extractor",
@@ -542,21 +542,21 @@ onEvent("loaded", e => {
 			laser_drill: (event, output, catalyst, rarities, fluidRecipe, entity) => {
 				fluidRecipe ? output = fluidConvert(output) : output = Ingredient.of(output)
 				if (fluidRecipe!==true) fluidRecipe = false
-				if (typeof entity!=="string") entity = "minecraft:empty"
+				if (typeof entity!="string") entity = "minecraft:empty"
 
 				let mineIn = []
-				if (typeof rarities[0]==='undefined') rarities = [["", "", ""]]
+				if (typeof rarities[0]=='undefined') rarities = [["", "", ""]]
 				rarities.forEach(rarity => {
 					if (!(Array.isArray(rarity[0]))) rarity[0] = []
 					if (!(Array.isArray(rarity[1]))) rarity[1] = []
 
 					if (!(Array.isArray(rarity[0][0]))) rarity[0][0] = []
-					if (typeof rarity[0][2]!=="string") rarity[0][2] = "minecraft:worldgen/biome"
+					if (typeof rarity[0][2]!="string") rarity[0][2] = "minecraft:worldgen/biome"
 					let typeList = rarity[0][1] !== true
 
-					if (typeof rarity[1][0]!=="number") rarity[1][0] = 0
-					if (typeof rarity[1][1]!=="number") rarity[1][1] = 64
-					if (typeof rarity[2]!=="number") rarity[2] = 1
+					if (typeof rarity[1][0]!="number") rarity[1][0] = 0
+					if (typeof rarity[1][1]!="number") rarity[1][1] = 64
+					if (typeof rarity[2]!="number") rarity[2] = 1
 
 					let whitelist = {}
 					let blacklist = {}
@@ -594,10 +594,10 @@ onEvent("loaded", e => {
 
 					output: Ingredient.of(output),
 
-					waterNeed: typeof water[0]!=="number" ? 1000 : water[0],
-					waterConsume: typeof water[1]!=="number" ? 0 : water[1],
-					lavaNeed: typeof lava[0]!=="number" ? 1000 : lava[0],
-					lavaConsume: typeof lava[1]!=="number" ? 0 : lava[1]
+					waterNeed: typeof water[0]!="number" ? 1000 : water[0],
+					waterConsume: typeof water[1]!="number" ? 0 : water[1],
+					lavaNeed: typeof lava[0]!="number" ? 1000 : lava[0],
+					lavaConsume: typeof lava[1]!="number" ? 0 : lava[1]
 				})
 			}
 		},
@@ -637,7 +637,7 @@ onEvent("loaded", e => {
 					},
 					result: Ingredient.of(output),
 
-					program: isDrill!==true ? "laser" : "drill"
+					program: isDrill===true ? "drill" : "laser"
 				}
 
 				if (Ingredient.of(input).getCount()!==1) recipe["input"]["type"] = "pneumaticcraft:stacked_item"
@@ -645,7 +645,7 @@ onEvent("loaded", e => {
 				event.custom(recipe)
 			},
 			explosion_crafting: (event, input, output, loss_rate) => {
-				if (typeof loss_rate!=="number") loss_rate = 20
+				if (typeof loss_rate!="number") loss_rate = 20
 
 				event.custom({
 					type: "pneumaticcraft:explosion_crafting",
@@ -658,11 +658,11 @@ onEvent("loaded", e => {
 			},
 			heat_frame_cooling: (event, input, output, max_temp, bonusOutput) => {
 				input = arrConvert(input)
-				if (typeof input[1]!=="number") input[1] = 1000
-				if (typeof max_temp!=="number") max_temp = 273
-				if (bonusOutput==null) bonusOutput = []
-				if (typeof bonusOutput[0]!=="number") bonusOutput[0] = 0
-				if (typeof bonusOutput[1]!=="number") bonusOutput[1] = 0
+				if (typeof input[1]!="number") input[1] = 1000
+				if (typeof max_temp!="number") max_temp = 273
+				if (!Array.isArray(bonusOutput)) bonusOutput = []
+				if (typeof bonusOutput[0]!="number") bonusOutput[0] = 0
+				if (typeof bonusOutput[1]!="number") bonusOutput[1] = 0
 
 				event.custom({
 					type: "pneumaticcraft:heat_frame_cooling",
@@ -679,9 +679,9 @@ onEvent("loaded", e => {
 			},
 			heat_properties: (event, input, output, temperature, thermalResistance, heatCapacity) => {
 				output = arrConvert(output)
-				if (typeof temperature!=="number") temperature = 298
-				if (typeof thermalResistance!=="number") thermalResistance = 200
-				if (typeof heatCapacity!=="number") heatCapacity = 5000
+				if (typeof temperature!="number") temperature = 298
+				if (typeof thermalResistance!="number") thermalResistance = 200
+				if (typeof heatCapacity!="number") heatCapacity = 5000
 
 				let recipe = {
 					type: "pneumaticcraft:heat_properties",
@@ -701,10 +701,10 @@ onEvent("loaded", e => {
 				outputItem = Ingredient.of(outputItem)
 				input1 = arrConvert(input1)
 				input2 = arrConvert(input2)
-				if (typeof input1[1]!=="number") input1[1] = 1000
-				if (typeof input2[1]!=="number") input2[1] = 1000
-				if (typeof time!=="number") time = 200
-				if (typeof pressure!=="number") pressure = 1
+				if (typeof input1[1]!="number") input1[1] = 1000
+				if (typeof input2[1]!="number") input2[1] = 1000
+				if (typeof time!="number") time = 200
+				if (typeof pressure!="number") pressure = 1
 				
 				recipe = {
 					type: "pneumaticcraft:fluid_mixer",
@@ -725,9 +725,9 @@ onEvent("loaded", e => {
 			},
 			fuel_quality: (event, input, air_per_bucket, burn_rate) => {
 				input = arrConvert(input)
-				if (typeof input[1]!=="number") input[1] = 1000
-				if (typeof air_per_bucket!=="number") air_per_bucket = 100000
-				if (typeof burn_rate!=="number") burn_rate = 1
+				if (typeof input[1]!="number") input[1] = 1000
+				if (typeof air_per_bucket!="number") air_per_bucket = 100000
+				if (typeof burn_rate!="number") burn_rate = 1
 
 				event.custom({
 					type: "pneumaticcraft:fuel_quality",
@@ -739,7 +739,7 @@ onEvent("loaded", e => {
 				})
 			},
 			pressure_chamber: (event, input, output, pressure) => {
-				if (typeof pressure!=="number") pressure = 1
+				if (typeof pressure!="number") pressure = 1
 
 				input = ingredientsConvert(arrConvert(input))
 				input.forEach(item => {
@@ -763,11 +763,11 @@ onEvent("loaded", e => {
 			refinery: (event, input, output, temperature) => {
 				console.log(fluidsConvert(arrConvert(output)))
 				input = arrConvert(input)
-				if (typeof input[1]!=="number") input[1] = 1000
+				if (typeof input[1]!="number") input[1] = 1000
 
 				let temperatures = {}
-				if (typeof temperature[0]==="number") temperatures["min_temp"] = temperature[0]
-				if (typeof temperature[1]==="number") temperatures["max_temp"] = temperature[1]
+				if (typeof temperature[0]=="number") temperatures["min_temp"] = temperature[0]
+				if (typeof temperature[1]=="number") temperatures["max_temp"] = temperature[1]
 				
 				event.custom({
 					type: "pneumaticcraft:refinery",
@@ -784,13 +784,13 @@ onEvent("loaded", e => {
 				if (inputItem.getCount()!==1) inputItem = Object.assign(itemJson, {type: "pneumaticcraft:stacked_item"})
 				
 				inputFluid = arrConvert(inputFluid)
-				if (typeof inputFluid[1]!=="number") inputFluid[1] = 1000
+				if (typeof inputFluid[1]!="number") inputFluid[1] = 1000
 				let inputFluidConverted = inputFluid[0].substring(0, 1)==="#" ?  fluidConvert("minecraft:water") : fluidConvert(inputFluid[0], inputFluid[1])
 				
 				outputItem = Ingredient.of(outputItem)
 				outputFluid = fluidConvert(outputFluid)
 				
-				if (typeof speed!=="number") speed = 1
+				if (typeof speed!="number") speed = 1
 				temperature = arrConvert(temperature)
 				
 				let recipe = {
@@ -808,11 +808,11 @@ onEvent("loaded", e => {
 				if (outputFluid!=null && outputFluid.id!=="minecraft:empty") recipe["fluid_output"] = outputFluid
 				
 				let temperatures = {}
-				if (typeof temperature[0]==="number") temperatures["min_temp"] = temperature[0]
-				if (typeof temperature[1]==="number") temperatures["max_temp"] = temperature[1]
+				if (typeof temperature[0]=="number") temperatures["min_temp"] = temperature[0]
+				if (typeof temperature[1]=="number") temperatures["max_temp"] = temperature[1]
 				if (temperatures!=={} || temperature===[]) recipe["temperature"] = temperatures
 				
-				if (typeof pressure==="number") recipe["pressure"] = pressure
+				if (typeof pressure=="number") recipe["pressure"] = pressure
 				
 				event.custom(recipe)
 			}
@@ -821,7 +821,7 @@ onEvent("loaded", e => {
 		powah: {
 			energizing: (event, input, output, energy) => {
 				input = arrConvert(input).slice(0, 6)
-				if (energy==null) energy = 100
+				if (typeof energy!="number") energy = 100
 
 				event.custom({
 					type: "powah:energizing",
