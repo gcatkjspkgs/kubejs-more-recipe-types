@@ -205,8 +205,8 @@ global.more_recipe_types.ftbic.<type>(event, [<Input items>], [<Output Items>])
 
 Some notes:
 
-- To use nbt in input items use Item.of(<Input item>, <nbt>)
-- To use chance in output items use Item.of(<Input item>).withChance(<Chance>)
+- To use nbt in input items use Item.of("<Input item>", "<nbt>")
+- To use chance in output items use Item.of("<Input item>").withChance("<Chance>")
 
 ### Industrial Foregoing
 
@@ -261,11 +261,12 @@ global.more_recipe_types.pneumaticcraft.heat_frame_cooling(event, [<Input fluid>
 ```
 
 #### (Block) Heat Properties
+
 ```js
 global.more_recipe_types.pneumaticcraft.heat_properties(event, <Input block>, [<Output block from Cooling>, <Output block from Heating>], <Block temperature (25°C by default)>, <Thermal Resictance (20 by default)>, <Heat Capacity (1000 by default)>)
 ```
 
-#### Fluid Mixer´
+#### Fluid Mixer
 
 ```js
 global.more_recipe_types.pneumaticcraft.fluid_mixer(event, [<Input Fluid 1>, <Amount (1000 by default)>], <Input Fluid 2>, <Amount (1000 by default)>], Fluid.of(<Output Fluid>, <Amount>), <Output item>, <Pressure (1 by default)>, <Time in ticks (200 by default)>)
