@@ -16,15 +16,21 @@ function fluidsConvert(i) {
 	i.forEach(fluid => {fluids.push(fluidConvert(fluid).toJson())})
 	return fluids
 }
-function fluidConvertWithTag(i, amount) {
-	let fluid
-	i.substring(0, 1)==="#" ? fluid = {tag: i.substring(1)} : fluid = {fluid: i}
-	fluid["amount"] = typeof amount == "number" ? amount : 1000 
+function fluidConvertWithTag(i, amount, typeNames, amountName) {
+	typeNames==null ? typeNames = ["fluid", "tag"] : typeNames = arrConvert(typeNames).slice(0, 2)
+	typeNames = typeNames.concat(["fluid", "tag"].slice(typeNames.length, 2))
+	if (amountName==null) amountName = "amount"
+
+	let fluid = {}
+	i.substring(0, 1)==="#" ? fluid[typeNames[1]] = i.substring(1) : fluid[typeNames[0]] = i
+	fluid[amountName] = typeof amount == "number" ? amount : 1000 
 	return fluid
 }
-function fluidsConvertWithTag(i) {
+function fluidsConvertWithTag(i, typeNames, amountName) {
 	let fluids = []
-	i.forEach(fluid => {fluids.push(fluidConvertWithTag(arrConvert(fluid)[0], arrConvert(fluid)[1]))})
+	i.forEach(fluid => {
+		fluid = arrConvert(fluid)
+		fluids.push(fluidConvertWithTag(fluid[0], fluid[1], typeNames, amountName))})
 	return fluids
 }
 function blockConvert(i, withType) {
@@ -856,7 +862,7 @@ onEvent("loaded", e => {
 
 					process_time: time
 				})
-				
+
 				event.custom({
 					type: "silents_mechanisms:alloy_smelting",
 
@@ -919,7 +925,7 @@ onEvent("loaded", e => {
 			},
 			mixing: (event, input, output, time) => {
 				if (typeof time!="number") time = 200
-				
+
 				event.custom({
 					type: "silents_mechanisms:mixing",
 
@@ -935,10 +941,10 @@ onEvent("loaded", e => {
 
 				event.custom({
 					type: "silents_mechanisms:refining",
-					
+
 					ingredient: fluidConvertWithTag(input[0], input[1]),
 					results: fluidsConvert(arrConvert(output).slice(0, 4)),
-					
+
 					process_time: time
 				})
 			},
@@ -953,6 +959,107 @@ onEvent("loaded", e => {
 					result: Ingredient.of(output),
 
 					process_time: time
+				})
+			}
+		},
+
+		tconstruct: {
+			alloy: (event, input, output, temperature) => {
+				if (typeof temperature!="number") temperature = 100
+
+				event.custom({
+					type: "tconstruct:alloy",
+
+					inputs: fluidsConvertWithTag(arrConvert(input), "name"),
+					result: fluidConvert(output).toJson(),
+
+					temperature: temperature
+				})
+			},
+			casting: (event, inputFluid, inputCast, output, isBasin, castConsumed, time) => {
+				inputFluid = arrConvert(inputFluid)
+				inputCast = Ingredient.of(inputCast)
+				if (typeof time!="number") time = 60
+
+				let recipe = {
+					type: isBasin===true ? "tconstruct:casting_basin" : "tconstruct:casting_table",
+
+					fluid: fluidConvertWithTag(inputFluid[0], inputFluid[1], "name"),
+					result: Ingredient.of(output).id,
+					
+					cooling_time: time,
+					cast_consumed: castConsumed===true
+				}
+				
+				if (inputCast.id!=="minecraft:air") recipe["cast"] = inputCast.toJson()
+				
+				event.custom(recipe)
+			},
+			entity_melting: (event, entity, output, damage) => {
+				if (typeof damage!="number") damage = 1
+				
+				event.custom({
+					type: "tconstruct:entity_melting",
+
+					entity: {type: entity},
+					result: fluidConvert(output).toJson(),
+
+					damage: damage
+				})
+			},
+			melting: (event, input, output, temperature, time) => {
+				if (typeof temperature!="number") temperature = 100
+				if (typeof time!="number") time = 300	
+
+				event.custom({
+					type: "tconstruct:melting",
+					
+					ingredient: Ingredient.of(input).toJson(),
+					result: fluidConvert(output).toJson(),
+					
+					temperature:  temperature,
+					time: time
+				})
+			},
+			molding_table: (event, inputCast, inputPattern, outputCast) => {
+				event.custom({
+					type: "tconstruct:molding_table",
+					
+					material: Ingredient.of(inputCast),
+					pattern: Ingredient.of(inputPattern).toJson(),
+					result: Ingredient.of(outputCast).id
+				})
+			},
+			part_builder: (event, pattern, output, materialCost) => {
+				if (typeof materialCost!="number") materialCost = 1	
+
+				event.custom({
+					type: "tconstruct:part_builder",
+
+					pattern: Ingredient.of(pattern).id,
+					result: {item: Ingredient.of(output).id},
+
+					cost: materialCost,
+				})
+			},
+			severing: (event, entity, output) => {
+				event.custom({
+					type: "tconstruct:severing",
+					
+					entity: {type: entity},
+					result: Ingredient.of(output)
+				})
+			},
+			table_casting_material: (event, inputCast, output, materialCost) => {
+				if (typeof materialCost!="number") materialCost = 1	
+
+				event.custom({
+					type: "tconstruct:table_casting_material",
+					
+					cast: Ingredient.of(inputCast).toJson(),
+					result: Ingredient.of(output).id,
+					
+					item_cost: materialCost
 				})
 			}
 		}

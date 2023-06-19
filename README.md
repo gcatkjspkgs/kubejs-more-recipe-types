@@ -353,3 +353,53 @@ global.more_recipe_types.silents_mechanisms.refining(event, [<Input fluid>, <Amo
 ```js
 global.more_recipe_types.silents_mechanisms.solidifying(event, [<Input fluid>, <Amount (1000 by default)>], <Output item>, <Time in ticks (200 by default)>)
 ```
+
+### Tinker's Construct
+
+#### Alloy (Alloying)
+
+```js
+global.more_recipe_types.tconstruct.alloy(event, [[<Input fluid>, <Amount (1000 by default)>], ...], Fluid.of(<Output fluid>, <Amount>), <Temperature (100 by default)>)
+```
+
+#### Casting (Table / Basin)
+
+```js
+global.more_recipe_types.tconstruct.casting(event, [<Input fluid>, <Amount (1000 by default)>], <Input Cast>, <Output item>, <Basin ? (else table, false by default)>, <Cast consumed ? (false by default)>, <Time in ticks (60 by default)>)
+```
+
+#### Entity Melting
+
+```js
+global.more_recipe_types.tconstruct.entity_melting(event, <Entity>, Fluid.of(<Output fluid>, <Amount>), <Damage (1 by default)>)
+```
+
+#### Melting
+
+```js
+global.more_recipe_types.tconstruct.melting(event, <Input item>, Fluid.of(<Output fluid>, <Amount>), <Temperature (100 by default)>, <Time in ticks (300 by default)>)
+```
+
+#### Molding (Table)
+
+```js
+global.more_recipe_types.tconstruct.molding_table(event, <Input Cast>, <Input item>, <Output cast>)
+```
+
+#### Part Builder
+
+```js
+global.more_recipe_types.tconstruct.part_builder(event, <Input pattern>, <Output Part>, <Cost (1 by default)>)
+```
+
+#### Severing
+
+```js
+global.more_recipe_types.tconstruct.severing(event, <Entity>, <Output item>)
+```
+
+#### Casting Table with Parts (like Part Builder)
+
+```js
+global.more_recipe_types.tconstruct.table_casting_material(event, <Input cast>, <Output Part>, <Cost (1 by default)>)
+```
