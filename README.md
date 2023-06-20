@@ -222,6 +222,20 @@ global.more_recipe_types.elementalcraft.pureinfusion(event, [<middle input item>
 global.more_recipe_types.elementalcraft.spell_craft(event, [<Gem input item>, <Crystal input item>], [<Output item>, <nbt>])
 ```
 
+### Evil Craft
+
+#### Blood Infuser
+
+```js
+global.more_recipe_types.evilcraft.blood_infuser(event, <Input item>, Fluid.of(<Input fluid>, <Amount>), <Output item>, <Tier (0-3, 0 by default)>, <time in ticks (200 by default)>, <Experience (float, 0.1 by default)>)
+```
+
+#### Environmental Accumulator / Sanguinary Environmental Accumulator
+
+```js
+global.more_recipe_types.evilcraft.environmental_accumulator(event, <Input item>, <Input action (e.g. LIGHTNING)>, <Output item>, <Output weather (ANY, CLEAR, RAIN, LIGHTNING)>, <time in ticks (100 by default)>, <Cooldown time in ticks (0 by default)>)
+```
+
 ### FTB Industrial Contraptions
 
 #### Antimatter Boost

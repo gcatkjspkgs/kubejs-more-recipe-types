@@ -595,6 +595,44 @@ onEvent("loaded", e => {
 			}
 		},
 
+		evilcraft: {
+			blood_infuser: (event, inputItem, inputFluid, output, tier, time, experience) => {
+				if (typeof experience!="number") experience = 0.1
+				if (typeof tier!="number") tier = 0
+				if (typeof time!="number") time = 200
+
+				event.custom({
+					type: "evilcraft:blood_infuser",
+					
+					item: Ingredient.of(inputItem),
+					fluid: fluidConvert(inputFluid).toJson(),
+					result: Ingredient.of(output),
+					
+					duration: time,
+					xp: experience,
+					tier: tier
+				})
+			},
+			environmental_accumulator: (event, input, inputAction, output, outputWeather, time, cooldownTime) => {
+				if (typeof time!="number") time = 100
+				if (typeof cooldownTime!="number") cooldownTime = 0
+
+				event.custom({
+					type: "evilcraft:environmental_accumulator",
+					
+					item: Ingredient.of(input).id,
+					weather: inputAction,
+					result: {
+						item: Ingredient.of(output).id,
+						weather: outputWeather
+					},
+					
+					duration: time,
+					cooldownTime: cooldownTime
+				})
+			}
+		},
+		
 		ftbic: {
 			antimatter_boost: (event, input, boost) => {
 				if (typeof boost!="number") boost = 1000
