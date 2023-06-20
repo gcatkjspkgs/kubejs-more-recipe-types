@@ -296,6 +296,26 @@ global.more_recipe_types.industrialforegoing.laser_drill(event, <Output item / F
 global.more_recipe_types.industrialforegoing.stonework_generate(event, <Output Item>, [<Water requirement (1000 by default)>, <Water usage (0 by default)>], [<Lava requirement (1000 by default)>, <Lava usage (0 by default)>])
 ```
 
+### Mystical Agriculture
+
+#### Infusion (Crafting)
+
+```js
+global.more_recipe_types.mysticalagriculture.infusion(event, <Middle input item>, [<Side input items>], <Output item>)
+```
+
+#### (Seed) Reprocessing
+
+```js
+global.more_recipe_types.mysticalagriculture.reprocessor(event, <Input item>, <Output item>)
+```
+
+#### Soul Extraction
+
+```js
+global.more_recipe_types.mysticalagriculture.soul_extraction(event, <Input item>, <Soul type (e.g. "mysticalagriculture:skeleton")>, <Soul amount (1 by default)>)
+```
+
 ### PneumaticCraft: Repressurized
 
 #### Amadron (Amadron Tablet)

@@ -777,6 +777,38 @@ onEvent("loaded", e => {
 				})
 			}
 		},
+		
+		mysticalagriculture: {
+			infusion: (event, mainInput, sideInput, output) => {
+				event.custom({
+					type: "mysticalagriculture:infusion",
+					
+					input: Ingredient.of(mainInput),
+					ingredients: ingredientsConvert(arrConvert(sideInput).slice(0, 8)),
+					result: Ingredient.of(output)
+				})
+			},
+			reprocessor: (event, input, output) => {
+				event.custom({
+					type: "mysticalagriculture:reprocessor",
+
+					input: Ingredient.of(input),
+					result: Ingredient.of(output)
+				})
+			},
+			soul_extraction: (event, input, soulType, soulAmount) => {
+				if (typeof soulAmount!="number") soulAmount = 1
+				
+				event.custom({
+					type: "mysticalagriculture:soul_extraction",
+					input: Ingredient.of(input),
+					output: {
+						type: soulType,
+						souls: soulAmount
+					}
+				})
+			}
+		},
 
 		pneumaticcraft: {
 			amadron: (event, input, output) => {
