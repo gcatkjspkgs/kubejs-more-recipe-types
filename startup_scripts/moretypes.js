@@ -197,17 +197,17 @@ onEvent("loaded", e => {
 				})
 			}
 		},
-		
+
 		atum: {
 			kiln: (event, input, output, experience) => {
 				if (typeof experience!="number") experience = 0.1
 
 				event.custom({
 					type: "atum:kiln",
-					
+
 					ingredient: Ingredient.of(input),
 					result: Ingredient.of(output),
-					
+
 					experience: experience
 				})
 			},
@@ -237,6 +237,59 @@ onEvent("loaded", e => {
 			}
 		},
 
+		betterendforge: {
+			alloying: (event, input, output, experience, time) => {
+				if (typeof experience!="number") experience = 1
+				if (typeof time!="number") time = 200
+
+				event.custom({
+					type: "betterendforge:alloying",
+
+					ingredients: ingredientsConvert(arrConvert(input).slice(0, 2)),
+					result: Ingredient.of(output),
+
+					experience: experience,
+					smelttime: time
+				})
+			},
+			anvil_smithing: (event, input, output, toolLevel, anvilLevel, toolDamage) => {
+				if (typeof toolLevel!="number") toolLevel = 0
+				if (typeof anvilLevel!="number") anvilLevel = 1
+				if (typeof toolDamage!="number") toolDamage = 1
+
+				event.custom({
+					type: "betterendforge:anvil_smithing",
+
+					input: Ingredient.of(input),
+					result: Ingredient.of(output).id,
+
+					level: toolLevel,
+					anvilLevel: anvilLevel,
+					damage: toolDamage
+				})
+			},
+			infusion: (event, middleInput, catalystInput, output, time) => {
+				catalystInput = arrConvert(catalystInput).slice(0, 8)
+				let catalysts = []
+				for (i = 0; i < catalystInput.length; i++) {
+					if (Ingredient.of(catalystInput[i]).id!=="minecraft:air") {
+						catalysts.push({item: Ingredient.of(catalystInput[i]), index: i})
+					}
+				}
+				if (typeof time!="number") time = 100
+
+				event.custom({
+					type: "betterendforge:infusion",
+					
+					input: Ingredient.of(middleInput),
+					output: Ingredient.of(output).id,
+					catalysts: catalysts,
+					
+					time: time
+				})
+			}
+		},
+		
 		boss_tools: {
 			blasting: (event, input, output, cookTime) => {
 				if (typeof cookTime!="number") cookTime = 200

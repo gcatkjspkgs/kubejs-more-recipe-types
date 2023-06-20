@@ -66,6 +66,26 @@ global.more_recipe_types.atum.quern(event, <Input item>, <Output item>, <Rotatio
 global.more_recipe_types.atum.spinning_wheel(event, <Input item>, <Output item>, <Rotations (1 by default)>)
 ```
 
+### Better End Forge
+
+#### Alloying
+
+```js
+global.more_recipe_types.betterendforge.alloying(event, [<Input items>], <Output item>, <Experience (float, 1 by default)>, <Time in ticks (200 by default)>)
+```
+
+#### Anvil Smithing
+
+```js
+global.more_recipe_types.betterendforge.anvil_smithing(event, <Input item>, <Output item>, <Tool level (0 by default = wood/gold)>, <Anvil level (1 by default)>, <Damage to tool (1 by default)>)
+```
+
+#### Infusion
+
+```js
+global.more_recipe_types.betterendforge.infusion(event, <Middle Input item>, [<Catalyst Input items (clockwise from top middle)>], <Output item>, <Time in seconds (100 by default)>)
+```
+
 ### (Space) Boss Tools
 
 #### Blasting
