@@ -441,6 +441,33 @@ onEvent("loaded", e => {
 				})
 			}
 		},
+		
+		draconicevolution: {
+			fusion_crafting: (event, mainInput, sideInput, output, tier, energy) => {
+				if (typeof tier!="string") tier = "DRACONIUM"
+				if (typeof energy!="number") energy = 100000
+				catalyst = Ingredient.of(mainInput)
+				if (catalyst.getCount() > 1) {
+					catalyst = {
+						type: "draconicevolution:ingredient_stack",
+						items: [catalyst],
+						count: catalyst.getCount()
+					}
+				}
+				
+				
+				event.custom({
+					type: "draconicevolution:fusion_crafting",
+
+					catalyst: catalyst,
+					ingredients: ingredientsConvert(arrConvert(sideInput)),
+					result: Ingredient.of(output),
+
+					total_energy: energy,
+					tier: tier
+				})
+			}
+		},
 
 		elementalcraft: {
 			binding: (event, input, output, elementType, elementAmount) => {

@@ -164,6 +164,14 @@ global.more_recipe_types.botanypots.fertilizer(event, <Input Fertilizer>, <Min t
 global.more_recipe_types.botanypots.soil(event, <Input soil>, [<Soil categories>], <Growth modifier (float between -1 and 1, 0 by default)>, <Display block (Input soil by default. Change if soil is item!)>)
 ```
 
+### Draconic Evolution
+
+#### Fusion Crafting
+
+```js
+global.more_recipe_types.draconicevolution.fusion_crafting(event, <Main input item>, [<side Input items>], <Output item>, <Tier (of DRACONIUM = default, WYVERN, DRACONIC, CHAOTIC)>, <Energy (100000 by default)>)
+```
+
 ### Elemental Craft
 
 #### Binding (Element Binding)
