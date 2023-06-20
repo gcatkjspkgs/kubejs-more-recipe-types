@@ -197,6 +197,45 @@ onEvent("loaded", e => {
 				})
 			}
 		},
+		
+		atum: {
+			kiln: (event, input, output, experience) => {
+				if (typeof experience!="number") experience = 0.1
+
+				event.custom({
+					type: "atum:kiln",
+					
+					ingredient: Ingredient.of(input),
+					result: Ingredient.of(output),
+					
+					experience: experience
+				})
+			},
+			quern: (event, input, output, rotations) => {
+				if (typeof rotations!="number") rotations = 1
+
+				event.custom({
+					type: "atum:quern",
+
+					ingredient: Ingredient.of(input),
+					result: Ingredient.of(output),
+
+					rotations: rotations
+				})
+			},
+			spinning_wheel: (event, input, output, rotations) => {
+				if (typeof rotations!="number") rotations = 1
+
+				event.custom({
+					type: "atum:spinning_wheel",
+
+					ingredient: Ingredient.of(input),
+					result: Ingredient.of(output),
+
+					rotations: rotations
+				})
+			}
+		},
 
 		boss_tools: {
 			blasting: (event, input, output, cookTime) => {

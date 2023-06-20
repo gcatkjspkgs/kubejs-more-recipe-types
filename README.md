@@ -46,6 +46,26 @@ global.more_recipe_types.astralsorcery.lightwell(event, <Input item>, <Output fl
 global.more_recipe_types.astralsorcery.liquid_interaction(event, [Fluid.of(<Input fluid 1>, <Amount>), <Chance consume fluid 1 (float, 100% by default)>], [Fluid.of(<Input fluid 2>, <Amount>), <Chance consume fluid 2 (float, 100% by default)>], <Output item>, <weight (1 by default)>)
 ```  
 
+### Atum
+
+#### Kiln
+
+```js
+global.more_recipe_types.atum.kiln(event, <Input item>, <Output item>, <Experience (float, 0.1 by default)>)
+```
+
+#### Quern
+
+```js
+global.more_recipe_types.atum.quern(event, <Input item>, <Output item>, <Rotations (1 by default)>)
+```
+
+#### Spinning Wheel
+
+```js
+global.more_recipe_types.atum.spinning_wheel(event, <Input item>, <Output item>, <Rotations (1 by default)>)
+```
+
 ### (Space) Boss Tools
 
 #### Blasting
