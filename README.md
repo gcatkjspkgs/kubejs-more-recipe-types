@@ -386,6 +386,14 @@ global.more_recipe_types.pneumaticcraft.thermo_plant(event, <Input item>, [<Inpu
 global.more_recipe_types.powah.energizing(event, [<Input items>], <Output item>, <Energy (100 by default)>)
 ```
 
+### Psi
+
+#### Trick Crafting (Spell Infusion)
+
+```js
+global.more_recipe_types.psi.trick_crafting(event, <Input item>, <Output item>, <Cad assemby>, <Trick>, <Dimension (Isn't listed in JEI)>)
+```
+
 ### Silent's Mechanism's
 
 #### Alloy Smelting

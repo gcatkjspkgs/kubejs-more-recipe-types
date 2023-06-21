@@ -1032,6 +1032,23 @@ onEvent("loaded", e => {
 				})
 			}
 		},
+		
+		psi: {
+			trick_crafting: (event, input, output, cad, trick, dimension) => {
+				let recipe = {
+					type: typeof dimension=="string" && dimension!=="" ? "psi:dimension_trick_crafting" : "psi:trick_crafting",
+					
+					input: Ingredient.of(input),
+					output: Ingredient.of(output),
+					cad: Ingredient.of(cad)
+				}
+				
+				if (typeof trick=="string" && trick!=="") recipe["trick"] = trick
+				if (recipe["type"]==="psi:dimension_trick_crafting") recipe["dimension"] = dimension
+				
+				event.custom(recipe)
+			}
+		},
 
 		silents_mechanisms: {
 			alloy_smelting: (event, input, output, time) => {
