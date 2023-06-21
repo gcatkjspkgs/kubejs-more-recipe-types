@@ -34,6 +34,25 @@ global.more_recipe_types.appliedenergistics2.grinder(event, <Input item>, [<Outp
 global.more_recipe_types.appliedenergistics2.inscriber(event, [<Top input item>, <Middle input item>, <Bottom input item> (all air by default)], <Output item>, <Keep top and bottom (false by default)>)
 ```
 
+### Ars Nouveau
+
+#### Enchanting Apparatus
+
+```js
+global.more_recipe_types.ars_nouveau.enchanting_apparatus(event, <Middle input item>, [<Side input items>], <Output item>)
+```
+
+#### Crush (Glyph)
+
+```js
+global.more_recipe_types.ars_nouveau.crush(event, <Input item>, [Ingredient.of(<Output item>).withChance(<Chance>), ...])```
+
+#### Glyph Recipe (Glyph Press)
+
+```js
+global.more_recipe_types.ars_nouveau.glyph_recipe(event, <Input item>, <Output item>, <Tier (1-3, 1 by default)>)
+```
+
 ### Astral Sorcery
 
 #### Block Transmutation (Starlight Transmutation)

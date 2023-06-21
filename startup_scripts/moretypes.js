@@ -2,6 +2,9 @@ function arrConvert(i) {
 	if (!Array.isArray(i)) i = [i]
 	return i
 }
+function ingredientOfOnlyId(i) {
+	return i.substring(0, 1)==="#" ? {tag: Ingredient.of(i).id} : {item: Ingredient.of(i).id}
+}
 function ingredientsConvert(i) {
 	let ingredients = []
 	i.forEach(item => {ingredients.push(Ingredient.of(item))})
@@ -98,7 +101,7 @@ onEvent("loaded", e => {
 				})
 			}
 		},
-		
+
 		appliedenergistics2: {
 			grinder: (event, input, output, turns) => {
 				output = ingredientsConvert(arrConvert(output).slice(0, 3))
@@ -132,6 +135,47 @@ onEvent("loaded", e => {
 
 					ingredients: ingredients,
 					result: Ingredient.of(output)
+				})
+			}
+		},
+
+		ars_nouveau: {
+			enchanting_apparatus: (event, mainInput, sideInput, output) => {
+				let recipe = {
+					type: "ars_nouveau:enchanting_apparatus",
+
+					reagent: [ingredientOfOnlyId(mainInput)],
+					output: Ingredient.of(output)
+				}
+
+				sideInput = arrConvert(sideInput)
+				for (i = 0; i < sideInput.length; i++) {
+					if (Ingredient.of(sideInput[i]).id!=="minecraft:air") {
+						recipe[`item_${i + 1}`] = [ingredientOfOnlyId(sideInput[i])]
+					}
+				}
+
+				event.custom(recipe)
+			},
+			crush: (event, input, output) => {
+
+				event.custom({
+					type: "ars_nouveau:crush",
+					
+					input: Ingredient.of(input),
+					output: ingredientsConvert(arrConvert(output))
+				})
+			},
+			glyph_recipe: (event, input, output, tier) => {
+				if (typeof tier!="number" && typeof tier!="string") tier = 1
+				tier = ["ONE", "TWO", "THREE"][tier - 1]
+
+				event.custom({
+					type: "ars_nouveau:glyph_recipe",
+					
+					input: Ingredient.of(input).id,
+					output: Ingredient.of(output).id,
+					tier: tier===undefined ? "ONE" : tier
 				})
 			}
 		},
