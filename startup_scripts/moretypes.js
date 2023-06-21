@@ -2,8 +2,12 @@ function arrConvert(i) {
 	if (!Array.isArray(i)) i = [i]
 	return i
 }
-function ingredientOfOnlyId(i) {
-	return i.substring(0, 1)==="#" ? {tag: Ingredient.of(i).id} : {item: Ingredient.of(i).id}
+function ingredientOfNoCount(i) {
+	item = Ingredient.of(i)
+	json = i.substring(0, 1)==="#" ? {tag: item.id} : {item: item.id}
+	if (item.getNbt()!=null) json["nbt"] = item.getNbt()
+	if (item.getChance()!=NaN) json["chance"] = item.getChance()
+	return json
 }
 function ingredientsConvert(i) {
 	let ingredients = []
@@ -144,14 +148,14 @@ onEvent("loaded", e => {
 				let recipe = {
 					type: "ars_nouveau:enchanting_apparatus",
 
-					reagent: [ingredientOfOnlyId(mainInput)],
+					reagent: [ingredientOfNoCount(mainInput)],
 					output: Ingredient.of(output)
 				}
 
 				sideInput = arrConvert(sideInput)
 				for (i = 0; i < sideInput.length; i++) {
 					if (Ingredient.of(sideInput[i]).id!=="minecraft:air") {
-						recipe[`item_${i + 1}`] = [ingredientOfOnlyId(sideInput[i])]
+						recipe[`item_${i + 1}`] = [ingredientOfNoCount(sideInput[i])]
 					}
 				}
 
@@ -712,10 +716,10 @@ onEvent("loaded", e => {
 				event.custom({
 					type: "evilcraft:environmental_accumulator",
 					
-					item: Ingredient.of(input).id,
+					item: Ingredient.of(input),
 					weather: inputAction,
 					result: {
-						item: Ingredient.of(output).id,
+						item: Ingredient.of(output),
 						weather: outputWeather
 					},
 					
@@ -1283,7 +1287,7 @@ onEvent("loaded", e => {
 					type: isBasin===true ? "tconstruct:casting_basin" : "tconstruct:casting_table",
 
 					fluid: fluidConvertWithTag(inputFluid[0], inputFluid[1], "name"),
-					result: Ingredient.of(output).id,
+					result: Ingredient.of(output),
 					
 					cooling_time: time,
 					cast_consumed: castConsumed===true
@@ -1312,7 +1316,7 @@ onEvent("loaded", e => {
 				event.custom({
 					type: "tconstruct:melting",
 					
-					ingredient: Ingredient.of(input).toJson(),
+					ingredient: ingredientOfNoCount(input),
 					result: fluidConvert(output).toJson(),
 					
 					temperature:  temperature,
@@ -1324,8 +1328,8 @@ onEvent("loaded", e => {
 					type: "tconstruct:molding_table",
 					
 					material: Ingredient.of(inputCast),
-					pattern: Ingredient.of(inputPattern).toJson(),
-					result: Ingredient.of(outputCast).id
+					pattern: Ingredient.of(inputPattern),
+					result: Ingredient.of(outputCast)
 				})
 			},
 			part_builder: (event, pattern, output, materialCost) => {
@@ -1354,7 +1358,7 @@ onEvent("loaded", e => {
 				event.custom({
 					type: "tconstruct:table_casting_material",
 					
-					cast: Ingredient.of(inputCast).toJson(),
+					cast: ingredientOfNoCount(inputCast),
 					result: Ingredient.of(output).id,
 					
 					item_cost: materialCost
