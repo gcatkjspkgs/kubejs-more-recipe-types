@@ -45,7 +45,8 @@ global.more_recipe_types.ars_nouveau.enchanting_apparatus(event, <Middle input i
 #### Crush (Glyph)
 
 ```js
-global.more_recipe_types.ars_nouveau.crush(event, <Input item>, [Ingredient.of(<Output item>).withChance(<Chance>), ...])```
+global.more_recipe_types.ars_nouveau.crush(event, <Input item>, [Ingredient.of(<Output item>).withChance(<Chance>), ...])
+```
 
 #### Glyph Recipe (Glyph Press)
 
