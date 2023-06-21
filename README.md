@@ -6,6 +6,20 @@ All new types are functions inside of the `global` object. They should be called
 
 ## Types
 
+### Advent of Ascension 3
+
+#### Infusion
+
+```js
+global.more_recipe_types.aoa3.infusion(event, <Main input item>, [<Other input items>], <Output item>)
+```
+
+#### Upgrade Kit
+
+```js
+global.more_recipe_types.aoa3.upgrade_kit(event, <Input item>, <Upgrade item>, <Output item>)
+```
+
 ### Applied Energistics 2
 
 #### Grinder

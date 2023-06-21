@@ -78,6 +78,27 @@ let i
 
 onEvent("loaded", e => {
 	global.more_recipe_types = {
+		aoa3: {
+			infusion: (event, mainInput, input, output) => {
+				event.custom({
+					type: "aoa3:infusion",
+
+					input: Ingredient.of(mainInput),
+					ingredients: ingredientsConvert(arrConvert(input).slice(0, 9)),
+					result: Ingredient.of(output)
+				})
+			},
+			upgrade_kit: (event, input, upgradeKit, output) => {
+				event.custom({
+					type: "aoa3:upgrade_kit",
+
+					input: Ingredient.of(input),
+					upgrade_kit: Ingredient.of(upgradeKit),
+					result: Ingredient.of(output)
+				})
+			}
+		},
+		
 		appliedenergistics2: {
 			grinder: (event, input, output, turns) => {
 				output = ingredientsConvert(arrConvert(output).slice(0, 3))
