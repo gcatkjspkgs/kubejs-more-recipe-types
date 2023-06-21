@@ -205,6 +205,20 @@ global.more_recipe_types.botanypots.soil(event, <Input soil>, [<Soil categories>
 global.more_recipe_types.draconicevolution.fusion_crafting(event, <Main input item>, [<side Input items>], <Output item>, <Tier (of DRACONIUM = default, WYVERN, DRACONIC, CHAOTIC)>, <Energy (100000 by default)>)
 ```
 
+### DivineRPG
+
+#### Infusion Table
+
+```js
+global.more_recipe_types.divinerpg.infusion_table(event, <Input item>, <Input template>, <Output item>)
+```
+
+#### Fusion Crafting
+
+```js
+global.more_recipe_types.draconicevolution.fusion_crafting(event, <Main input item>, [<side Input items>], <Output item>, <Tier (of DRACONIUM = default, WYVERN, DRACONIC, CHAOTIC)>, <Energy (100000 by default)>)
+```
+
 ### Elemental Craft
 
 #### Binding (Element Binding)

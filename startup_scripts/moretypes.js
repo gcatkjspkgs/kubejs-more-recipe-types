@@ -520,7 +520,6 @@ onEvent("loaded", e => {
 					}
 				}
 				
-				
 				event.custom({
 					type: "draconicevolution:fusion_crafting",
 
@@ -530,6 +529,34 @@ onEvent("loaded", e => {
 
 					total_energy: energy,
 					tier: tier
+				})
+			}
+		},
+		
+		divinerpg: {
+			arcanium_extractor: (event, input,  output, experience, time) => {
+				if (typeof experience!="number") experience = 0.1
+				if (typeof time!="number") time = 200
+
+				event.custom({
+					type: "divinerpg:arcanium_extractor",
+					
+					ingredient: Ingredient.of(input),
+					result: Ingredient.of(output),
+					
+					experience: 0.1,
+					cookingtime: 100
+				})
+			},
+			
+			infusion_table: (event, input, template, output) => {
+
+				event.custom({
+					type: "divinerpg:infusion_table",
+					
+					input: Ingredient.of(input),
+					template: Ingredient.of(template),
+					output: Ingredient.of(output)
 				})
 			}
 		},
