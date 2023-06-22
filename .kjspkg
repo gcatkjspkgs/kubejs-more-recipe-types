@@ -1,5 +1,5 @@
 {
-    "author": "G_cat",
+    "author": ["G_cat", "MundM2007"],
     "description": "A KubeJS addon that adds support for more modded recipe types. Docs: https://github.com/gcatkjspkgs/kubejs-more-recipe-types/blob/main/README.md",
     
     "versions": [6, 8],

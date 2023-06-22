@@ -11,13 +11,13 @@ All new types are functions inside of the `global` object. They should be called
 #### Infusion
 
 ```js
-global.mrt.aoa3.infusion(event, <Main input item>, [<Other input items>], <Output item>, <id>)
+global.mrt.aoa3.infusion(event, <Output item>, <Main input item>, [<Other input items>], <id>)
 ```
 
 #### Upgrade Kit
 
 ```js
-global.mrt.aoa3.upgrade_kit(event, <Input item>, <Upgrade item>, <Output item>, <id>)
+global.mrt.aoa3.upgrade_kit(event, <Output item>, <Input item>, <Upgrade item>, <id>)
 ```
 
 ### Applied Energistics 2
@@ -25,13 +25,13 @@ global.mrt.aoa3.upgrade_kit(event, <Input item>, <Upgrade item>, <Output item>, 
 #### Grinder
 
 ```js
-global.mrt.appliedenergistics2.grinder(event, <Input item>, [<Output items>], <Turns (4 by default)>, <id>)
+global.mrt.appliedenergistics2.grinder(event, [<Output items>], <Input item>, <Turns (4 by default)>, <id>)
 ```
 
 #### Inscriber
 
 ```js
-global.mrt.appliedenergistics2.inscriber(event, [<Top input item>, <Middle input item>, <Bottom input item> (all air by default)], <Output item>, <Keep top and bottom (false by default)>, <id>)
+global.mrt.appliedenergistics2.inscriber(event, <Output item>, [<Top input item>, <Middle input item>, <Bottom input item> (all air by default)], <Keep top and bottom (false by default)>, <id>)
 ```
 
 ### Ars Nouveau
@@ -39,19 +39,19 @@ global.mrt.appliedenergistics2.inscriber(event, [<Top input item>, <Middle input
 #### Enchanting Apparatus
 
 ```js
-global.mrt.ars_nouveau.enchanting_apparatus(event, <Middle input item>, [<Side input items>], <Output item>, <id>)
+global.mrt.ars_nouveau.enchanting_apparatus(event, <Output item>, <Middle input item>, [<Side input items>], <id>)
 ```
 
 #### Crush (Glyph)
 
 ```js
-global.mrt.ars_nouveau.crush(event, <Input item>, [Ingredient.of(<Output item>).withChance(<Chance>), ...], <id>)
+global.mrt.ars_nouveau.crush(event, [Ingredient.of(<Output item>).withChance(<Chance>), ...], <Input item>, <id>)
 ```
 
 #### Glyph Recipe (Glyph Press)
 
 ```js
-global.mrt.ars_nouveau.glyph_recipe(event, <Input item>, <Output item>, <Tier (1-3, 1 by default)>, <id>)
+global.mrt.ars_nouveau.glyph_recipe(event, <Output item>, <Input item>, <Tier (1-3, 1 by default)>, <id>)
 ```
 
 ### Astral Sorcery
@@ -59,25 +59,25 @@ global.mrt.ars_nouveau.glyph_recipe(event, <Input item>, <Output item>, <Tier (1
 #### Block Transmutation (Starlight Transmutation)
 
 ```js
-global.mrt.astralsorcery.block_transmutation(event, [<Input block (can use multiple)>], <Output block>, <Starlight>, <id>)
+global.mrt.astralsorcery.block_transmutation(event, <Output block>, [<Input block (can use multiple)>], <Starlight>, <id>)
 ```
 
 #### Infuser (Starlight Infusion)
 
 ```js
-global.mrt.astralsorcery.infuser(event, <Input item>, <Output item>, <Duration (100 by default)>, <Consumption chance (float, 0.1 by default)>, [>Consume multiple fluids (False by default)>, <Accept chalice input (True by default)>, <Copy NBT to output (False by default)>](Array can contain any number of booleans), <Input fluid id name ("astralsorcery:liquid_starlight" by default)>, <id>)
+global.mrt.astralsorcery.infuser(event, <Output item>, <Input item>, <Duration (100 by default)>, <Consumption chance (float, 0.1 by default)>, [>Consume multiple fluids (False by default)>, <Accept chalice input (True by default)>, <Copy NBT to output (False by default)>](Array can contain any number of booleans), <Input fluid id name ("astralsorcery:liquid_starlight" by default)>, <id>)
 ```
 
 #### Lightwell
 
 ```js
-global.mrt.astralsorcery.lightwell(event, <Input item>, <Output fluid id name>, <Production multiplier (float, 1 by default)>, <Shatter multiplier (float, lower = faster shatter, 10 by default)>, <color (white color by default)>, <id>)
+global.mrt.astralsorcery.lightwell(event, <Output fluid id name>, <Input item>, <Production multiplier (float, 1 by default)>, <Shatter multiplier (float, lower = faster shatter, 10 by default)>, <color (white color by default)>, <id>)
 ```
 
 #### Liquid Interaction
 
 ```js
-global.mrt.astralsorcery.liquid_interaction(event, [Fluid.of(<Input fluid 1>, <Amount>), <Chance consume fluid 1 (float, 100% by default)>], [Fluid.of(<Input fluid 2>, <Amount>), <Chance consume fluid 2 (float, 100% by default)>], <Output item>, <weight (1 by default)>, <id>)
+global.mrt.astralsorcery.liquid_interaction(event, <Output item>, [Fluid.of(<Input fluid 1>, <Amount>), <Chance consume fluid 1 (float, 100% by default)>], [Fluid.of(<Input fluid 2>, <Amount>), <Chance consume fluid 2 (float, 100% by default)>], <weight (1 by default)>, <id>)
 ```  
 
 ### Atum
@@ -85,19 +85,19 @@ global.mrt.astralsorcery.liquid_interaction(event, [Fluid.of(<Input fluid 1>, <A
 #### Kiln
 
 ```js
-global.mrt.atum.kiln(event, <Input item>, <Output item>, <Experience (float, 0.1 by default)>, <id>)
+global.mrt.atum.kiln(event, <Output item>, <Input item>, <Experience (float, 0.1 by default)>, <id>)
 ```
 
 #### Quern
 
 ```js
-global.mrt.atum.quern(event, <Input item>, <Output item>, <Rotations (1 by default)>, <id>)
+global.mrt.atum.quern(event, <Output item>, <Input item>, <Rotations (1 by default)>, <id>)
 ```
 
 #### Spinning Wheel
 
 ```js
-global.mrt.atum.spinning_wheel(event, <Input item>, <Output item>, <Rotations (1 by default)>, <id>)
+global.mrt.atum.spinning_wheel(event, <Output item>, <Input item>, <Rotations (1 by default)>, <id>)
 ```
 
 ### Better End Forge
@@ -105,19 +105,19 @@ global.mrt.atum.spinning_wheel(event, <Input item>, <Output item>, <Rotations (1
 #### Alloying
 
 ```js
-global.mrt.betterendforge.alloying(event, [<Input items>], <Output item>, <Experience (float, 1 by default)>, <Time in ticks (200 by default)>, <id>)
+global.mrt.betterendforge.alloying(event, <Output item>, [<Input items>], <Experience (float, 1 by default)>, <Time in ticks (200 by default)>, <id>)
 ```
 
 #### Anvil Smithing
 
 ```js
-global.mrt.betterendforge.anvil_smithing(event, <Input item>, <Output item>, <Tool level (0 by default = wood/gold)>, <Anvil level (1 by default)>, <Damage to tool (1 by default)>, <id>)
+global.mrt.betterendforge.anvil_smithing(event, <Output item>, <Input item>, <Tool level (0 by default = wood/gold)>, <Anvil level (1 by default)>, <Damage to tool (1 by default)>, <id>)
 ```
 
 #### Infusion
 
 ```js
-global.mrt.betterendforge.infusion(event, <Middle Input item>, [<Catalyst Input items (clockwise from top middle)>], <Output item>, <Time in seconds (100 by default)>, <id>)
+global.mrt.betterendforge.infusion(event, <Output item>, <Middle Input item>, [<Catalyst Input items (clockwise from top middle)>], <Time in seconds (100 by default)>, <id>)
 ```
 
 ### (Space) Boss Tools
@@ -125,13 +125,13 @@ global.mrt.betterendforge.infusion(event, <Middle Input item>, [<Catalyst Input 
 #### Blasting
 
 ```js
-global.mrt.boss_tools.blasting(event, <Input item>, <Output item>, <Cook time (200 by default)>, <id>)
+global.mrt.boss_tools.blasting(event, <Output item>, <Input item>, <Cook time (200 by default)>, <id>)
 ```
 
 #### Compressing
 
 ```js
-global.mrt.boss_tools.compressing(event, <Input item>, <Output item>, <Cook time (200 by default)>, <id>)
+global.mrt.boss_tools.compressing(event, <Output item>, <Input item>, <Cook time (200 by default)>, <id>)
 ```
 
 ### Botania
@@ -139,43 +139,43 @@ global.mrt.boss_tools.compressing(event, <Input item>, <Output item>, <Cook time
 #### Brew (Botanical Brewery)
 
 ```js
-global.mrt.botania.brew(event, [<Input items>], <Output Brew id name (example: "botania:haste")>, <id>)
+global.mrt.botania.brew(event, <Output Brew id name (example: "botania:haste")>, [<Input items>], <id>)
 ```
 
 #### Elven Trade
 
 ```js
-global.mrt.botania.elven_trade(event, [<Input items>], [<Output items>], <id>)
+global.mrt.botania.elven_trade(event, [<Output items>], [<Input items>], <id>)
 ```
 
 #### Mana Infusion
 
 ```js
-global.mrt.botania.mana_infusion(event, <Output items>, <Output item>, <Mana (1000 by default)>, "Catalyst", <id>)
+global.mrt.botania.mana_infusion(event, <Output item>, <Output items>, <Mana (1000 by default)>, "Catalyst", <id>)
 ```
 
 #### Petal Aplothecary
 
 ```js
-global.mrt.botania.petal_apothecary(event, [<Input items>], <Output item>, <id>)
+global.mrt.botania.petal_apothecary(event, <Output item>, [<Input items>], <id>)
 ```
 
 #### Pure Daisy
 
 ```js
-global.mrt.botania.pure_daisy(event, <Input block>, <Output block>)
+global.mrt.botania.pure_daisy(event, <Output block>, <Input block>)
 ```
 
 #### Runic Altar
 
 ```js
-global.mrt.botania.runic_altar(event, [<Input items>], <Output item>, <Mana (5000 by default)>, <id>)
+global.mrt.botania.runic_altar(event, <Output item>, [<Input items>], <Mana (5000 by default)>, <id>)
 ```
 
 #### Terra Plate (Terrestrial Agglomeration)
 
 ```js
-global.mrt.botania.terra_plate(event, [<Input items>], <Output item>, <Mana (100000 by default)>, <id>)
+global.mrt.botania.terra_plate(event, <Output item>, [<Input items>], <Mana (100000 by default)>, <id>)
 ```
 
 ### Botany Pots
@@ -183,7 +183,7 @@ global.mrt.botania.terra_plate(event, [<Input items>], <Output item>, <Mana (100
 #### Crop
 
 ```js
-global.mrt.botanypots.crop(event, <Input seed>, [<Soil categories>], [[<Output item>, <Chance (float, 1 by default)>, <Min rolls (1 by default)>, <Max Rolls (1 by default)>], ...], <Growth ticks (1200 by default)>, <Display block (Input seed by default. Change if seed is item!)>, <id>)
+global.mrt.botanypots.crop(event, [[<Output item>, <Chance (float, 1 by default)>, <Min rolls (1 by default)>, <Max Rolls (1 by default)>], ...], <Input seed>, [<Soil categories>], <Growth ticks (1200 by default)>, <Display block (Input seed by default. Change if seed is item!)>, <id>)
 ```
 
 #### Fertilizer
@@ -203,7 +203,7 @@ global.mrt.botanypots.soil(event, <Input soil>, [<Soil categories>], <Growth mod
 #### Fusion Crafting
 
 ```js
-global.mrt.draconicevolution.fusion_crafting(event, <Main input item>, [<side Input items>], <Output item>, <Tier (of DRACONIUM = default, WYVERN, DRACONIC, CHAOTIC)>, <Energy (100000 by default)>, <id>)
+global.mrt.draconicevolution.fusion_crafting(event, <Output item>, <Main input item>, [<side Input items>], <Tier (of DRACONIUM = default, WYVERN, DRACONIC, CHAOTIC)>, <Energy (100000 by default)>, <id>)
 ```
 
 ### DivineRPG
@@ -211,13 +211,13 @@ global.mrt.draconicevolution.fusion_crafting(event, <Main input item>, [<side In
 #### Infusion Table
 
 ```js
-global.mrt.divinerpg.infusion_table(event, <Input item>, <Input template>, <Output item>, <id>)
+global.mrt.divinerpg.infusion_table(event, <Output item>, <Input item>, <Input template>, <id>)
 ```
 
 #### Fusion Crafting
 
 ```js
-global.mrt.draconicevolution.fusion_crafting(event, <Main input item>, [<side Input items>], <Output item>, <Tier (of DRACONIUM = default, WYVERN, DRACONIC, CHAOTIC)>, <Energy (100000 by default)>, <id>)
+global.mrt.draconicevolution.fusion_crafting(event, <Output item>, <Main input item>, [<side Input items>], <Tier (of DRACONIUM = default, WYVERN, DRACONIC, CHAOTIC)>, <Energy (100000 by default)>, <id>)
 ```
 
 ### Elemental Craft
@@ -225,19 +225,19 @@ global.mrt.draconicevolution.fusion_crafting(event, <Main input item>, [<side In
 #### Binding (Element Binding)
 
 ```js
-global.mrt.elementalcraft.binding(event, [<Input items>], <Output item>, <Element Type>, <Element Amount (1000 by default)>, <id>)
+global.mrt.elementalcraft.binding(event, <Output item>, [<Input items>], <Element Type>, <Element Amount (1000 by default)>, <id>)
 ```
 
 #### Crystallization (Gem Crystallization)
 
 ```js
-global.mrt.elementalcraft.crystallization(event, [<Gem input item>, <Crystal input item>, <Shard input item>], [[<Output item>, <Weight (1 by default)>, <Quality (null by default)>], ...], <Element Type>, <Element Amount (1000 by default)>, <id>)
+global.mrt.elementalcraft.crystallization(event, [[<Output item>, <Weight (1 by default)>, <Quality (null by default)>], ...], [<Gem input item>, <Crystal input item>, <Shard input item>], <Element Type>, <Element Amount (1000 by default)>, <id>)
 ```
 
 #### Grinding
 
 ```js
-global.mrt.elementalcraft.grinding(event, <Input item>, <Output item>, <Element Amount (1000 by default)>, <id>)
+global.mrt.elementalcraft.grinding(event, <Output item>, <Input item>, <Element Amount (1000 by default)>, <id>)
 ```
 
 #### Tool Infusion (Element Infusion)
@@ -249,25 +249,25 @@ global.mrt.elementalcraft.tool_infusion(event, <Input item>, <Tool infusion type
 #### Infusion (Element Infusion)
 
 ```js
-global.mrt.elementalcraft.infusion(event, <Input item>, <Output Item>, <Element Type>, <Element Amount (1000 by default)>, <id>)
+global.mrt.elementalcraft.infusion(event, <Output Item>, <Input item>, <Element Type>, <Element Amount (1000 by default)>, <id>)
 ```
 
 #### Inscription (Rune Inscription)
 
 ```js
-global.mrt.elementalcraft.inscription(event, [<Slate input item>, <3 other input items>], [<Output item>, <nbt>], <Element Type>, <Element Amount (1000 by default)>, <id>)
+global.mrt.elementalcraft.inscription(event, <Output item>, [<Slate input item>, <3 other input items>], <Element Type>, <Element Amount (1000 by default)>, <id>)
 ```
 
 #### Pure Infusion
 
 ```js
-global.mrt.elementalcraft.pureinfusion(event, [<middle input item>, <Water input item>, <Fire input item>, <Earth input item>, <Air input item>], <Output Item>, <Element Amount (1000 by default)>, <id>)
+global.mrt.elementalcraft.pureinfusion(event, <Output Item>, [<middle input item>, <Water input item>, <Fire input item>, <Earth input item>, <Air input item>], <Element Amount (1000 by default)>, <id>)
 ```
 
 #### Spell Craft
 
 ```js
-global.mrt.elementalcraft.spell_craft(event, [<Gem input item>, <Crystal input item>], [<Output item>, <nbt>], <id>)
+global.mrt.elementalcraft.spell_craft(event, <Output item>, [<Gem input item>, <Crystal input item>], <id>)
 ```
 
 ### Evil Craft
@@ -275,13 +275,13 @@ global.mrt.elementalcraft.spell_craft(event, [<Gem input item>, <Crystal input i
 #### Blood Infuser
 
 ```js
-global.mrt.evilcraft.blood_infuser(event, <Input item>, Fluid.of(<Input fluid>, <Amount>), <Output item>, <Tier (0-3, 0 by default)>, <time in ticks (200 by default)>, <Experience (float, 0.1 by default)>, <id>)
+global.mrt.evilcraft.blood_infuser(event, <Output item>, <Input item>, Fluid.of(<Input fluid>, <Amount>), <Tier (0-3, 0 by default)>, <time in ticks (200 by default)>, <Experience (float, 0.1 by default)>, <id>)
 ```
 
 #### Environmental Accumulator / Sanguinary Environmental Accumulator
 
 ```js
-global.mrt.evilcraft.environmental_accumulator(event, <Input item>, <Input action (e.g. LIGHTNING)>, <Output item>, <Output weather (ANY, CLEAR, RAIN, LIGHTNING)>, <time in ticks (100 by default)>, <Cooldown time in ticks (0 by default)>, <id>)
+global.mrt.evilcraft.environmental_accumulator(event, <Output item>, <Output weather (ANY, CLEAR, RAIN, LIGHTNING)>, <Input item>, <Input action (e.g. LIGHTNING)>´, <time in ticks (100 by default)>, <Cooldown time in ticks (0 by default)>, <id>)
 ```
 
 ### FTB Industrial Contraptions
@@ -310,26 +310,26 @@ Supported types:
 - seperating
 
 ```js
-global.mrt.ftbic.<type>(event, [<Input items>], [<Output Items>], <id>)
+global.mrt.ftbic.<type>(event, [<Output Items>], [<Input items>], <id>)
 ```
 
 Some notes:
 
 - To use nbt in input items use Item.of(`<Input item>`, `<nbt>`)
-- To use chance in output items use Item.of("Input item").withChance("Chance")
+- To use chance in output items use Item.of(`<Input item>`).withChance(`<Chance>`)
 
 ### Industrial Foregoing
 
 #### Dissolution Chamber
 
 ```js
-global.mrt.industrialforegoing.dissolution_chamber(event, [<Input items>], Fluid.of(<Input fluid>, <Amount>), <Output item>, <Output fluid (nothing by default)>, <Time in ticks (20 by default)>, <id>)
+global.mrt.industrialforegoing.dissolution_chamber(event, <Output item>, <Output fluid (nothing by default)>, [<Input items>], Fluid.of(<Input fluid>, <Amount>), <Time in ticks (20 by default)>, <id>)
 ```
 
 #### Fluid Extractor
 
 ```js
-global.mrt.industrialforegoing.fluid_extractor(event, <Input block>, Fluid.of(<Output fluid>, <Amount>), <Block damage chance (float, 0% by default)>, <Result block ("minecraft:air" by default)>, <id>)
+global.mrt.industrialforegoing.fluid_extractor(event, Fluid.of(<Output fluid>, <Amount>), <Input block>, <Block damage chance (float, 0% by default)>, <Result block ("minecraft:air" by default)>, <id>)
 ```
 
 #### Laser Drill (Ore / Fluid)
@@ -349,19 +349,19 @@ global.mrt.industrialforegoing.stonework_generate(event, <Output Item>, [<Water 
 #### Infusion (Crafting)
 
 ```js
-global.mrt.mysticalagriculture.infusion(event, <Middle input item>, [<Side input items>], <Output item>, <id>)
+global.mrt.mysticalagriculture.infusion(event, <Output item>, <Middle input item>, [<Side input items>], <id>)
 ```
 
 #### (Seed) Reprocessing
 
 ```js
-global.mrt.mysticalagriculture.reprocessor(event, <Input item>, <Output item>, <id>)
+global.mrt.mysticalagriculture.reprocessor(event, <Output item>, <Input item>, <id>)
 ```
 
 #### Soul Extraction
 
 ```js
-global.mrt.mysticalagriculture.soul_extraction(event, <Input item>, <Soul type (e.g. "mysticalagriculture:skeleton")>, <Soul amount (1 by default)>, <id>)
+global.mrt.mysticalagriculture.soul_extraction(event, <Soul type (e.g. "mysticalagriculture:skeleton")>, <Soul amount (1 by default)>, <Input item>, <id>)
 ```
 
 ### PneumaticCraft: Repressurized
@@ -369,37 +369,37 @@ global.mrt.mysticalagriculture.soul_extraction(event, <Input item>, <Soul type (
 #### Amadron (Amadron Tablet)
 
 ```js
-global.mrt.pneumaticcraft.amadron(event, [<Input item / Fluid.of(<Input fluid>, <Amount>)>, <Input is Fluid ? (false by default)>], [<Output item / Fluid.of(<Output fluid>, <Amount>)>, <Output is Fluid ? (false by default)>], <id>)
+global.mrt.pneumaticcraft.amadron(event, [<Output item / Fluid.of(<Output fluid>, <Amount>)>, <Output is Fluid ? (false by default)>], [<Input item / Fluid.of(<Input fluid>, <Amount>)>, <Input is Fluid ? (false by default)>], <id>)
 ```
 
 #### Assembly Laser (Assembly Controller)
 
 ```js
-global.mrt.pneumaticcraft.assembly_laser(event, <Input item>, <Output item>, <Type is Drill ? (false by default)>, <id>)
+global.mrt.pneumaticcraft.assembly_laser(event, <Output item>, <Input item>, <Type is Drill ? (false by default)>, <id>)
 ```
 
 #### Explosion Crafting
 
 ```js
-global.mrt.pneumaticcraft.explosion_crafting(event, <Input item>, [<Output items>], <Loss rate (0 - 100, 20 by default)>, <id>)
+global.mrt.pneumaticcraft.explosion_crafting(event, [<Output items>], <Input item>, <Loss rate (0 - 100, 20 by default)>, <id>)
 ```
 
 #### Heat Frame Cooling
 
 ```js
-global.mrt.pneumaticcraft.heat_frame_cooling(event, [<Input fluid>, <Amount>], <Output item>, <Max temperature (0°C by default)>, [<Bonus output multiplier per degree (0 by default)>, <Bonus output max multiplier (0 by default)>], <id>)
+global.mrt.pneumaticcraft.heat_frame_cooling(event, <Output item>, [<Input fluid>, <Amount>], <Max temperature (0°C by default)>, [<Bonus output multiplier per degree (0 by default)>, <Bonus output max multiplier (0 by default)>], <id>)
 ```
 
 #### (Block) Heat Properties
 
 ```js
-global.mrt.pneumaticcraft.heat_properties(event, <Input block>, [<Output block from Cooling>, <Output block from Heating>], <Block temperature (25°C by default)>, <Thermal Resictance (20 by default)>, <Heat Capacity (1000 by default)>, <id>)
+global.mrt.pneumaticcraft.heat_properties(event, [<Output block from Cooling>, <Output block from Heating>], <Input block>, <Block temperature (25°C by default)>, <Thermal Resictance (20 by default)>, <Heat Capacity (1000 by default)>, <id>)
 ```
 
 #### Fluid Mixer
 
 ```js
-global.mrt.pneumaticcraft.fluid_mixer(event, [<Input Fluid 1>, <Amount (1000 by default)>], <Input Fluid 2>, <Amount (1000 by default)>], Fluid.of(<Output Fluid>, <Amount>), <Output item>, <Pressure (1 by default)>, <Time in ticks (200 by default)>, <id>)
+global.mrt.pneumaticcraft.fluid_mixer(event, Fluid.of(<Output Fluid>, <Amount>), <Output item>, [<Input Fluid 1>, <Amount (1000 by default)>], [<Input Fluid 2>, <Amount (1000 by default)>], <Pressure (1 by default)>, <Time in ticks (200 by default)>, <id>)
 ```
 
 #### Fuel Quality
@@ -411,19 +411,19 @@ global.mrt.pneumaticcraft.fuel_quality(event, <Input fluid>, <Air per bucket (10
 #### Pressure Chamber
 
 ```js
-global.mrt.pneumaticcraft.pressure_chamber(event, [<Input items>], [<Output items>], <Pressure (1 by default)>, <id>)
+global.mrt.pneumaticcraft.pressure_chamber(event, [<Output items>], [<Input items>], <Pressure (1 by default)>, <id>)
 ```
 
 #### Refinery (Refinery Controller)
 
 ```js
-global.mrt.pneumaticcraft.refinery(event, [<Input fluid>, <Amount (1000 by default)>], [Fluid.of(<Output Fluid>, <Amount>), ... (atleast two fluids)], [<Min temperature>, <Max temperature>], <id>)
+global.mrt.pneumaticcraft.refinery(event, [Fluid.of(<Output Fluid>, <Amount>), ... (atleast two fluids)], [<Input fluid>, <Amount (1000 by default)>], [<Min temperature>, <Max temperature>], <id>)
 ```
 
 #### Thermo Plant (Thermopneumatic Processing Plant)
 
 ```js
-global.mrt.pneumaticcraft.thermo_plant(event, <Input item>, [<Input fluid>, <Amount>], <Output item>, Fluid.of(<Ouput fluid>, <Amount>), [<Min temperature>, <Max temperature>], <Pressure>, <Speed (float, 1 by default)>, <is Exothermic ? (false by default)>, <id>)   
+global.mrt.pneumaticcraft.thermo_plant(event, <Output item>, Fluid.of(<Ouput fluid>, <Amount>), <Input item>, [<Input fluid>, <Amount>], [<Min temperature>, <Max temperature>], <Pressure>, <Speed (float, 1 by default)>, <is Exothermic ? (false by default)>, <id>)   
 ```
 
 ### Powah
@@ -431,7 +431,7 @@ global.mrt.pneumaticcraft.thermo_plant(event, <Input item>, [<Input fluid>, <Amo
 #### Energizing
 
 ```js
-global.mrt.powah.energizing(event, [<Input items>], <Output item>, <Energy (100 by default)>, <id>)
+global.mrt.powah.energizing(event, <Output item>, [<Input items>], <Energy (100 by default)>, <id>)
 ```
 
 ### Psi
@@ -439,7 +439,7 @@ global.mrt.powah.energizing(event, [<Input items>], <Output item>, <Energy (100 
 #### Trick Crafting (Spell Infusion)
 
 ```js
-global.mrt.psi.trick_crafting(event, <Input item>, <Output item>, <Cad assemby>, <Trick>, <Dimension (Isn't listed in JEI)>, <id>)
+global.mrt.psi.trick_crafting(event, <Output item>, <Input item>, <Cad assemby>, <Trick>, <Dimension (Isn't listed in JEI)>, <id>)
 ```
 
 ### Silent Gear
@@ -447,13 +447,13 @@ global.mrt.psi.trick_crafting(event, <Input item>, <Output item>, <Cad assemby>,
 #### Compounding
 
 ```js
-global.mrt.silentgear.compounding(event, [<Input items>], <Output item>, <Gem Compounding ? (else Metal, false by default)>, <id>)
+global.mrt.silentgear.compounding(event, <Output item>, [<Input items>], <Gem Compounding ? (else Metal, false by default)>, <id>)
 ```
 
 #### Salvaging
 
 ```js
-global.mrt.silentgear.salvaging(event, <Input item>, [<Output items>], <id>)
+global.mrt.silentgear.salvaging(event, [<Output items>], <Input item>, <id>)
 ```
 
 ### Silent's Mechanism's
@@ -461,49 +461,49 @@ global.mrt.silentgear.salvaging(event, <Input item>, [<Output items>], <id>)
 #### Alloy Smelting
 
 ```js
-global.mrt.silents_mechanisms.alloy_smelting(event, [[[<Input item>, ...], <Amount>], ...], <Output item>, <Time in ticks (200 by default)>, <id>)
+global.mrt.silents_mechanisms.alloy_smelting(event, <Output item>, [[[<Input item>, ...], <Amount>], ...], <Time in ticks (200 by default)>, <id>)
 ```
 
 #### Compressing
 
 ```js
-global.mrt.silents_mechanisms.compressing(event, [[<Input item>, ...], <Amount>], <Output item>, <Time in ticks (200 by default)>, <id>)
+global.mrt.silents_mechanisms.compressing(event, <Output item>, [[<Input item>, ...], <Amount>], <Output item>, <Time in ticks (200 by default)>, <id>)
 ```
 
 #### Crushing
 
 ```js
-global.mrt.silents_mechanisms.crushing(event, <Input item>, [<Output items>], <Time in ticks (200 by default)>, <id>)
+global.mrt.silents_mechanisms.crushing(event, [<Output items>], <Input item>, <Time in ticks (200 by default)>, <id>)
 ```
 
 #### Drying
 
 ```js
-global.mrt.silents_mechanisms.drying(event, <Input item>, <Output item>, <Time in ticks (200 by default)>, <id>)
+global.mrt.silents_mechanisms.drying(event, <Output item>, <Input item>, <Time in ticks (200 by default)>, <id>)
 ```
 
 #### Infusing
 
 ```js
-global.mrt.silents_mechanisms.infusing(event, <Input item>, [<Input fluid>, <Amount (1000 by default)>], <Output item>, <Time in ticks (200 by default)>, <id>)
+global.mrt.silents_mechanisms.infusing(event, <Output item>, <Input item>, [<Input fluid>, <Amount (1000 by default)>], <Time in ticks (200 by default)>, <id>)
 ```
 
 #### Mixing
 
 ```js
-global.mrt.silents_mechanisms.mixing(event, [[<Input fluid>, <Amount (1000 by default)>], ...], Fluid.of(<Output fluid>, <Amount>), <Time in ticks (200 by default)>, <id>)
+global.mrt.silents_mechanisms.mixing(event, Fluid.of(<Output fluid>, <Amount>), [[<Input fluid>, <Amount (1000 by default)>], ...], <Time in ticks (200 by default)>, <id>)
 ```
 
 #### Refining
 
 ```js
-global.mrt.silents_mechanisms.refining(event, [<Input fluid>, <Amount (1000 by default)>], [Fluid.of(<Output fluid>, <Amount>), ...], <Time in ticks (200 by default)>, <id>)
+global.mrt.silents_mechanisms.refining(event, [Fluid.of(<Output fluid>, <Amount>), ...], [<Input fluid>, <Amount (1000 by default)>], <Time in ticks (200 by default)>, <id>)
 ```
 
 #### Solidifying
 
 ```js
-global.mrt.silents_mechanisms.solidifying(event, [<Input fluid>, <Amount (1000 by default)>], <Output item>, <Time in ticks (200 by default)>, <id>)
+global.mrt.silents_mechanisms.solidifying(event, <Output item>, [<Input fluid>, <Amount (1000 by default)>], <Time in ticks (200 by default)>, <id>)
 ```
 
 ### Tinker's Construct
@@ -511,47 +511,47 @@ global.mrt.silents_mechanisms.solidifying(event, [<Input fluid>, <Amount (1000 b
 #### Alloy (Alloying)
 
 ```js
-global.mrt.tconstruct.alloy(event, [[<Input fluid>, <Amount (1000 by default)>], ...], Fluid.of(<Output fluid>, <Amount>), <Temperature (100 by default)>, <id>)
+global.mrt.tconstruct.alloy(event, [[<Input fluid>, Fluid.of(<Output fluid>, <Amount>), <Amount (1000 by default)>], ...], <Temperature (100 by default)>, <id>)
 ```
 
 #### Casting (Table / Basin)
 
 ```js
-global.mrt.tconstruct.casting(event, [<Input fluid>, <Amount (1000 by default)>], <Input Cast>, <Output item>, <Basin ? (else table, false by default)>, <Cast consumed ? (false by default)>, <Time in ticks (60 by default)>, <id>)
+global.mrt.tconstruct.casting(event, <Output item>, [<Input fluid>, <Amount (1000 by default)>], <Input Cast>, <Basin ? (else table, false by default)>, <Cast consumed ? (false by default)>, <Time in ticks (60 by default)>, <id>)
 ```
 
 #### Entity Melting
 
 ```js
-global.mrt.tconstruct.entity_melting(event, <Entity>, Fluid.of(<Output fluid>, <Amount>), <Damage (1 by default)>, <id>)
+global.mrt.tconstruct.entity_melting(event, Fluid.of(<Output fluid>, <Amount>), <Entity>, <Damage (1 by default)>, <id>)
 ```
 
 #### Melting
 
 ```js
-global.mrt.tconstruct.melting(event, <Input item>, Fluid.of(<Output fluid>, <Amount>), <Temperature (100 by default)>, <Time in ticks (300 by default)>, <id>)
+global.mrt.tconstruct.melting(event, Fluid.of(<Output fluid>, <Amount>), <Input item>, <Temperature (100 by default)>, <Time in ticks (300 by default)>, <id>)
 ```
 
 #### Molding (Table)
 
 ```js
-global.mrt.tconstruct.molding_table(event, <Input Cast>, <Input item>, <Output cast>, <id>)
+global.mrt.tconstruct.molding_table(event, <Output cast>, <Input Cast>, <Input item>, <id>)
 ```
 
 #### Part Builder
 
 ```js
-global.mrt.tconstruct.part_builder(event, <Input pattern>, <Output Part>, <Cost (1 by default)>, <id>)
+global.mrt.tconstruct.part_builder(event, <Output Part>, <Input pattern>, <Cost (1 by default)>, <id>)
 ```
 
 #### Severing
 
 ```js
-global.mrt.tconstruct.severing(event, <Entity>, <Output item>, <id>)
+global.mrt.tconstruct.severing(event, <Output item>, <Entity>, <id>)
 ```
 
 #### Casting Table with Parts (like Part Builder)
 
 ```js
-global.mrt.tconstruct.table_casting_material(event, <Input cast>, <Output Part>, <Cost (1 by default)>, <id>)
+global.mrt.tconstruct.table_casting_material(event, <Output Part>, <Input cast>, <Cost (1 by default)>, <id>)
 ```
