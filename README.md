@@ -442,6 +442,20 @@ global.more_recipe_types.powah.energizing(event, [<Input items>], <Output item>,
 global.more_recipe_types.psi.trick_crafting(event, <Input item>, <Output item>, <Cad assemby>, <Trick>, <Dimension (Isn't listed in JEI)>)
 ```
 
+### Silent Gear
+
+#### Compounding
+
+```js
+global.more_recipe_types.silentgear.compounding(event, [<Input items>], <Output item>, <Gem Compounding ? (else Metal, false by default)>)
+```
+
+#### Salvaging
+
+```js
+global.more_recipe_types.silentgear.salvaging(event, <Input item>, [<Output items>])
+```
+
 ### Silent's Mechanism's
 
 #### Alloy Smelting

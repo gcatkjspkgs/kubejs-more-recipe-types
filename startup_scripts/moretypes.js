@@ -1145,6 +1145,25 @@ onEvent("loaded", e => {
 				event.custom(recipe)
 			}
 		},
+		
+		silentgear: {
+			compounding: (event, input, output, isGem) => {
+				event.custom({
+					type: isGem===true ? "silentgear:compounding/gem" : "silentgear:compounding/metal",
+					
+					ingredients: ingredientsConvert(arrConvert(input).slice(0, 4)),
+					result: Ingredient.of(output)
+				})
+			},
+			salvaging: (event, input, output) => {
+				event.custom({
+					type: "silentgear:salvaging",
+					
+					ingredient: Ingredient.of(input),
+					results: ingredientsConvert(arrConvert(output).slice(0, 9))
+				})
+			}
+		},
 
 		silents_mechanisms: {
 			alloy_smelting: (event, input, output, time) => {
