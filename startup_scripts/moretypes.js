@@ -84,7 +84,7 @@ function SMIngredientConvert(i) {
 let i
 
 onEvent("loaded", e => {
-	global.more_recipe_types = {
+	global.mrt = {
 		aoa3: {
 			infusion: (event, mainInput, input, output, id) => {
 				event.custom({
