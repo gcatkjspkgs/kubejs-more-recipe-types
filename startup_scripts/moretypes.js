@@ -51,7 +51,7 @@ function blockIngredientsConvert(i, withType) {
 	i.forEach(block => {ingredients.push(blockConvert(block, withType))})
 	return ingredients
 }
-function addFTBICRecipes(event, input, output, type, id) {
+function addFTBICRecipes(event, output, input, type, id) {
 	let ingredients = []
 	input.forEach(item => {
 		let ingredient = Ingredient.of(item)
@@ -86,7 +86,7 @@ let i
 onEvent("loaded", e => {
 	global.mrt = {
 		aoa3: {
-			infusion: (event, mainInput, input, output, id) => {
+			infusion: (event, output, mainInput, input, id) => {
 				event.custom({
 					type: "aoa3:infusion",
 
@@ -95,7 +95,7 @@ onEvent("loaded", e => {
 					result: Ingredient.of(output)
 				}).id(id)
 			},
-			upgrade_kit: (event, input, upgradeKit, output, id) => {
+			upgrade_kit: (event, output, input, upgradeKit, id) => {
 				event.custom({
 					type: "aoa3:upgrade_kit",
 
@@ -107,7 +107,7 @@ onEvent("loaded", e => {
 		},
 
 		appliedenergistics2: {
-			grinder: (event, input, output, turns, id) => {
+			grinder: (event, output, input, turns, id) => {
 				output = ingredientsConvert(arrConvert(output).slice(0, 3))
 				if (typeof turns!="number") turns = 4
 
@@ -123,7 +123,7 @@ onEvent("loaded", e => {
 					turns: turns
 				}).id(id)
 			},
-			inscriber: (event, input, output, keep, id) => {
+			inscriber: (event, output, input, keep, id) => {
 				input = ingredientsConvert(arrConvert(input).slice(0, 3))
 				let input_names = ["top", "middle", "bottom"]
 				let ingredients = {}
@@ -144,7 +144,7 @@ onEvent("loaded", e => {
 		},
 
 		ars_nouveau: {
-			enchanting_apparatus: (event, mainInput, sideInput, output, id) => {
+			enchanting_apparatus: (event, output, mainInput, sideInput, id) => {
 				let recipe = {
 					type: "ars_nouveau:enchanting_apparatus",
 
@@ -161,7 +161,7 @@ onEvent("loaded", e => {
 
 				event.custom(recipe).id(id)
 			},
-			crush: (event, input, output, id) => {
+			crush: (event, output, input, id) => {
 
 				event.custom({
 					type: "ars_nouveau:crush",
@@ -170,7 +170,7 @@ onEvent("loaded", e => {
 					output: ingredientsConvert(arrConvert(output))
 				}).id(id)
 			},
-			glyph_recipe: (event, input, output, tier, id) => {
+			glyph_recipe: (event, output, input, tier, id) => {
 				if (typeof tier!="number" && typeof tier!="string") tier = 1
 				tier = ["ONE", "TWO", "THREE"][tier - 1]
 
@@ -185,7 +185,7 @@ onEvent("loaded", e => {
 		},
 
 		astralsorcery: {
-			block_transmutation: (event, input, output, starlight, id) => {
+			block_transmutation: (event, output, input, starlight, id) => {
 				if (typeof starlight!="number") starlight = 200
 
 				event.custom({
@@ -197,7 +197,7 @@ onEvent("loaded", e => {
 					starlight: starlight
 				}).id(id)
 			},
-			infuser: (event, input, output, duration, consumptionChance, settings, inputFluid, id) => {
+			infuser: (event, output, input, duration, consumptionChance, settings, inputFluid, id) => {
 				if (typeof duration!="number") duration = 100
 				if (typeof consumptionChance!="number") consumptionChance = 0.1
 				if (!Array.isArray(settings)) settings = [false, true, false]
@@ -217,9 +217,9 @@ onEvent("loaded", e => {
 					consumeMultipleFluids: settings[0],
 					acceptChaliceInput: settings[1],
 					copyNBTToOutputs: settings[2]
-				})
+				}).id(id)
 			},
-			lightwell: (event, input, outputFluid, productionMultiplier, shatterMultiplier, color, id) => {
+			lightwell: (event, outputFluid, input, productionMultiplier, shatterMultiplier, color, id) => {
 				if (typeof productionMultiplier!="number") productionMultiplier = 1
 				if (typeof shatterMultiplier!="number") shatterMultiplier = 10
 				if (typeof color!="number") color = -2236929
@@ -235,7 +235,7 @@ onEvent("loaded", e => {
 					color: color
 				}).id(id)
 			},
-			liquid_interaction: (event, inputFluid1, inputFluid2, output, weight, id) => {
+			liquid_interaction: (event, output, inputFluid1, inputFluid2, weight, id) => {
 				inputFluid1 = arrConvert(inputFluid1)
 				inputFluid2 = arrConvert(inputFluid2)
 				let fluid1 = fluidConvert(inputFluid1[0])
@@ -268,7 +268,7 @@ onEvent("loaded", e => {
 		},
 
 		atum: {
-			kiln: (event, input, output, experience, id) => {
+			kiln: (event, output, input, experience, id) => {
 				if (typeof experience!="number") experience = 0.1
 
 				event.custom({
@@ -280,7 +280,7 @@ onEvent("loaded", e => {
 					experience: experience
 				}).id(id)
 			},
-			quern: (event, input, output, rotations, id) => {
+			quern: (event, output, input, rotations, id) => {
 				if (typeof rotations!="number") rotations = 1
 
 				event.custom({
@@ -292,7 +292,7 @@ onEvent("loaded", e => {
 					rotations: rotations
 				}).id(id)
 			},
-			spinning_wheel: (event, input, output, rotations, id) => {
+			spinning_wheel: (event, output, input, rotations, id) => {
 				if (typeof rotations!="number") rotations = 1
 
 				event.custom({
@@ -307,7 +307,7 @@ onEvent("loaded", e => {
 		},
 
 		betterendforge: {
-			alloying: (event, input, output, experience, time, id) => {
+			alloying: (event, output, input, experience, time, id) => {
 				if (typeof experience!="number") experience = 1
 				if (typeof time!="number") time = 200
 
@@ -321,7 +321,7 @@ onEvent("loaded", e => {
 					smelttime: time
 				}).id(id)
 			},
-			anvil_smithing: (event, input, output, toolLevel, anvilLevel, toolDamage, id) => {
+			anvil_smithing: (event, output, input, toolLevel, anvilLevel, toolDamage, id) => {
 				if (typeof toolLevel!="number") toolLevel = 0
 				if (typeof anvilLevel!="number") anvilLevel = 1
 				if (typeof toolDamage!="number") toolDamage = 1
@@ -337,7 +337,7 @@ onEvent("loaded", e => {
 					damage: toolDamage
 				}).id(id)
 			},
-			infusion: (event, middleInput, catalystInput, output, time, id) => {
+			infusion: (event, output, middleInput, catalystInput, time, id) => {
 				catalystInput = arrConvert(catalystInput).slice(0, 8)
 				let catalysts = []
 				for (i = 0; i < catalystInput.length; i++) {
@@ -360,7 +360,7 @@ onEvent("loaded", e => {
 		},
 		
 		boss_tools: {
-			blasting: (event, input, output, cookTime, id) => {
+			blasting: (event, output, input, cookTime, id) => {
 				if (typeof cookTime!="number") cookTime = 200
 
 				event.custom({
@@ -372,7 +372,7 @@ onEvent("loaded", e => {
 					cookTime: cookTime
 				}).id(id)
 			},
-			compressing: (event, input, output, cookTime, id) => {
+			compressing: (event, output, input, cookTime, id) => {
 				if (typeof cookTime!="number") cookTime = 200
 
 				event.custom({
@@ -387,7 +387,7 @@ onEvent("loaded", e => {
 		},
 
 		botania: {
-			brew: (event, input, outputBrew, id) => {
+			brew: (event, outputBrew, input, id) => {
 				event.custom({
 					type: "botania:brew",
 
@@ -395,7 +395,7 @@ onEvent("loaded", e => {
 					ingredients: ingredientsConvert(arrConvert(input))
 				}).id(id)
 			},
-			elven_trade: (event, input, output, id) => {
+			elven_trade: (event, output, input, id) => {
 				event.custom({
 					type: "botania:elven_trade",
 
@@ -403,7 +403,7 @@ onEvent("loaded", e => {
 					output: ingredientsConvert(arrConvert(output))
 				}).id(id)
 			},
-			mana_infusion: (event, input, output, mana, catalyst, id) => {
+			mana_infusion: (event, output, input, mana, catalyst, id) => {
 				if (typeof mana!="number") mana = 1000
 
 				event.custom({
@@ -416,7 +416,7 @@ onEvent("loaded", e => {
 					catalyst: typeof catalyst!="string" ? null : blockConvert(catalyst, true)
 				}).id(id)
 			},
-			petal_apothecary: (event, input, output, id) => {
+			petal_apothecary: (event, output, input, id) => {
 				event.custom({
 					type: "botania:petal_apothecary",
 
@@ -424,7 +424,7 @@ onEvent("loaded", e => {
 					output: Ingredient.of(output)
 				}).id(id)
 			},
-			pure_daisy: (event, input, output, id) => {
+			pure_daisy: (event, output, input, id) => {
 				event.custom({
 					type: "botania:pure_daisy",
 
@@ -432,7 +432,7 @@ onEvent("loaded", e => {
 					output: {name: output}
 				}).id(id)
 			},
-			runic_altar: (event, input, output, mana, id) => {
+			runic_altar: (event, output, input, mana, id) => {
 				if (typeof mana!="number") mana = 5000
 
 				event.custom({
@@ -444,7 +444,7 @@ onEvent("loaded", e => {
 					mana: mana
 				}).id(id)
 			},
-			terra_plate: (event, input, output, mana, id) => {
+			terra_plate: (event, output, input, mana, id) => {
 				if (typeof mana!="number") mana = 100000
 
 				event.custom({
@@ -459,7 +459,7 @@ onEvent("loaded", e => {
 		},
 
 		botanypots: {
-			crop: (event, inputSeed, SoilCategories, output, growthTicks, displayBlock, id) => {
+			crop: (event, output, inputSeed, SoilCategories, growthTicks, displayBlock, id) => {
 				if (typeof growthTicks!="number") growthTicks = 1200
 				if (typeof displayBlock!="string") displayBlock = inputSeed
 				let results = []
@@ -512,7 +512,7 @@ onEvent("loaded", e => {
 		},
 		
 		draconicevolution: {
-			fusion_crafting: (event, mainInput, sideInput, output, tier, energy, id) => {
+			fusion_crafting: (event, output, mainInput, sideInput, tier, energy, id) => {
 				if (typeof tier!="string") tier = "DRACONIUM"
 				if (typeof energy!="number") energy = 100000
 				catalyst = Ingredient.of(mainInput)
@@ -538,7 +538,7 @@ onEvent("loaded", e => {
 		},
 		
 		divinerpg: {
-			arcanium_extractor: (event, input,  output, experience, time, id) => {
+			arcanium_extractor: (event, output, input, experience, time, id) => {
 				if (typeof experience!="number") experience = 0.1
 				if (typeof time!="number") time = 200
 
@@ -553,7 +553,7 @@ onEvent("loaded", e => {
 				}).id(id)
 			},
 			
-			infusion_table: (event, input, template, output) => {
+			infusion_table: (event, output, input, template) => {
 
 				event.custom({
 					type: "divinerpg:infusion_table",
@@ -566,7 +566,7 @@ onEvent("loaded", e => {
 		},
 
 		elementalcraft: {
-			binding: (event, input, output, elementType, elementAmount, id) => {
+			binding: (event, output, input, elementType, elementAmount, id) => {
 				if (typeof elementAmount!="number") elementAmount = 1000
 
 				event.custom({
@@ -579,7 +579,7 @@ onEvent("loaded", e => {
 					element_amount: elementAmount
 				}).id(id)
 			},
-			crystallization: (event, input, output, elementType, elementAmount, id) => {
+			crystallization: (event, output, input, elementType, elementAmount, id) => {
 				input = ingredientsConvert(arrConvert(input))
 				if (typeof elementAmount!="number") elementAmount = 1000
 				let results = []
@@ -606,7 +606,7 @@ onEvent("loaded", e => {
 					element_amount: elementAmount
 				}).id(id)
 			},
-			grinding: (event, input, output, elementAmount, id) => {
+			grinding: (event, output, input, elementAmount, id) => {
 				if (typeof elementAmount!="number") elementAmount = 1000
 
 				event.custom({
@@ -630,7 +630,7 @@ onEvent("loaded", e => {
 					element_amount: elementAmount,
 				}).id(id)
 			},
-			infusion: (event, input, output, elementType, elementAmount, id) => {
+			infusion: (event, output, input, elementType, elementAmount, id) => {
 				if (typeof elementAmount!="number") elementAmount = 1000
 
 				event.custom({
@@ -643,11 +643,8 @@ onEvent("loaded", e => {
 					element_amount: elementAmount,
 				}).id(id)
 			},
-			inscription: (event, input, output, elementType, elementAmount, id) => {
+			inscription: (event, output, input, elementType, elementAmount, id) => {
 				input = ingredientsConvert(arrConvert(input).slice(0, 4))
-				output = arrConvert(output)
-				let outputItem = Ingredient.of(output[0])
-				if (typeof output[1]!='undefined') outputItem["nbt"] = output[1]
 				if (typeof elementAmount!="number") elementAmount = 1000
 
 				event.custom({
@@ -655,13 +652,13 @@ onEvent("loaded", e => {
 
 					slate: input[0],
 					ingredients: input.slice(1),
-					output: outputItem,
+					output: Ingredient.of(output),
 
 					element_type: elementType,
 					element_amount: elementAmount
 				}).id(id)
 			},
-			pureinfusion: (event, input, output, elementAmount, id) => {
+			pureinfusion: (event, output, input, elementAmount, id) => {
 				input = arrConvert(input).slice(0, 5)
 				if (typeof elementAmount!="number") elementAmount = 1000
 
@@ -674,25 +671,21 @@ onEvent("loaded", e => {
 					element_amount: elementAmount,
 				}).id(id)
 			},
-			spell_craft: (event, input, output, id) => {
+			spell_craft: (event, output, input, id) => {
 				input = ingredientsConvert(arrConvert(input))
-				output = arrConvert(output)
-				let outputItem = Ingredient.of(output[0])
-				if (typeof output[1]!='undefined') outputItem["nbt"] = output[1]
-
 
 				event.custom({
 					type: "elementalcraft:spell_craft",
 
 					gem: input[0],
 					crystal: input[1],
-					output: outputItem,
+					output: Ingredient.of(output),
 				}).id(id)
 			}
 		},
 
 		evilcraft: {
-			blood_infuser: (event, inputItem, inputFluid, output, tier, time, experience, id) => {
+			blood_infuser: (event, output, inputItem, inputFluid, tier, time, experience, id) => {
 				if (typeof experience!="number") experience = 0.1
 				if (typeof tier!="number") tier = 0
 				if (typeof time!="number") time = 200
@@ -709,7 +702,7 @@ onEvent("loaded", e => {
 					tier: tier
 				}).id(id)
 			},
-			environmental_accumulator: (event, input, inputAction, output, outputWeather, time, cooldownTime, id) => {
+			environmental_accumulator: (event, output, outputWeather, input, inputAction, time, cooldownTime, id) => {
 				if (typeof time!="number") time = 100
 				if (typeof cooldownTime!="number") cooldownTime = 0
 
@@ -750,34 +743,34 @@ onEvent("loaded", e => {
 					ticks: ticks
 				}).id(id)
 			},
-			canning: (event, input, output, id) => {
+			canning: (event, output, input, id) => {
 				input = arrConvert(input).slice(0, 2)
-				addFTBICRecipes(event, input, output, "ftbic:canning", id)
+				addFTBICRecipes(event, output, input, "ftbic:canning", id)
 			},
-			compressing: (event, input, output, id) => {
+			compressing: (event, output, input, id) => {
 				input = arrConvert(input)
-				addFTBICRecipes(event, input, output, "ftbic:compressing", id)
+				addFTBICRecipes(event, output, input, "ftbic:compressing", id)
 			},
-			extruding: (event, input, output, id) => {
+			extruding: (event, output, input, id) => {
 				input = arrConvert(input)
-				addFTBICRecipes(event, input, output, "ftbic:extruding", id)
+				addFTBICRecipes(event, output, input, "ftbic:extruding", id)
 			},
-			macerating: (event, input, output, id) => {
+			macerating: (event, output, input, id) => {
 				input = arrConvert(input)
-				addFTBICRecipes(event, input, output, "ftbic:macerating", id)
+				addFTBICRecipes(event, output, input, "ftbic:macerating", id)
 			},
-			rolling: (event, input, output, id) => {
+			rolling: (event, output, input, id) => {
 				input = arrConvert(input)
-				addFTBICRecipes(event, input, output, "ftbic:rolling", id)
+				addFTBICRecipes(event, output, input, "ftbic:rolling", id)
 			},
-			separating: (event, input, output, id) => {
+			separating: (event, output, input, id) => {
 				input = arrConvert(input)
-				addFTBICRecipes(event, input, output, "ftbic:separating", id)
+				addFTBICRecipes(event, output, input, "ftbic:separating", id)
 			}
 		},
 
 		industrialforegoing: {
-			dissolution_chamber: (event, input, inputFluid, output, outputFluid, time, id) => {
+			dissolution_chamber: (event, output, outputFluid, input, inputFluid, time, id) => {
 				input = arrConvert(input).slice(0, 8)
 				inputFluid = fluidConvert(inputFluid)
 				outputFluid = fluidConvert(outputFluid)
@@ -795,7 +788,7 @@ onEvent("loaded", e => {
 					outputFluid: `{FluidName:"${outputFluid!=null ? outputFluid.id : ""}",Amount:${outputFluid!=null ? outputFluid.getAmount() : 0}}`
 				}).id(id)
 			},
-			fluid_extractor: (event, input, output, breakchance, result, id) => {
+			fluid_extractor: (event, output, input, breakchance, result, id) => {
 				output = fluidConvert(output)
 				if (typeof breakchance!="number") breakchance = 0
 				if (typeof result!="string") result = "minecraft:air"
@@ -875,7 +868,7 @@ onEvent("loaded", e => {
 		},
 		
 		mysticalagriculture: {
-			infusion: (event, mainInput, sideInput, output, id) => {
+			infusion: (event, output, mainInput, sideInput, id) => {
 				event.custom({
 					type: "mysticalagriculture:infusion",
 					
@@ -884,7 +877,7 @@ onEvent("loaded", e => {
 					result: Ingredient.of(output)
 				}).id(id)
 			},
-			reprocessor: (event, input, output, id) => {
+			reprocessor: (event, output, input, id) => {
 				event.custom({
 					type: "mysticalagriculture:reprocessor",
 
@@ -892,7 +885,7 @@ onEvent("loaded", e => {
 					result: Ingredient.of(output)
 				}).id(id)
 			},
-			soul_extraction: (event, input, soulType, soulAmount, id) => {
+			soul_extraction: (event, soulType, soulAmount, input, id) => {
 				if (typeof soulAmount!="number") soulAmount = 1
 				
 				event.custom({
@@ -907,7 +900,7 @@ onEvent("loaded", e => {
 		},
 
 		pneumaticcraft: {
-			amadron: (event, input, output, id) => {
+			amadron: (event, output, input, id) => {
 				input = arrConvert(input)
 				output = arrConvert(output)
 				let inputFluid = input[1] !== true
@@ -931,7 +924,7 @@ onEvent("loaded", e => {
 					level: 0
 				}).id(id)
 			},
-			assembly_laser: (event, input, output, isDrill, id) => {
+			assembly_laser: (event, output, input, isDrill, id) => {
 				let recipe = {
 					type: "pneumaticcraft:assembly_laser",
 
@@ -948,7 +941,7 @@ onEvent("loaded", e => {
 
 				event.custom(recipe).id(id)
 			},
-			explosion_crafting: (event, input, output, loss_rate, id) => {
+			explosion_crafting: (event, output, input, loss_rate, id) => {
 				if (typeof loss_rate!="number") loss_rate = 20
 
 				event.custom({
@@ -960,7 +953,7 @@ onEvent("loaded", e => {
 					loss_rate: loss_rate
 				}).id(id)
 			},
-			heat_frame_cooling: (event, input, output, max_temp, bonusOutput, id) => {
+			heat_frame_cooling: (event, output, input, max_temp, bonusOutput, id) => {
 				input = arrConvert(input)
 				if (typeof max_temp!="number") max_temp = 273
 				if (!Array.isArray(bonusOutput)) bonusOutput = []
@@ -980,7 +973,7 @@ onEvent("loaded", e => {
 					}
 				}).id(id)
 			},
-			heat_properties: (event, input, output, temperature, thermalResistance, heatCapacity, id) => {
+			heat_properties: (event, output, input, temperature, thermalResistance, heatCapacity, id) => {
 				output = arrConvert(output)
 				if (typeof temperature!="number") temperature = 298
 				if (typeof thermalResistance!="number") thermalResistance = 200
@@ -999,7 +992,7 @@ onEvent("loaded", e => {
 
 				event.custom(recipe).id(id)
 			},
-			fluid_mixer: (event, input1, input2, outputFluid, outputItem, pressure, time, id) => {
+			fluid_mixer: (event, outputFluid, outputItem, input1, input2, pressure, time, id) => {
 				outputFluid = fluidConvert(outputFluid)
 				outputItem = Ingredient.of(outputItem)
 				input1 = arrConvert(input1)
@@ -1036,7 +1029,7 @@ onEvent("loaded", e => {
 					burn_rate: burn_rate
 				}).id(id)
 			},
-			pressure_chamber: (event, input, output, pressure, id) => {
+			pressure_chamber: (event, output, input, pressure, id) => {
 				if (typeof pressure!="number") pressure = 1
 
 				input = ingredientsConvert(arrConvert(input))
@@ -1047,7 +1040,7 @@ onEvent("loaded", e => {
 					}
 					if (item.getCount()!==1) itemJson["type"] = "pneumaticcraft:stacked_item"
 					input[input.indexOf(item)] = itemJson
-				}).id(id)
+				})
 
 				event.custom({
 					type: "pneumaticcraft:pressure_chamber",
@@ -1058,7 +1051,7 @@ onEvent("loaded", e => {
 					pressure: pressure
 				}).id(id)
 			},
-			refinery: (event, input, output, temperature, id) => {
+			refinery: (event, output, input, temperature, id) => {
 				input = arrConvert(input)
 
 				let temperatures = {}
@@ -1074,7 +1067,7 @@ onEvent("loaded", e => {
 					temperature: temperatures,
 				}).id(id)
 			},
-			thermo_plant: (event, inputItem, inputFluid, outputItem, outputFluid, temperature, pressure, speed, exothermic, id) => {
+			thermo_plant: (event, outputItem, outputFluid, inputItem, inputFluid, temperature, pressure, speed, exothermic, id) => {
 				inputItem = Ingredient.of(inputItem)
 				let itemJson = {item: inputItem.id, count: inputItem.getCount()}
 				if (inputItem.getCount()!==1) inputItem = Object.assign(itemJson, {type: "pneumaticcraft:stacked_item"})
@@ -1114,7 +1107,7 @@ onEvent("loaded", e => {
 		},
 
 		powah: {
-			energizing: (event, input, output, energy, id) => {
+			energizing: (event, output, input, energy, id) => {
 				input = arrConvert(input).slice(0, 6)
 				if (typeof energy!="number") energy = 100
 
@@ -1130,7 +1123,7 @@ onEvent("loaded", e => {
 		},
 		
 		psi: {
-			trick_crafting: (event, input, output, cad, trick, dimension, id) => {
+			trick_crafting: (event, output, input, cad, trick, dimension, id) => {
 				let recipe = {
 					type: typeof dimension=="string" && dimension!=="" ? "psi:dimension_trick_crafting" : "psi:trick_crafting",
 					
@@ -1147,7 +1140,7 @@ onEvent("loaded", e => {
 		},
 		
 		silentgear: {
-			compounding: (event, input, output, isGem, id) => {
+			compounding: (event, output, input, isGem, id) => {
 				event.custom({
 					type: isGem===true ? "silentgear:compounding/gem" : "silentgear:compounding/metal",
 					
@@ -1155,7 +1148,7 @@ onEvent("loaded", e => {
 					result: Ingredient.of(output)
 				}).id(id)
 			},
-			salvaging: (event, input, output, id) => {
+			salvaging: (event, output, input, id) => {
 				event.custom({
 					type: "silentgear:salvaging",
 					
@@ -1166,7 +1159,7 @@ onEvent("loaded", e => {
 		},
 
 		silents_mechanisms: {
-			alloy_smelting: (event, input, output, time, id) => {
+			alloy_smelting: (event, output, input, time, id) => {
 				input = arrConvert(input).slice(0, 4)
 				let ingredients = []
 				input.forEach(item => {
@@ -1184,7 +1177,7 @@ onEvent("loaded", e => {
 					process_time: time
 				}).id(id)
 			},
-			compressing: (event, input, output, time, id) => {
+			compressing: (event, output, input, time, id) => {
 				if (typeof time!="number") time = 200
 
 				event.custom({
@@ -1196,7 +1189,7 @@ onEvent("loaded", e => {
 					process_time: time
 				}).id(id)
 			},
-			crushing: (event, input, output, time, id) => {
+			crushing: (event, output, input, time, id) => {
 				output = arrConvert(output).slice(0, 4)
 				if (typeof time!="number") time = 200
 
@@ -1209,7 +1202,7 @@ onEvent("loaded", e => {
 					process_time: time
 				}).id(id)
 			},
-			drying: (event, input, output, time, id) => {
+			drying: (event, output, input, time, id) => {
 				if (typeof time!="number") time = 200
 
 				event.custom({
@@ -1221,7 +1214,7 @@ onEvent("loaded", e => {
 					process_time: time
 				}).id(id)
 			},
-			infusing: (event, inputItem, inputFluid, output, time, id) => {
+			infusing: (event, output, inputItem, inputFluid, time, id) => {
 				inputFluid = arrConvert(inputFluid)
 				if (typeof time!="number") time = 200
 
@@ -1235,7 +1228,7 @@ onEvent("loaded", e => {
 					process_time: time
 				}).id(id)
 			},
-			mixing: (event, input, output, time, id) => {
+			mixing: (event, output, input, time, id) => {
 				if (typeof time!="number") time = 200
 
 				event.custom({
@@ -1247,7 +1240,7 @@ onEvent("loaded", e => {
 					process_time: time
 				}).id(id)
 			},
-			refining: (event, input, output, time, id) => {
+			refining: (event, output, input, time, id) => {
 				input = arrConvert(input)
 				if (typeof time!="number") time = 200
 
@@ -1260,7 +1253,7 @@ onEvent("loaded", e => {
 					process_time: time
 				}).id(id)
 			},
-			solidifying: (event, input, output, time, id) => {
+			solidifying: (event, output, input, time, id) => {
 				input = arrConvert(input)
 				if (typeof time!="number") time = 200
 
@@ -1276,7 +1269,7 @@ onEvent("loaded", e => {
 		},
 
 		tconstruct: {
-			alloy: (event, input, output, temperature, id) => {
+			alloy: (event, output, input, temperature, id) => {
 				if (typeof temperature!="number") temperature = 100
 
 				event.custom({
@@ -1288,7 +1281,7 @@ onEvent("loaded", e => {
 					temperature: temperature
 				}).id(id)
 			},
-			casting: (event, inputFluid, inputCast, output, isBasin, castConsumed, time, id) => {
+			casting: (event, output, inputFluid, inputCast, isBasin, castConsumed, time, id) => {
 				inputFluid = arrConvert(inputFluid)
 				inputCast = Ingredient.of(inputCast)
 				if (typeof time!="number") time = 60
@@ -1307,7 +1300,7 @@ onEvent("loaded", e => {
 				
 				event.custom(recipe).id(id)
 			},
-			entity_melting: (event, entity, output, damage, id) => {
+			entity_melting: (event, output, entity, damage, id) => {
 				if (typeof damage!="number") damage = 1
 				
 				event.custom({
@@ -1319,7 +1312,7 @@ onEvent("loaded", e => {
 					damage: damage
 				}).id(id)
 			},
-			melting: (event, input, output, temperature, time, id) => {
+			melting: (event, output, input, temperature, time, id) => {
 				if (typeof temperature!="number") temperature = 100
 				if (typeof time!="number") time = 300	
 
@@ -1333,7 +1326,7 @@ onEvent("loaded", e => {
 					time: time
 				}).id(id)
 			},
-			molding_table: (event, inputCast, inputPattern, outputCast, id) => {
+			molding_table: (event, outputCast, inputCast, inputPattern, id) => {
 				event.custom({
 					type: "tconstruct:molding_table",
 					
@@ -1342,7 +1335,7 @@ onEvent("loaded", e => {
 					result: Ingredient.of(outputCast)
 				}).id(id)
 			},
-			part_builder: (event, pattern, output, materialCost, id) => {
+			part_builder: (event, output, pattern, materialCost, id) => {
 				if (typeof materialCost!="number") materialCost = 1	
 
 				event.custom({
@@ -1354,7 +1347,7 @@ onEvent("loaded", e => {
 					cost: materialCost,
 				}).id(id)
 			},
-			severing: (event, entity, output) => {
+			severing: (event, output, entity, id) => {
 				event.custom({
 					type: "tconstruct:severing",
 					
@@ -1362,7 +1355,7 @@ onEvent("loaded", e => {
 					result: Ingredient.of(output)
 				}).id(id)
 			},
-			table_casting_material: (event, inputCast, output, materialCost, id) => {
+			table_casting_material: (event, output, inputCast, materialCost, id) => {
 				if (typeof materialCost!="number") materialCost = 1	
 
 				event.custom({
