@@ -2,7 +2,13 @@
 
 ## Quickstart
 
-All new types are functions inside of the `global` object. They should be called inside of the `recipes` event like so: `global.mrt.<mod>.<type>(event, {args}, <id>)`. For more info look at the section below.
+All new types are functions inside of the `global` object. They should be called inside of the `recipes` event like so: `global.mrt.<mod>.<type>(event, {args}, <id>)`. 
+
+- the recipe id and almost all number and boolean parameters are optional
+- to use nbt in items use Item.of(`<item>`, `<nbt>`)
+- to use chance in items use Item.of(`<item>`).withChance(`<Chance>`)
+
+For more info look at the section below.
 
 ## Types
 
@@ -284,6 +290,82 @@ global.mrt.evilcraft.blood_infuser(event, <Output item>, <Input item>, Fluid.of(
 global.mrt.evilcraft.environmental_accumulator(event, <Output item>, <Output weather (ANY, CLEAR, RAIN, LIGHTNING)>, <Input item>, <Input action (e.g. LIGHTNING)>´, <time in ticks (100 by default)>, <Cooldown time in ticks (0 by default)>, <id>)
 ```
 
+### Ex Compressum
+
+#### Chicken Stick
+
+```js
+global.mrt.excompressum.chicken_stick(event, [<Output items>], <Input item>, <id>)
+```
+
+#### Compressed Hammer
+
+```js
+global.mrt.excompressum.compressed_hammer(event, [<Output items>], <Input item>, <id>)
+```
+
+#### Heavy Sieve
+
+```js
+global.mrt.excompressum.heavy_sieve(event, <Input item>, <Input item from normal sieve>, <id>)
+```
+
+### Ex Nihilo Sequentia
+
+#### Compost
+
+```js
+global.mrt.exnihilosequentia.compost(event, <Input item>, <Compost amount (100 by default)>, <id>)
+```
+
+#### Crook
+
+```js
+global.mrt.exnihilosequentia.crook(event, [<Output items>], <Input item>, <id>)
+```
+
+#### Crucible
+
+```js
+global.mrt.exnihilosequentia.crucible(event, Fluid.of(<Output fluid>, <Amount>), <Input item>, <Is wooden crucible ? (else fired, false by default)>, <id>)
+```
+
+#### Fluid Item (Transformation)
+
+```js
+global.mrt.exnihilosequentia.fluid_item(event, <Output item>, <Input fluid>, <Input item>, <id>)
+```
+
+#### Fluid On Top
+
+```js
+global.mrt.exnihilosequentia.fluid_on_top(event, <Output item>, <Input fluid 1>, <Input fluid 2>, <id>)
+```
+
+#### Fluid Transform
+
+```js
+global.mrt.exnihilosequentia.fluid_transform(event, <Output fluid>, <Input fluid>, <Input item>, <id>)
+```
+
+#### Hammer
+
+```js
+global.mrt.exnihilosequentia.hammer(event, [<Output items>], <Input item>, <id>)
+```
+
+#### Heat (Crucible Heat Sources)
+
+```js
+global.mrt.exnihilosequentia.heat(event, <Heat block>, <Blockstate json>, <Boost (1 by default)>, <id>)
+```
+
+#### Sieve
+
+```js
+global.mrt.exnihilosequentia.sieve(event, <Output item>, <Input item>, [[<Mesh ("string", "flint", "iron", "diamond", "emerald", "netherite")>, <Chance (float, 0.1 by default)>], ...], <Is waterlogged ? (false by default)>, <id>)
+```
+
 ### FTB Industrial Contraptions
 
 #### Antimatter Boost
@@ -312,11 +394,6 @@ Supported types:
 ```js
 global.mrt.ftbic.<type>(event, [<Output Items>], [<Input items>], <id>)
 ```
-
-Some notes:
-
-- To use nbt in input items use Item.of(`<Input item>`, `<nbt>`)
-- To use chance in output items use Item.of(`<Input item>`).withChance(`<Chance>`)
 
 ### Industrial Foregoing
 
