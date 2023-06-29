@@ -5,8 +5,8 @@
 All new types are functions inside of the `global` object. They should be called inside of the `recipes` event like so: `global.mrt.<mod>.<type>(event, {args}, <id>)`. 
 
 - the recipe id and almost all number and boolean parameters are optional
-- to use nbt in items use Item.of(`<item>`, `<nbt>`)
-- to use chance in items use Item.of(`<item>`).withChance(`<Chance>`)
+- to use nbt in items use Item.of(`<Item>`, `<Nbt>`)
+- to use chance in items use Item.of(`<Item>`).withChance(`<Chance>`)
 
 For more info look at the section below.
 
@@ -419,6 +419,32 @@ global.mrt.industrialforegoing.laser_drill(event, <Output item / Fluid.of(<Outpu
 
 ```js
 global.mrt.industrialforegoing.stonework_generate(event, <Output Item>, [<Water requirement (1000 by default)>, <Water usage (0 by default)>], [<Lava requirement (1000 by default)>, <Lava usage (0 by default)>], <id>)
+```
+
+### Integrated Dynamics
+
+#### Drying Basin
+
+```js
+global.mrt.integrateddynamics.drying_basin(event, <Output item>, <Input item>, [<Input fluid>, <Amount>], <Time in ticks (200 by default)>, <Copy to Mechanical ? (false by default, duration / 10, id + /in_mechanical)>, <id>)
+```
+
+#### Mechanical Drying Basin
+
+```js
+global.mrt.integrateddynamics.mechanical_drying_basin(event, <Output item>, <Input item>, [<Input fluid>, <Amount>], <Time in ticks (200 by default)>, <id>)
+```
+
+#### Squeezer
+
+```js
+global.mrt.integrateddynamics.squeezer(event, [<Output items>], Fluid.of(<Output fluid>, <Amount>), <Input item>, <id>)
+```
+
+#### Mechanical Squeezer
+
+```js
+global.mrt.integrateddynamics.mechanical_squeezer(event, [<Output items>], Fluid.of(<Output fluid>, <Amount>), <Input item>, <Time in 10 ticks (10 by default)>, <id>)
 ```
 
 ### Mystical Agriculture

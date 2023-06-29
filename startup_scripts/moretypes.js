@@ -1,65 +1,71 @@
-function arrConvert(i) {
-	if (!Array.isArray(i)) i = [i]
-	return i
+function arrConvert(element) {
+	let array = Array.isArray(element) ? element : [element]
+	return array
 }
-function ingredientOfNoCount(i) {
-	item = Ingredient.of(i)
-	json = i.substring(0, 1)==="#" ? {tag: item.id} : {item: item.id}
-	if (item.getNbt()!=null) json["nbt"] = item.getNbt()
-	if (!isNaN(item.getChance())) json["chance"] = item.getChance()
+function ingredientOfNoCount(item) {
+	let ingredient = Ingredient.of(item)
+	let json = item.substring(0, 1)==="#" ? {tag: ingredient.tag} : {item: ingredient.id}
+	if (ingredient.getNbt()!=null) json["nbt"] = ingredient.getNbt()
+	if (!isNaN(ingredient.getChance())) json["chance"] = ingredient.getChance()
 	return json
 }
-function ingredientsConvert(i) {
+function ingredientsConvert(items) {
 	let ingredients = []
-	i.forEach(item => {ingredients.push(Ingredient.of(item))})
+	items.forEach(item => {ingredients.push(Ingredient.of(item))})
 	return ingredients
 }
-function fluidConvert(i) {
-	if (typeof i == "string") i = Fluid.of(i, 1000)
-	return i
+function fluidConvert(fluid) {
+	if (typeof fluid == "string") fluid = Fluid.of(i, 1000)
+	return fluid
 }
-function fluidsConvert(i) {
+function fluidsConvert(fluidArray) {
 	let fluids = []
-	i.forEach(fluid => {fluids.push(fluidConvert(fluid).toJson())})
+	fluidArray.forEach(fluid => {fluids.push(fluidConvert(fluid).toJson())})
 	return fluids
 }
-function fluidConvertWithTag(i, amount, typeNames, amountName) {
+function fluidConvertWithTag(fluidString, amount, typeNames, amountName) {
 	typeNames==null ? typeNames = ["fluid", "tag"] : typeNames = arrConvert(typeNames).slice(0, 2)
 	typeNames = typeNames.concat(["fluid", "tag"].slice(typeNames.length, 2))
 	if (amountName==null) amountName = "amount"
 
 	let fluid = {}
-	i.substring(0, 1)==="#" ? fluid[typeNames[1]] = i.substring(1) : fluid[typeNames[0]] = i
+	fluidString.substring(0, 1)==="#" ? fluid[typeNames[1]] = fluidString.substring(1) : fluid[typeNames[0]] = fluidString
 	fluid[amountName] = typeof amount == "number" ? amount : 1000 
 	return fluid
 }
-function fluidsConvertWithTag(i, typeNames, amountName) {
+function fluidsConvertWithTag(fluidArray, typeNames, amountName) {
 	let fluids = []
-	i.forEach(fluid => {
+	fluidArray.forEach(fluid => {
 		fluid = arrConvert(fluid)
 		fluids.push(fluidConvertWithTag(fluid[0], fluid[1], typeNames, amountName))})
 	return fluids
 }
-function blockConvert(i, withType) {
+function blockConvert(blockString, withType) {
 	let block
-	i.substring(0, 1)==="#" ? block = {tag: i.substring(1)} : block = {block: i}
-	if (withType) i.substring(0, 1)==="#" ? block["type"] = "tag" : block["type"] = "block"
+	blockString.substring(0, 1)==="#" ? block = {tag: blockString.substring(1)} : block = {block: blockString}
+	if (withType) blockString.substring(0, 1)==="#" ? block["type"] = "tag" : block["type"] = "block"
 	return block
 }
-function blockIngredientsConvert(i, withType) {
+function blockIngredientsConvert(blockArray, withType) {
 	let ingredients = []
-	i.forEach(block => {ingredients.push(blockConvert(block, withType))})
+	blockArray.forEach(block => {ingredients.push(blockConvert(block, withType))})
 	return ingredients
 }
 function addFTBICRecipes(event, output, input, type, id) {
 	let ingredients = []
 	input.forEach(item => {
 		let ingredient = Ingredient.of(item)
-		let ingredientJson = {ingredient: {item: ingredient.id}, count: ingredient.getCount()}
-		
-		if (ingredient.nbt!=null){
+		let ingredientJson
+
+		if (ingredient.tag===undefined) {
+			ingredientJson = {ingredient: {item: ingredient.id}, count: ingredient.getCount()}
+		} else {
+			ingredientJson = {ingredient: {tag: ingredient.tag}, count: ingredient.getCount()}
+		}
+
+		if (ingredient.getNbt()!=null){
 			ingredientJson["ingredient"]["type"] = "forge:nbt"
-			ingredientJson["ingredient"]["nbt"] = String(ingredient.nbt)
+			ingredientJson["ingredient"]["nbt"] = String(ingredient.getNbt())
 		}
 		ingredients.push(ingredientJson)
 	})
@@ -71,24 +77,23 @@ function addFTBICRecipes(event, output, input, type, id) {
 		outputItems: ingredientsConvert(arrConvert(output))
 	})
 }
-function SMIngredientConvert(i) {
+function SMIngredientConvert(ingredient) {
 	let values = []
-	i = arrConvert(i)
-	arrConvert(i[0]).forEach(value => {
+	ingredient = arrConvert(ingredient)
+	arrConvert(ingredient[0]).forEach(value => {
 		values.push(Ingredient.of(value).toJson())
 	})
-	if (typeof i[1]!="number") i[1] = 1
-	return {value: values, count: i[1]}
+	if (typeof ingredient[1]!="number") ingredient[1] = 1
+	return {value: values, count: ingredient[1]}
 }
-function exCompressumLootTable(i) {
+function exCompressumLootTable(items) {
 	let lootTable = {
 		type: "minecraft:block",
 		pools: []
 	}
 
-	i.forEach(pool => {
-		pool = arrConvert(pool)
-		item = Ingredient.of(pool[0])
+	items.forEach(pool => {
+		item = Ingredient.of(pool)
 
 		lootTable["pools"].push({
 			rolls: 1,
@@ -98,11 +103,14 @@ function exCompressumLootTable(i) {
 				functions: [{
 					function: "minecraft:set_count",
 					count: item.getCount()
+				},{
+					function: "minecraft:set_nbt",
+					tag: item.getNbt()==null ? "{}" : String(item.getNbt())
 				}]
 			}],
 			conditions: [{
 				condition: "minecraft:random_chance",
-				chance: typeof pool[1]!="number" ? 1 : pool[1]
+				chance: isNaN(item.getChance()) ? 1 : item.getChance()
 			}]
 		})
 	})
@@ -209,8 +217,8 @@ onEvent("loaded", e => {
 				applyID(event, id, {
 					type: "ars_nouveau:glyph_recipe",
 					
-					input: Ingredient.of(input).id,
-					output: Ingredient.of(output).id,
+					input: Ingredient.of(input),
+					output: Ingredient.of(output),
 					tier: tier===undefined ? "ONE" : tier
 				})
 			}
@@ -1033,6 +1041,67 @@ onEvent("loaded", e => {
 			}
 		},
 		
+		integrateddynamics: {
+			drying_basin: (event, output, inputItem, inputFluid, duration, addInMechanical, id) => {
+				if (typeof duration!="number") duration = 200
+				inputFluid = arrConvert(inputFluid)
+
+				let recipe = {
+					type: "integrateddynamics:drying_basin",
+					result: Ingredient.of(output),
+					duration: duration
+				}
+
+				if (Ingredient.of(inputItem).id!="minecraft:air") recipe["item"] = Ingredient.of(inputItem)
+				recipe["fluid"] = fluidConvertWithTag(inputFluid[0], inputFluid[1])
+
+				applyID(event, id, recipe)
+
+				if (addInMechanical===true) {
+					if (id!=null) id = `${id}/in_mechanical`
+					global.mrt.integrateddynamics.mechanical_drying_basin(event, output, inputItem, inputFluid, Math.round(duration/10), id)
+				}
+			},
+			mechanical_drying_basin: (event, output, inputItem, inputFluid, duration, id) => {
+				if (typeof duration!="number") duration = 200
+				inputFluid = arrConvert(inputFluid)
+
+				let recipe = {
+					type: "integrateddynamics:mechanical_drying_basin",
+					result: Ingredient.of(output),
+					duration: duration
+				}
+
+				if (Ingredient.of(inputItem).id!="minecraft:air") recipe["item"] = Ingredient.of(inputItem)
+				recipe["fluid"] = fluidConvertWithTag(inputFluid[0], inputFluid[1])
+
+				applyID(event, id, recipe)
+			},
+			squeezer: (event, outputItem, outputFluid, input, id) => {
+				applyID(event, id, {
+					type: "integrateddynamics:squeezer",
+					item: Ingredient.of(input),
+					result: {
+						items: ingredientsConvert(outputItem),
+					  	fluid: outputFluid
+					}
+				})
+			},
+			mechanical_squeezer: (event, outputItem, outputFluid, input, duration, id) => {
+				if (typeof duration!="number") duration = 10
+
+				applyID(event, id, {
+					type: "integrateddynamics:mechanical_squeezer",
+					item: Ingredient.of(input),
+					result: {
+						items: ingredientsConvert(outputItem),
+					  	fluid: outputFluid
+					},
+					duration: duration
+				})
+			},
+		},
+
 		mysticalagriculture: {
 			infusion: (event, output, mainInput, sideInput, id) => {
 				applyID(event, id, {
@@ -1069,33 +1138,37 @@ onEvent("loaded", e => {
 			amadron: (event, output, input, id) => {
 				input = arrConvert(input)
 				output = arrConvert(output)
-				let inputFluid = input[1] !== true
-				let outputFluid = output[1] !== true
+				let inputFluid = input[1] === true
+				let outputFluid = output[1] === true
 
-				applyID(event, id, {
+				let recipe = {
 					type: "pneumaticcraft:amadron",
 
 					input: {
 						type: inputFluid ? "ITEM" : "FLUID",
-						id: inputFluid ? Ingredient.of(input[0]).id : fluidConvert(input[0]).id,
-						amount: inputFluid ? Ingredient.of(input[0]).getCount() : fluidConvert(input[0]).getAmount()
+						id: inputFluid ? fluidConvert(input[0]).id : Ingredient.of(input[0]).id,
+						amount: inputFluid ?  fluidConvert(input[0]).getAmount() : Ingredient.of(input[0]).getCount()
 					},
 					output: {
 						type: outputFluid ? "ITEM" : "FLUID",
-						id: outputFluid ? Ingredient.of(output[0]).id : fluidConvert(output[0]).id,
-						amount: outputFluid ? Ingredient.of(output[0]).getCount() : fluidConvert(output[0]).getAmount()
+						id: outputFluid ? fluidConvert(output[0]).id : Ingredient.of(output[0]).id,
+						amount: outputFluid ? fluidConvert(output[0]).getAmount() : Ingredient.of(output[0]).getCount()
 					},
 
 					static: true,
 					level: 0
-				})
+				}
+
+				if (!(inputFluid)) recipe["input"]["nbt"] = Ingredient.of(input[0]).getNbt()==null ? "{}" : String(Ingredient.of(input[0]).getNbt())
+				if (!(outputFluid)) recipe["output"]["nbt"] = Ingredient.of(output[0]).getNbt()==null ? "{}" : String(Ingredient.of(output[0]).getNbt())
+
+				applyID(event, id, recipe)
 			},
 			assembly_laser: (event, output, input, isDrill, id) => {
 				let recipe = {
 					type: "pneumaticcraft:assembly_laser",
 
 					input: {
-						item: Ingredient.of(input).id,
 						count: Ingredient.of(input).getCount()
 					},
 					result: Ingredient.of(output),
@@ -1103,6 +1176,7 @@ onEvent("loaded", e => {
 					program: isDrill===true ? "drill" : "laser"
 				}
 
+				Ingredient.of(input).tag===undefined ? recipe["input"]["item"] = Ingredient.of(input).id : recipe["input"]["tag"] = Ingredient.of(input).tag
 				if (Ingredient.of(input).getCount()!==1) recipe["input"]["type"] = "pneumaticcraft:stacked_item"
 
 				applyID(event, id, recipe)
@@ -1176,8 +1250,8 @@ onEvent("loaded", e => {
 					time: time
 				}
 
-				if (outputFluid!=null && outputFluid.id!=="minecraft:empty") recipe["fluid_output"] = outputFluid
-				if (outputItem!=null && outputItem.id!=="minecraft:air") recipe["item_output"] = outputItem
+				if (outputFluid.id!=="minecraft:empty") recipe["fluid_output"] = outputFluid
+				if (outputItem.id!=="minecraft:air") recipe["item_output"] = outputItem
 
 				applyID(event, id, recipe)
 			},
@@ -1200,10 +1274,8 @@ onEvent("loaded", e => {
 
 				input = ingredientsConvert(arrConvert(input))
 				input.forEach(item => {
-					let itemJson = {
-						item: item.id,
-						count: item.getCount()
-					}
+					let itemJson = {count: item.getCount()}
+					item.tag===undefined ? itemJson["item"] = item.id : itemJson["tag"] = item.tag
 					if (item.getCount()!==1) itemJson["type"] = "pneumaticcraft:stacked_item"
 					input[input.indexOf(item)] = itemJson
 				})
@@ -1235,7 +1307,8 @@ onEvent("loaded", e => {
 			},
 			thermo_plant: (event, outputItem, outputFluid, inputItem, inputFluid, temperature, pressure, speed, exothermic, id) => {
 				inputItem = Ingredient.of(inputItem)
-				let itemJson = {item: inputItem.id, count: inputItem.getCount()}
+				let itemJson = {count: inputItem.getCount()}
+				inputItem.tag===undefined ? itemJson["item"] = inputItem.id : itemJson["tag"] = inputItem.tag
 				if (inputItem.getCount()!==1) inputItem = Object.assign(itemJson, {type: "pneumaticcraft:stacked_item"})
 
 				inputFluid = arrConvert(inputFluid)
@@ -1253,13 +1326,13 @@ onEvent("loaded", e => {
 					exothermic: exothermic===true
 				}
 
-				if (inputItem!=null && inputItem.id!=="minecraft:air") recipe["item_input"] = inputItem
-				if (inputFluid!=null && inputFluidConverted.id!=="minecraft:empty") {
+				if (inputItem.id!=="minecraft:air") recipe["item_input"] = inputItem
+				if (inputFluidConverted.id!=="minecraft:empty") {
 					recipe["fluid_input"] = Object.assign(fluidConvertWithTag(inputFluid[0], inputFluid[1]), {type: "pneumaticcraft:fluid"})
 				}
 
-				if (outputItem!=null && outputItem.id!=="minecraft:air") recipe["item_output"] = outputItem
-				if (outputFluid!=null && outputFluid.id!=="minecraft:empty") recipe["fluid_output"] = outputFluid
+				if (outputItem.id!=="minecraft:air") recipe["item_output"] = outputItem
+				if (outputFluid.id!=="minecraft:empty") recipe["fluid_output"] = outputFluid
 
 				let temperatures = {}
 				if (typeof temperature[0]=="number") temperatures["min_temp"] = temperature[0]
