@@ -1,7 +1,10 @@
+// Universal Functions
+
 function arrConvert(element) {
 	let array = Array.isArray(element) ? element : [element]
 	return array
 }
+
 function ingredientOfNoCount(item) {
 	let ingredient = Ingredient.of(item)
 	let json = item.substring(0, 1)==="#" ? {tag: ingredient.tag} : {item: ingredient.id}
@@ -9,41 +12,59 @@ function ingredientOfNoCount(item) {
 	if (!isNaN(ingredient.getChance())) json["chance"] = ingredient.getChance()
 	return json
 }
+
+function ingredientOfAlwaysIngredient(item) {
+	let ingredient = Ingredient.of(item)
+	let json = item.substring(0, 1)==="#" ? {ingredient: {tag: ingredient.tag}} : {ingredient: {item: ingredient.id}}
+	json["count"] = ingredient.getCount()
+	if (ingredient.getNbt()!=null) json["nbt"] = ingredient.getNbt()
+	if (!isNaN(ingredient.getChance())) json["chance"] = ingredient.getChance()
+	return json
+}
+
 function ingredientsConvert(items) {
 	let ingredients = []
 	items.forEach(item => {ingredients.push(Ingredient.of(item))})
 	return ingredients
 }
+
 function fluidConvert(fluid) {
-	if (typeof fluid == "string") fluid = Fluid.of(i, 1000)
+	if (typeof fluid == "string") fluid = Fluid.of(fluid, 1000)
 	return fluid
 }
+
+function fluidConvertAlwaysAmount(fluid) {
+	if (typeof fluid == "string") fluid = Fluid.of(fluid, 1000)
+	return {fluid: fluid.id, amount: fluid.getAmount()}
+}
+
 function fluidsConvert(fluidArray) {
 	let fluids = []
 	fluidArray.forEach(fluid => {fluids.push(fluidConvert(fluid).toJson())})
 	return fluids
 }
-function fluidConvertWithTag(fluidString, amount, typeNames, amountName) {
-	typeNames==null ? typeNames = ["fluid", "tag"] : typeNames = arrConvert(typeNames).slice(0, 2)
+
+function fluidConvertWithTag(fluidArray, typeNames, amountName) {
+	Array.isArray(typeNames) ? typeNames = arrConvert(typeNames).slice(0, 2) : typeNames = ["fluid", "tag"]
 	typeNames = typeNames.concat(["fluid", "tag"].slice(typeNames.length, 2))
-	if (amountName==null) amountName = "amount"
+	if (typeof amountName!="string") amountName = "amount"
 
 	let fluid = {}
-	fluidString.substring(0, 1)==="#" ? fluid[typeNames[1]] = fluidString.substring(1) : fluid[typeNames[0]] = fluidString
-	fluid[amountName] = typeof amount == "number" ? amount : 1000 
+	fluidArray[0].substring(0, 1)==="#" ? fluid[typeNames[1]] = fluidArray[0].substring(1) : fluid[typeNames[0]] = fluidArray[0]
+	fluid[amountName] = typeof fluidArray[1]=="number" ? fluidArray[1] : 1000 
 	return fluid
 }
+
 function fluidsConvertWithTag(fluidArray, typeNames, amountName) {
 	let fluids = []
 	fluidArray.forEach(fluid => {
-		fluid = arrConvert(fluid)
-		fluids.push(fluidConvertWithTag(fluid[0], fluid[1], typeNames, amountName))})
+		fluids.push(fluidConvertWithTag(arrConvert(fluid), typeNames, amountName))})
 	return fluids
 }
+
 function blockConvert(blockString, withType) {
-	let block
-	blockString.substring(0, 1)==="#" ? block = {tag: blockString.substring(1)} : block = {block: blockString}
-	if (withType) blockString.substring(0, 1)==="#" ? block["type"] = "tag" : block["type"] = "block"
+	let block = blockString.substring(0, 1)==="#" ? {tag: blockString.substring(1)} : {block: blockString}
+	if (withType) block["type"] = blockString.substring(0, 1)==="#" ? "tag" : "block"
 	return block
 }
 function blockIngredientsConvert(blockArray, withType) {
@@ -51,6 +72,37 @@ function blockIngredientsConvert(blockArray, withType) {
 	blockArray.forEach(block => {ingredients.push(blockConvert(block, withType))})
 	return ingredients
 }
+
+function applyID(event, id, recipe) {
+	id==null ? event.custom(recipe) : event.custom(recipe).id(id)
+}
+
+// Mod Specific Functions
+
+function gasConvert(gasArray, withChemicalType, gasAmountPerAmount, defaultAmount) {
+	if (typeof gasAmountPerAmount!="number") gasAmountPerAmount = 1
+	if (typeof defaultAmount!="number") defaultAmount = 1
+
+	let gas = {amount: typeof gasArray[1]=="number" ? Math.round(gasArray[1]/gasAmountPerAmount) : defaultAmount}
+	gasArray[0].substring(0, 1)==="#" ? gas["tag"] = gasArray[0].substring(1) : gas["gas"] = gasArray[0] 
+	if (withChemicalType===true) gas["chemicalType"] = "gas"
+	return gas
+}
+
+function slurryConvert(slurryArray, withChemicalType, slurryAmountPerAmount, defaultAmount) {
+	if (typeof slurryAmountPerAmount!="number") slurryAmountPerAmount = 1
+	if (typeof defaultAmount!="number") defaultAmount = 1
+
+	let slurry = {amount: typeof slurryArray[1]=="number" ? Math.round(slurryArray[1]/slurryAmountPerAmount) : defaultAmount}
+	slurryArray[0].substring(0, 1)==="#" ? slurry["tag"] = slurryArray[0].substring(1) : slurry["slurry"] = slurryArray[0] 
+	if (withChemicalType===true) slurry["chemicalType"] = "slurry"
+	return slurry
+}
+
+function pigmentConvert(pigmentArray) {
+	return {pigment: pigmentArray[0], amount: typeof pigmentArray[1]=="number" ? pigmentArray[1] : 32}
+}
+
 function addFTBICRecipes(event, output, input, type, id) {
 	let ingredients = []
 	input.forEach(item => {
@@ -77,15 +129,16 @@ function addFTBICRecipes(event, output, input, type, id) {
 		outputItems: ingredientsConvert(arrConvert(output))
 	})
 }
-function SMIngredientConvert(ingredient) {
+
+function SMIngredientConvert(ingredientArray) {
 	let values = []
-	ingredient = arrConvert(ingredient)
-	arrConvert(ingredient[0]).forEach(value => {
+	arrConvert(ingredientArray[0]).forEach(value => {
 		values.push(Ingredient.of(value).toJson())
 	})
-	if (typeof ingredient[1]!="number") ingredient[1] = 1
-	return {value: values, count: ingredient[1]}
+	if (typeof ingredientArray[1]!="number") ingredientArray[1] = 1
+	return {value: values, count: ingredientArray[1]}
 }
+
 function exCompressumLootTable(items) {
 	let lootTable = {
 		type: "minecraft:block",
@@ -117,9 +170,8 @@ function exCompressumLootTable(items) {
 	
 	return lootTable
 }
-function applyID(event, id, recipe) {
-	id==null ? event.custom(recipe) : event.custom(recipe).id(id)
-}
+
+// Recipes
 
 let i
 
@@ -959,7 +1011,7 @@ onEvent("loaded", e => {
 					processingTime: time,
 
 					output: Ingredient.of(output),
-					outputFluid: `{FluidName:"${outputFluid!=null ? outputFluid.id : ""}",Amount:${outputFluid!=null ? outputFluid.getAmount() : 0}}`
+					outputFluid: `{FluidName:"${outputFluid===Fluid.empty ? "" : outputFluid.id}",Amount:${outputFluid===Fluid.empty ? 0 : outputFluid.getAmount()}}`
 				})
 			},
 			fluid_extractor: (event, output, input, breakchance, result, id) => {
@@ -979,7 +1031,7 @@ onEvent("loaded", e => {
 				})
 			},
 			laser_drill: (event, output, catalyst, rarities, fluidRecipe, entity, id) => {
-				fluidRecipe ? output = fluidConvert(output) : output = Ingredient.of(output)
+				output = fluidRecipe ? fluidConvert(output) : Ingredient.of(output)
 				if (fluidRecipe!==true) fluidRecipe = false
 				if (typeof entity!="string") entity = "minecraft:empty"
 
@@ -1044,7 +1096,6 @@ onEvent("loaded", e => {
 		integrateddynamics: {
 			drying_basin: (event, output, inputItem, inputFluid, duration, addInMechanical, id) => {
 				if (typeof duration!="number") duration = 200
-				inputFluid = arrConvert(inputFluid)
 
 				let recipe = {
 					type: "integrateddynamics:drying_basin",
@@ -1053,7 +1104,7 @@ onEvent("loaded", e => {
 				}
 
 				if (Ingredient.of(inputItem).id!="minecraft:air") recipe["item"] = Ingredient.of(inputItem)
-				recipe["fluid"] = fluidConvertWithTag(inputFluid[0], inputFluid[1])
+				recipe["fluid"] = fluidConvertWithTag(arrConvert(inputFluid))
 
 				applyID(event, id, recipe)
 
@@ -1064,7 +1115,6 @@ onEvent("loaded", e => {
 			},
 			mechanical_drying_basin: (event, output, inputItem, inputFluid, duration, id) => {
 				if (typeof duration!="number") duration = 200
-				inputFluid = arrConvert(inputFluid)
 
 				let recipe = {
 					type: "integrateddynamics:mechanical_drying_basin",
@@ -1073,7 +1123,7 @@ onEvent("loaded", e => {
 				}
 
 				if (Ingredient.of(inputItem).id!="minecraft:air") recipe["item"] = Ingredient.of(inputItem)
-				recipe["fluid"] = fluidConvertWithTag(inputFluid[0], inputFluid[1])
+				recipe["fluid"] = fluidConvertWithTag(arrConvert(inputFluid))
 
 				applyID(event, id, recipe)
 			},
@@ -1130,6 +1180,266 @@ onEvent("loaded", e => {
 						type: soulType,
 						souls: soulAmount
 					}
+				})
+			}
+		},
+
+		mekanism: {
+			activating: (event, output, input, id) => {
+				applyID(event, id, {
+					type: "mekanism:activating",
+					input: gasConvert(arrConvert(input)),
+					output: gasConvert(arrConvert(output))
+				})
+			},
+			centrifuging: (event, output, input, id) => {
+				input = arrConvert(input)
+
+				applyID(event, id, {
+					type: "mekanism:centrifuging",
+					input: gasConvert(arrConvert(input)),
+					output: gasConvert(arrConvert(output))
+				})
+			},
+			chemical_infusing: (event, output, input, id) => {
+				input = arrConvert(input)
+
+				applyID(event, id, {
+					type: "mekanism:chemical_infusing",
+					leftInput: gasConvert(arrConvert(input[0])),
+					rightInput: gasConvert(arrConvert(input[1])),
+					output: gasConvert(arrConvert(output))
+				 })
+			},
+			combining: (event, output, input, id) => {
+				input = arrConvert(input)
+
+				applyID(event, id, {
+					type: "mekanism:combining",
+					mainInput: Ingredient.of(input[0]),
+					extraInput: Ingredient.of(input[1]),
+					output: Ingredient.of(output)
+				 })
+			},
+			compressing: (event, output, inputItem, inputGas, id) => {
+				applyID(event, id, {
+					type: "mekanism:compressing",
+					itemInput: Ingredient.of(inputItem),
+					gasInput: gasConvert(arrConvert(inputGas), false, 200, 1),
+					output: Ingredient.of(output)
+				})
+			},
+			crushing: (event, output, input, id) => {
+				applyID(event, id, {
+					type: "mekanism:crushing",
+					input: Ingredient.of(input),
+					output: Ingredient.of(output)
+				})
+			},
+			crystallizing: (event, output, input, id) => {
+				applyID(event, id, {
+					type: "mekanism:crystallizing",
+					chemicalType: input[2]===true ? "gas" : "slurry",
+					input: input[2]===true ? gasConvert(input) : slurryConvert(input),
+					output: Ingredient.of(output)
+				 })
+			},	
+			dissolution: (event, output, inputItem, inputGas, id) => {
+				applyID(event, id, {
+					type: "mekanism:dissolution",
+					itemInput: Ingredient.of(inputItem),
+					gasInput: gasConvert(arrConvert(inputGas), false, 100, 1),
+					output: output[2]===true ? gasConvert(arrConvert(output), true) : slurryConvert(arrConvert(output), true)
+				 })
+			},	
+			energy_conversion: (event, input, energy, id) => {
+				applyID(event, id, {
+					type: "mekanism:energy_conversion",
+					input: Ingredient.of(input),
+					output: typeof energy=="number" ? energy : 10000
+				})
+			},	
+			enriching: (event, output, input, id) => {
+				applyID(event, id, {
+					type:"mekanism:enriching",
+					input: Ingredient.of(input),
+					output: Ingredient.of(output)
+				 })
+			},
+			evaporating: (event, output, input, id) => {
+				applyID(event, id, {
+					type: "mekanism:evaporating",
+					input: fluidConvertWithTag(arrConvert(input)),
+					output: fluidConvertAlwaysAmount(output)
+				 })
+			},
+			gas_conversion: (event, output, input, id) => {
+				applyID(event, id, {
+					type: "mekanism:gas_conversion",
+					input: Ingredient.of(input),
+					output: gasConvert(arrConvert(output), false, 1, 10)
+				 })
+			},
+			infusion_conversion: (event, output, input, id) => {
+				output = arrConvert(output)
+				
+				applyID(event, id, {
+					type: "mekanism:infusion_conversion",
+					input: ingredientOfAlwaysIngredient(input),
+					output: {
+						infuse_type: output[0],
+						amount: typeof output[1]=="number" ? output[1] : 10
+					}
+				})
+			},		
+			injecting: (event, output, inputItem, inputGas, id) => {
+				output = arrConvert(output)
+
+				applyID(event, id, {
+					type:"mekanism:injecting",
+					itemInput: Ingredient.of(inputItem),
+					gasInput: gasConvert(arrConvert(inputGas), false, 200, 1),
+					output: Ingredient.of(output)
+				})
+			},		
+			metallurgic_infusing: (event, output, inputItem, inputInfusion, id) => {
+				inputInfusion = arrConvert(inputInfusion)
+
+				applyID(event, id, {
+					type: "mekanism:metallurgic_infusing",
+					itemInput: Ingredient.of(inputItem),
+					infusionInput: {
+						tag: inputInfusion[0],
+						amount: typeof inputInfusion[1]=="number" ? inputInfusion[1] : 10
+					},
+					output: Ingredient.of(output)
+				})
+			},		
+			nucleosynthesizing: (event, output, inputItem, inputGas, duration, id) => {
+				if (typeof duration!="number") duration = 200
+
+				applyID(event, id, {
+					type: "mekanism:nucleosynthesizing",
+					itemInput: ingredientOfAlwaysIngredient(inputItem),
+					gasInput: gasConvert(arrConvert(inputGas)),
+					output: Ingredient.of(output),
+					duration: duration
+				})
+			},		
+			oxidizing: (event, output, input, id) => {
+				applyID(event, id, {
+					type: "mekanism:oxidizing",
+					input: Ingredient.of(input),
+					output: gasConvert(arrConvert(output))
+				})	
+			},		
+			painting: (event, output, inputTag, inputPigment, id) => {
+				applyID(event, id, {
+					type: "mekanism:painting",
+					itemInput: {
+						ingredient:{
+							type: "mekanism:without",
+							base: Ingredient.of(inputTag),
+							without: Ingredient.of(output)
+						}
+					},
+					chemicalInput: pigmentConvert(arrConvert(inputPigment)),
+					output: Ingredient.of(output)
+				})
+			},		
+			pigment_extracting: (event, output, input, id) => {
+				applyID(event, id, {
+					type: "mekanism:pigment_extracting",
+					input: ingredientOfAlwaysIngredient(input),
+					output: pigmentConvert(arrConvert(output))
+				})
+			},		
+			pigment_mixing: (event, output, input, id) => {
+				input = arrConvert(input)
+
+				applyID(event, id, {
+					type:"mekanism:pigment_mixing",
+					leftInput: pigmentConvert(arrConvert(input[0])),
+					rightInput: pigmentConvert(arrConvert(input[1])),
+					output: pigmentConvert(arrConvert(output))
+				})
+			},
+			purifying: (event, output, inputItem, inputGas, id) => {
+				applyID(event, id, {
+					type: "mekanism:purifying",
+					itemInput: Ingredient.of(inputItem),
+					gasInput: gasConvert(arrConvert(inputGas), false, 200, 1),
+					output: Ingredient.of(output)
+				})
+			},		
+			reaction: (event, outputItem, outputGas, inputItem, inputFluid, inputGas, duration, energy, id) => {
+				let recipe = {
+					type: "mekanism:reaction",
+					itemInput: Ingredient.of(inputItem),
+					fluidInput: fluidConvertWithTag(arrConvert(inputFluid)),
+					gasInput: gasConvert(arrConvert(inputGas)),
+					duration: typeof duration=="number" ? duration : 200,
+					energyRequired: typeof energy=="number" ?  energy : 5
+				}
+
+				if (Ingredient.of(outputItem).id!=="minecraft:air") recipe["itemOutput"] = Ingredient.of(outputItem)
+				if (outputGas!=null && outputGas!=="") recipe["gasOutput"] = gasConvert(outputGas)
+
+				applyID(event, id, recipe)
+			},		
+			rotary: (event, toGas, toFluid, id) => {
+				toGas = arrConvert(toGas)
+				toFluid = arrConvert(toFluid)
+
+				applyID(event, id, {
+					type: "mekanism:rotary",
+					fluidInput: fluidConvertWithTag(arrConvert(toGas[1])),
+					gasOutput: gasConvert(arrConvert(toGas[0])),
+					gasInput: gasConvert(arrConvert(toFluid[1])),
+					fluidOutput: fluidConvertAlwaysAmount(toFluid[0])
+				})
+			},		
+			sawing: (event, output, input, secondaryChance, id) => {
+				output = arrConvert(output)
+
+				let recipe = {
+					type: "mekanism:sawing",
+					input: Ingredient.of(input),
+					mainOutput: Ingredient.of(output[0])
+				}
+
+				if (Ingredient.of(output[1]).id!=="minecraft:air") {
+					recipe["secondaryOutput"] = Ingredient.of(output[1])
+					recipe["secondaryChance"] = typeof secondaryChance=="number" ? secondaryChance : 1.0
+				}
+
+				applyID(event, id, recipe)
+			},		
+			separating: (event, output, input, id) => {
+				output = arrConvert(output)
+
+				applyID(event, id, {
+					type: "mekanism:separating",
+					input: fluidConvertWithTag(arrConvert(input)),
+					leftGasOutput: gasConvert(arrConvert(output[0])),
+					rightGasOutput: gasConvert(arrConvert(output[1]))
+				})
+			},		
+			smelting: (event, output, input, id) => {
+				applyID(event, id, {
+					type: "mekanism:smelting",
+					input: Ingredient.of(input),
+					output: Ingredient.of(output)
+				})
+			},
+			washing: (event, output, inputFluid, inputSlurry, id) => {
+				output = arrConvert(output)
+
+				applyID(event, id, {
+					type: "mekanism:washing",
+					fluidInput: fluidConvertWithTag(arrConvert(inputFluid)),
+					slurryInput: slurryConvert(arrConvert(inputSlurry)),
+					output: slurryConvert(arrConvert(output))
 				})
 			}
 		},
@@ -1194,7 +1504,6 @@ onEvent("loaded", e => {
 				})
 			},
 			heat_frame_cooling: (event, output, input, max_temp, bonusOutput, id) => {
-				input = arrConvert(input)
 				if (typeof max_temp!="number") max_temp = 273
 				if (!Array.isArray(bonusOutput)) bonusOutput = []
 				if (typeof bonusOutput[0]!="number") bonusOutput[0] = 0
@@ -1203,7 +1512,7 @@ onEvent("loaded", e => {
 				applyID(event, id, {
 					type: "pneumaticcraft:heat_frame_cooling",
 
-					input: Object.assign(fluidConvertWithTag(input[0], input[1]), {type: "pneumaticcraft:fluid"}),
+					input: Object.assign(fluidConvertWithTag(arrConvert(input)), {type: "pneumaticcraft:fluid"}),
 					result: Ingredient.of(output),
 
 					max_temp: max_temp,
@@ -1235,16 +1544,14 @@ onEvent("loaded", e => {
 			fluid_mixer: (event, outputFluid, outputItem, input1, input2, pressure, time, id) => {
 				outputFluid = fluidConvert(outputFluid)
 				outputItem = Ingredient.of(outputItem)
-				input1 = arrConvert(input1)
-				input2 = arrConvert(input2)
 				if (typeof time!="number") time = 200
 				if (typeof pressure!="number") pressure = 1
 
 				recipe = {
 					type: "pneumaticcraft:fluid_mixer",
 
-					input1: Object.assign(fluidConvertWithTag(input1[0], input1[1]), {type: "pneumaticcraft:fluid"}),
-					input2: Object.assign(fluidConvertWithTag(input2[0], input2[1]), {type: "pneumaticcraft:fluid"}),
+					input1: Object.assign(fluidConvertWithTag(arrConvert(input1)), {type: "pneumaticcraft:fluid"}),
+					input2: Object.assign(fluidConvertWithTag(arrConvert(input2)), {type: "pneumaticcraft:fluid"}),
 
 					pressure: pressure,
 					time: time
@@ -1256,14 +1563,13 @@ onEvent("loaded", e => {
 				applyID(event, id, recipe)
 			},
 			fuel_quality: (event, input, air_per_bucket, burn_rate, id) => {
-				input = arrConvert(input)
 				if (typeof air_per_bucket!="number") air_per_bucket = 100000
 				if (typeof burn_rate!="number") burn_rate = 1
 
 				applyID(event, id, {
 					type: "pneumaticcraft:fuel_quality",
 
-					fluid: Object.assign(fluidConvertWithTag(input[0], input[1]), {type: "pneumaticcraft:fluid"}),
+					fluid: Object.assign(fluidConvertWithTag(arrConvert(input)), {type: "pneumaticcraft:fluid"}),
 
 					air_per_bucket: air_per_bucket,
 					burn_rate: burn_rate
@@ -1290,8 +1596,6 @@ onEvent("loaded", e => {
 				})
 			},
 			refinery: (event, output, input, temperature, id) => {
-				input = arrConvert(input)
-
 				let temperatures = {}
 				if (typeof temperature[0]=="number") temperatures["min_temp"] = temperature[0]
 				if (typeof temperature[1]=="number") temperatures["max_temp"] = temperature[1]
@@ -1299,7 +1603,7 @@ onEvent("loaded", e => {
 				applyID(event, id, {
 					type: "pneumaticcraft:refinery",
 
-					input: Object.assign(fluidConvertWithTag(input[0], input[1]), {type: "pneumaticcraft:fluid"}),
+					input: Object.assign(fluidConvertWithTag(arrConvert(input)), {type: "pneumaticcraft:fluid"}),
 					results: fluidsConvert(arrConvert(output).slice(0, 4)),
 
 					temperature: temperatures,
@@ -1328,7 +1632,7 @@ onEvent("loaded", e => {
 
 				if (inputItem.id!=="minecraft:air") recipe["item_input"] = inputItem
 				if (inputFluidConverted.id!=="minecraft:empty") {
-					recipe["fluid_input"] = Object.assign(fluidConvertWithTag(inputFluid[0], inputFluid[1]), {type: "pneumaticcraft:fluid"})
+					recipe["fluid_input"] = Object.assign(fluidConvertWithTag(arrConvert(inputFluid)), {type: "pneumaticcraft:fluid"})
 				}
 
 				if (outputItem.id!=="minecraft:air") recipe["item_output"] = outputItem
@@ -1402,7 +1706,7 @@ onEvent("loaded", e => {
 				input = arrConvert(input).slice(0, 4)
 				let ingredients = []
 				input.forEach(item => {
-					ingredients.push(SMIngredientConvert(item))
+					ingredients.push(SMIngredientConvert(arrConvert(item)))
 				})
 
 				if (typeof time!="number") time = 200
@@ -1454,14 +1758,13 @@ onEvent("loaded", e => {
 				})
 			},
 			infusing: (event, output, inputItem, inputFluid, time, id) => {
-				inputFluid = arrConvert(inputFluid)
 				if (typeof time!="number") time = 200
 
 				applyID(event, id, {
 					type: "silents_mechanisms:infusing",
 
 					ingredient: Ingredient.of(inputItem).toJson(),
-					fluid: fluidConvertWithTag(inputFluid[0], inputFluid[1]),
+					fluid: fluidConvertWithTag(arrConvert(inputFluid)),
 					result: Ingredient.of(output).toJson(),
 
 					process_time: time
@@ -1480,26 +1783,24 @@ onEvent("loaded", e => {
 				})
 			},
 			refining: (event, output, input, time, id) => {
-				input = arrConvert(input)
 				if (typeof time!="number") time = 200
 
 				applyID(event, id, {
 					type: "silents_mechanisms:refining",
 
-					ingredient: fluidConvertWithTag(input[0], input[1]),
+					ingredient: fluidConvertWithTag(arrConvert(input)),
 					results: fluidsConvert(arrConvert(output).slice(0, 4)),
 
 					process_time: time
 				})
 			},
 			solidifying: (event, output, input, time, id) => {
-				input = arrConvert(input)
 				if (typeof time!="number") time = 200
 
 				applyID(event, id, {
 					type: "silents_mechanisms:solidifying",
 
-					ingredient: fluidConvertWithTag(input[0], input[1]),
+					ingredient: fluidConvertWithTag(arrConvert(input)),
 					result: Ingredient.of(output),
 
 					process_time: time
@@ -1521,14 +1822,13 @@ onEvent("loaded", e => {
 				})
 			},
 			casting: (event, output, inputFluid, inputCast, isBasin, castConsumed, time, id) => {
-				inputFluid = arrConvert(inputFluid)
 				inputCast = Ingredient.of(inputCast)
 				if (typeof time!="number") time = 60
 
 				let recipe = {
 					type: isBasin===true ? "tconstruct:casting_basin" : "tconstruct:casting_table",
 
-					fluid: fluidConvertWithTag(inputFluid[0], inputFluid[1], "name"),
+					fluid: fluidConvertWithTag(arrConvert(inputFluid), "name"),
 					result: Ingredient.of(output),
 					
 					cooling_time: time,
