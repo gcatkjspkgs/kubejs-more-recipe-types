@@ -607,7 +607,7 @@ onEvent("loaded", e => {
 			fusion_crafting: (event, output, mainInput, sideInput, tier, energy, id) => {
 				if (typeof tier!="string") tier = "DRACONIUM"
 				if (typeof energy!="number") energy = 100000
-				catalyst = Ingredient.of(mainInput)
+				let catalyst = Ingredient.of(mainInput)
 				if (catalyst.getCount() > 1) {
 					catalyst = {
 						type: "draconicevolution:ingredient_stack",
@@ -1440,6 +1440,47 @@ onEvent("loaded", e => {
 					fluidInput: fluidConvertWithTag(arrConvert(inputFluid)),
 					slurryInput: slurryConvert(arrConvert(inputSlurry)),
 					output: slurryConvert(arrConvert(output))
+				})
+			}
+		},
+
+		pedestals: {
+			cobblegen: (event, output, input, silk, id) => {
+				applyID(event, id, {
+					type: silk===true ? "pedestals:pedestal_cobblegensilk" : "pedestals:pedestal_cobblegen",
+					ingredient: Ingredient.of(input),
+					result: Ingredient.of(output)
+				})
+			},
+			crushing: (event, output, input, advanced, id) => {
+				applyID(event, id, {
+					type: advanced===true ? "pedestals:pedestal_crushing_advanced" : "pedestals:pedestal_crushing",
+					ingredient: Ingredient.of(input),
+					result: Ingredient.of(output)
+				})
+			},
+			fluid_to_xp: (event, input, xp_amount, id) => {
+				applyID(event, id, {
+					type: "pedestals:pedestal_fluid_to_xp",
+					ingredient: Ingredient.of(input),
+					result: {
+						item: "minecraft:experience_bottle",
+						count: typeof xp_amount=="number" ? xp_amount : 1
+					}
+				})
+			},
+			sawing: (event, output, input, advanced, id) => {
+				applyID(event, id, {
+					type: advanced===true ? "pedestals:pedestal_sawing_advanced" : "pedestals:pedestal_sawing",
+					ingredient: Ingredient.of(input),
+					result: Ingredient.of(output)
+				})
+			},
+			smelting_advanced: (event, output, input, advanced, id) => {
+				applyID(event, id, {
+					type: "pedestals:pedestal_smelting_advanced",
+					ingredient: Ingredient.of(input),
+					result: Ingredient.of(output)
 				})
 			}
 		},

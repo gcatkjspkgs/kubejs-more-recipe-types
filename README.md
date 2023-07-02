@@ -625,6 +625,38 @@ global.mrt.mysticalagriculture.reprocessor(event, <Output item>, <Input item>, <
 global.mrt.mysticalagriculture.soul_extraction(event, <Soul type (e.g. "mysticalagriculture:skeleton")>, <Soul amount (1 by default)>, <Input item>, <id>)
 ```
 
+### Pedestals
+
+#### Cobblegen
+
+```js
+global.mrt.pedestals.cobblegen(event, <Output item>, <Input item>, <Is silk ? (false by default)>, <id>)
+```
+
+#### Crushing
+
+```js
+global.mrt.pedestals.crushing(event, <Output item>, <Input item>, <Is advanced ? (false by default)>, <id>)
+```
+
+#### Fluid to Xp
+
+```js
+global.mrt.pedestals.fluid_to_xp(event, <Input fluid as bucket item>, <Amount of xp in experience bottles (1 by default)>, <id>)
+```
+
+#### Sawing
+
+```js
+global.mrt.pedestals.sawing(event, <Output item>, <Input item>, <Is advanced ? (false by default)>, <id>)
+```
+
+#### Advanced Smelting
+
+```js
+global.mrt.pedestals.smelting_advanced(event, <Output item>, <Input item>, <id>)
+```
+
 ### PneumaticCraft: Repressurized
 
 #### Amadron (Amadron Tablet)
