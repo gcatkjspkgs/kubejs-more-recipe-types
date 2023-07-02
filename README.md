@@ -17,6 +17,7 @@ For more info look at the section below.
 
 #### A
 
+- [Alchemistry](https://github.com/gcatkjspkgs/kubejs-more-recipe-types/blob/main/docs/alchemistry.md)
 - [Advent of Ascension 3](https://github.com/gcatkjspkgs/kubejs-more-recipe-types/blob/main/docs/aoa3.md)
 - [Applied Energistics 2](https://github.com/gcatkjspkgs/kubejs-more-recipe-types/blob/main/docs/appliedenergistics2.md)
 - [Ars Nouveau](https://github.com/gcatkjspkgs/kubejs-more-recipe-types/blob/main/docs/ars_nouveau.md)

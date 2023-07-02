@@ -177,6 +177,59 @@ let i
 
 onEvent("loaded", e => {
 	global.mrt = {
+		alchemistry: {
+			atomizer: (event, output, input, id) => {
+				applyID(event, id, {
+					type: "alchemistry:atomizer",
+					group: "minecraft:misc",
+					input: fluidConvertWithTag(arrConvert(input)),
+					result: Ingredient.of(output)
+				})
+			},
+			combiner: (event, output, input, id) => {
+				applyID(event, id, {
+					type: "alchemistry:combiner",
+					group: "minecraft:misc",
+					input: ingredientsConvert(arrConvert(input)),
+					result: Ingredient.of(output)
+				})
+			},
+			dissolver: (event, output, input, relative, rolls, id) => {
+				let groups = []
+				arrConvert(output).forEach(group =>{
+					group = arrConvert(group)
+					groups.push({stacks: ingredientsConvert(arrConvert(group[0])), probability: typeof group[1]=="number" ? group[1] : 1})
+				})
+
+				applyID(event, id, {
+					type: "alchemistry:dissolver",
+					group: "minecraft:misc",
+					input: Ingredient.of(input),
+					output: {
+					  	rolls: typeof rolls=="number" ? rolls : 1,
+					  	relativeProbability: relative===true,
+					  	groups: groups
+					}
+				})
+			},
+			evaporator: (event, output, input, id) => {
+				applyID(event, id, {
+					type: "alchemistry:evaporator",
+					group: "minecraft:misc",
+					input: fluidConvertWithTag(arrConvert(input)),
+					result: Ingredient.of(output)
+				  })
+			},
+			liquifier: (event, output, input, id) => {
+				applyID(event, id, {
+					type: "alchemistry:liquifier",
+					group: "minecraft:misc",
+					ingredient: Ingredient.of(input),
+					inputCount: Ingredient.of(input).getCount(),
+					result: fluidConvertAlwaysAmount(output)
+				  })
+			}
+		},
 		aoa3: {
 			infusion: (event, output, mainInput, input, id) => {
 				applyID(event, id, {
