@@ -47,6 +47,7 @@ For more info look at the section below.
 
 #### F
 
+- [FTB Dripper](https://github.com/gcatkjspkgs/kubejs-more-recipe-types/blob/main/docs/ftbdripper.md)
 - [FTB Industrial Contraptions](https://github.com/gcatkjspkgs/kubejs-more-recipe-types/blob/main/docs/ftbic.md)
 
 #### I
