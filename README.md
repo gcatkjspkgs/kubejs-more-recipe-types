@@ -18,6 +18,7 @@ For more info look at the section below.
 #### A
 
 - [Alchemistry](https://github.com/gcatkjspkgs/kubejs-more-recipe-types/blob/main/docs/alchemistry.md)
+- [Apotheosis](https://github.com/gcatkjspkgs/kubejs-more-recipe-types/blob/main/docs/apotheosis.md)
 - [Advent of Ascension 3](https://github.com/gcatkjspkgs/kubejs-more-recipe-types/blob/main/docs/aoa3.md)
 - [Applied Energistics 2](https://github.com/gcatkjspkgs/kubejs-more-recipe-types/blob/main/docs/appliedenergistics2.md)
 - [Ars Nouveau](https://github.com/gcatkjspkgs/kubejs-more-recipe-types/blob/main/docs/ars_nouveau.md)
@@ -28,7 +29,7 @@ For more info look at the section below.
 
 
 - [Better End Forge](https://github.com/gcatkjspkgs/kubejs-more-recipe-types/blob/main/docs/betterendforge.md)
-- [Space Boss Tools](https://github.com/gcatkjspkgs/kubejs-more-recipe-types/blob/main/docs/boss_tools.md)
+- [Boss Tools](https://github.com/gcatkjspkgs/kubejs-more-recipe-types/blob/main/docs/boss_tools.md)
 - [Botania](https://github.com/gcatkjspkgs/kubejs-more-recipe-types/blob/main/docs/botania.md)
 - [Botany Pots](https://github.com/gcatkjspkgs/kubejs-more-recipe-types/blob/main/docs/botanypots.md)
 

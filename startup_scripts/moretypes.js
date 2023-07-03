@@ -230,6 +230,7 @@ onEvent("loaded", e => {
 				  })
 			}
 		},
+
 		aoa3: {
 			infusion: (event, output, mainInput, input, id) => {
 				applyID(event, id, {
@@ -248,6 +249,66 @@ onEvent("loaded", e => {
 					upgrade_kit: Ingredient.of(upgradeKit),
 					result: Ingredient.of(output)
 				})
+			}
+		},
+
+		apotheosis: {
+			enchanting: (event, output, input, displayLevelRequiement, stats, id) => {
+				stats = arrConvert(stats).slice(0, 3)
+				stats.forEach((stat, index) => {stats[index] = arrConvert(stat)})
+				stats = stats.concat(["", "", ""].slice(stats.length, 3))
+
+				applyID(event, id, {
+					type: "apotheosis:enchanting",
+					input: Ingredient.of(input),
+					result: Ingredient.of(output),
+					display_level: typeof displayLevelRequiement=="number" ? displayLevelRequiement : 3,
+					requirements: {
+						eterna: typeof stats[0][0]=="number" ? stats[0][0] : 20,
+						quanta: typeof stats[1][0]=="number" ? stats[1][0] : 20,
+						arcana: typeof stats[2][0]=="number" ? stats[2][0] : 20
+					},
+					max_requirements: {
+						eterna: typeof stats[0][1]=="number" ? stats[0][1] : typeof stats[0][0]=="number" ? stats[0][0] : 20,
+						quanta: typeof stats[1][1]=="number" ? stats[1][1] : typeof stats[1][0]=="number" ? stats[1][0] + 20 : 40,
+						arcana: typeof stats[2][1]=="number" ? stats[2][1] : typeof stats[2][0]=="number" ? stats[2][0] + 20 : 40
+					}
+				})
+			},
+			fletching: (event, output, input, id) => {
+				applyID(event, id, {
+					type: "apotheosis:fletching",
+					ingredients: ingredientsConvert(arrConvert(input).slice(0, 3)),
+					result: Ingredient.of(output)
+				})
+			},
+			spawner_modifier: (event, stats, input, id) => {
+				stats = arrConvert(stats)
+				statChanges = []
+				stats.forEach(stat => {
+					stat = arrConvert(stat)
+					statChange = {
+						id: stat[0],
+						value: stat[1]
+					}
+					if (typeof stat[2]=="number") statChange["min"] = stat[2]
+					if (typeof stat[3]=="number") statChange["max"] = stat[3]
+					statChanges.push(statChange)
+				})
+
+				recipe = {
+					type: "apotheosis:spawner_modifier",
+					stat_changes: statChanges
+				}
+
+				input = arrConvert(input)
+				if (Ingredient.of(input[0]).id!=="minecraft:air") recipe["mainhand"] = Ingredient.of(input[0])
+				if (Ingredient.of(input[1]).id!=="minecraft:air") {
+					recipe["offhand"] = Ingredient.of(input[1])
+					recipe["consumes_offhand"] = input[2]===true
+				}
+
+				applyID(event, id, recipe)
 			}
 		},
 
@@ -1156,7 +1217,7 @@ onEvent("loaded", e => {
 					duration: duration
 				}
 
-				if (Ingredient.of(inputItem).id!="minecraft:air") recipe["item"] = Ingredient.of(inputItem)
+				if (Ingredient.of(inputItem).id!=="minecraft:air") recipe["item"] = Ingredient.of(inputItem)
 				recipe["fluid"] = fluidConvertWithTag(arrConvert(inputFluid))
 
 				applyID(event, id, recipe)
@@ -1175,7 +1236,7 @@ onEvent("loaded", e => {
 					duration: duration
 				}
 
-				if (Ingredient.of(inputItem).id!="minecraft:air") recipe["item"] = Ingredient.of(inputItem)
+				if (Ingredient.of(inputItem).id!=="minecraft:air") recipe["item"] = Ingredient.of(inputItem)
 				recipe["fluid"] = fluidConvertWithTag(arrConvert(inputFluid))
 
 				applyID(event, id, recipe)
