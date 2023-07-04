@@ -428,7 +428,7 @@ onEvent("loaded", e => {
 			lightwell: (event, outputFluid, input, productionMultiplier, shatterMultiplier, color, id) => {
 				if (typeof productionMultiplier!="number") productionMultiplier = 1
 				if (typeof shatterMultiplier!="number") shatterMultiplier = 10
-				if (typeof color!="number") color = -2236929
+				if (typeof color!="number") color = 0xEEEEEE
 
 				applyID(event, id, {
 					type: "astralsorcery:lightwell",
@@ -1108,6 +1108,7 @@ onEvent("loaded", e => {
 				addFTBICRecipes(event, output, input, "ftbic:separating", id)
 			}
 		},
+
 		ftbdripper: {
 			drip: (event, output, inputBlock, inputFluid, chance, id) => {
 				let recipe = {
@@ -1278,38 +1279,6 @@ onEvent("loaded", e => {
 					duration: duration
 				})
 			},
-		},
-
-		mysticalagriculture: {
-			infusion: (event, output, mainInput, sideInput, id) => {
-				applyID(event, id, {
-					type: "mysticalagriculture:infusion",
-					
-					input: Ingredient.of(mainInput),
-					ingredients: ingredientsConvert(arrConvert(sideInput).slice(0, 8)),
-					result: Ingredient.of(output)
-				})
-			},
-			reprocessor: (event, output, input, id) => {
-				applyID(event, id, {
-					type: "mysticalagriculture:reprocessor",
-
-					input: Ingredient.of(input),
-					result: Ingredient.of(output)
-				})
-			},
-			soul_extraction: (event, soulType, soulAmount, input, id) => {
-				if (typeof soulAmount!="number") soulAmount = 1
-				
-				applyID(event, id, {
-					type: "mysticalagriculture:soul_extraction",
-					input: Ingredient.of(input),
-					output: {
-						type: soulType,
-						souls: soulAmount
-					}
-				})
-			}
 		},
 
 		mekanism: {
@@ -1609,6 +1578,54 @@ onEvent("loaded", e => {
 					type: "pedestals:pedestal_smelting_advanced",
 					ingredient: Ingredient.of(input),
 					result: Ingredient.of(output)
+				})
+			}
+		},
+
+		mysticalagriculture: {
+			infusion: (event, output, mainInput, sideInput, id) => {
+				applyID(event, id, {
+					type: "mysticalagriculture:infusion",
+					
+					input: Ingredient.of(mainInput),
+					ingredients: ingredientsConvert(arrConvert(sideInput).slice(0, 8)),
+					result: Ingredient.of(output)
+				})
+			},
+			reprocessor: (event, output, input, id) => {
+				applyID(event, id, {
+					type: "mysticalagriculture:reprocessor",
+
+					input: Ingredient.of(input),
+					result: Ingredient.of(output)
+				})
+			},
+			soul_extraction: (event, soulType, soulAmount, input, id) => {
+				if (typeof soulAmount!="number") soulAmount = 1
+				
+				applyID(event, id, {
+					type: "mysticalagriculture:soul_extraction",
+					input: Ingredient.of(input),
+					output: {
+						type: soulType,
+						souls: soulAmount
+					}
+				})
+			}
+		},
+		
+		mythicbotany: {
+			infusion: (event, output, input, mana, color, id) => {		
+				color = arrConvert(color)
+				
+				applyID(event, id, {
+					type: "mythicbotany:infusion",
+					group: "infuser",
+					ingredients: ingredientsConvert(arrConvert(input)),
+					output: Ingredient.of(output),
+					mana: typeof mana=="number" ? mana : 500000,
+					fromColor: typeof color[0]=="number" ? color[0] : 0xFFFFFF,
+					toColor: typeof color[1]=="number" ? color[1] : 0x000000
 				})
 			}
 		},

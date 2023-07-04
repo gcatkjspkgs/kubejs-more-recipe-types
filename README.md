@@ -27,7 +27,6 @@ For more info look at the section below.
 
 #### B
 
-
 - [Better End Forge](https://github.com/gcatkjspkgs/kubejs-more-recipe-types/blob/main/docs/betterendforge.md)
 - [Boss Tools](https://github.com/gcatkjspkgs/kubejs-more-recipe-types/blob/main/docs/boss_tools.md)
 - [Botania](https://github.com/gcatkjspkgs/kubejs-more-recipe-types/blob/main/docs/botania.md)
@@ -59,6 +58,7 @@ For more info look at the section below.
 
 - [Mekanism](https://github.com/gcatkjspkgs/kubejs-more-recipe-types/blob/main/docs/mekanism.md)
 - [Mystical Agriculture](https://github.com/gcatkjspkgs/kubejs-more-recipe-types/blob/main/docs/mysticalagriculture.md)
+- [Mythic Botany](https://github.com/gcatkjspkgs/kubejs-more-recipe-types/blob/main/docs/mythicbotany.md)
 
 #### P
 
