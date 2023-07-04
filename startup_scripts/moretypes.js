@@ -1062,6 +1062,42 @@ onEvent("loaded", e => {
 			}
 		},
 		
+		farmersdelight: {
+			cooking: (event, output, input, container, experience, time, id) => {
+				applyID(event, id, {
+					type: "farmersdelight:cooking",
+					ingredients: ingredientsConvert(arrConvert(input)),
+					result: Ingredient.of(output),
+					container: Ingredient.of(container),
+					experience: typeof experience=="number" ? experience : 0.5,
+					cookingtime: typeof time=="number" ? time : 200
+				  })
+			},
+			cutting: (event, output, input, tool, id) => {
+				applyID(event, id, {
+					type: "farmersdelight:cutting",
+					ingredients: ingredientsConvert(arrConvert(input)),
+					tool: Ingredient.of(tool),
+					result: ingredientsConvert(arrConvert(output))
+				})
+			}
+		},
+
+		ftbdripper: {
+			drip: (event, output, inputBlock, inputFluid, chance, id) => {
+				let recipe = {
+					type: "ftbdripper:drip",
+					inputBlock: Ingredient.of(inputBlock).id,
+					outputBlock: Ingredient.of(output).id,
+					chance: typeof chance=="number" ? chance : 1.0
+				}
+
+				inputFluid.substring(0, 1)==="#" ? recipe["fluidTag"] = inputFluid.substring(1) : recipe["fluid"] = inputFluid
+				
+				applyID(event, id, recipe)
+			}
+		},
+
 		ftbic: {
 			antimatter_boost: (event, input, boost, id) => {
 				if (typeof boost!="number") boost = 1000
@@ -1106,21 +1142,6 @@ onEvent("loaded", e => {
 			separating: (event, output, input, id) => {
 				input = arrConvert(input)
 				addFTBICRecipes(event, output, input, "ftbic:separating", id)
-			}
-		},
-
-		ftbdripper: {
-			drip: (event, output, inputBlock, inputFluid, chance, id) => {
-				let recipe = {
-					type: "ftbdripper:drip",
-					inputBlock: Ingredient.of(inputBlock).id,
-					outputBlock: Ingredient.of(output).id,
-					chance: typeof chance=="number" ? chance : 1.0
-				}
-
-				inputFluid.substring(0, 1)==="#" ? recipe["fluidTag"] = inputFluid.substring(1) : recipe["fluid"] = inputFluid
-				
-				applyID(event, id, recipe)
 			}
 		},
 
@@ -1613,7 +1634,7 @@ onEvent("loaded", e => {
 				})
 			}
 		},
-		
+
 		mythicbotany: {
 			infusion: (event, output, input, mana, color, id) => {		
 				color = arrConvert(color)
