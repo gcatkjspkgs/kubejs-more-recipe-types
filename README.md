@@ -62,6 +62,10 @@ For more info look at the section below.
 - [Mystical Agriculture](https://github.com/gcatkjspkgs/kubejs-more-recipe-types/blob/main/docs/mysticalagriculture.md)
 - [Mythic Botany](https://github.com/gcatkjspkgs/kubejs-more-recipe-types/blob/main/docs/mythicbotany.md)
 
+#### N
+
+- [Nature's Aura](https://github.com/gcatkjspkgs/kubejs-more-recipe-types/blob/main/docs/naturesaura.md)
+
 #### P
 
 - [Pedestals](https://github.com/gcatkjspkgs/kubejs-more-recipe-types/blob/main/docs/pedestals.md)
