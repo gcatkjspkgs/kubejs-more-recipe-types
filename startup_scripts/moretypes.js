@@ -1620,47 +1620,6 @@ onEvent("loaded", e => {
 			}
 		},
 
-		pedestals: {
-			cobblegen: (event, output, input, silk, id) => {
-				applyID(event, id, {
-					type: silk===true ? "pedestals:pedestal_cobblegensilk" : "pedestals:pedestal_cobblegen",
-					ingredient: Ingredient.of(input),
-					result: Ingredient.of(output)
-				})
-			},
-			crushing: (event, output, input, advanced, id) => {
-				applyID(event, id, {
-					type: advanced===true ? "pedestals:pedestal_crushing_advanced" : "pedestals:pedestal_crushing",
-					ingredient: Ingredient.of(input),
-					result: Ingredient.of(output)
-				})
-			},
-			fluid_to_xp: (event, input, xp_amount, id) => {
-				applyID(event, id, {
-					type: "pedestals:pedestal_fluid_to_xp",
-					ingredient: Ingredient.of(input),
-					result: {
-						item: "minecraft:experience_bottle",
-						count: typeof xp_amount=="number" ? xp_amount : 1
-					}
-				})
-			},
-			sawing: (event, output, input, advanced, id) => {
-				applyID(event, id, {
-					type: advanced===true ? "pedestals:pedestal_sawing_advanced" : "pedestals:pedestal_sawing",
-					ingredient: Ingredient.of(input),
-					result: Ingredient.of(output)
-				})
-			},
-			smelting_advanced: (event, output, input, advanced, id) => {
-				applyID(event, id, {
-					type: "pedestals:pedestal_smelting_advanced",
-					ingredient: Ingredient.of(input),
-					result: Ingredient.of(output)
-				})
-			}
-		},
-
 		mysticalagriculture: {
 			infusion: (event, output, mainInput, sideInput, id) => {
 				applyID(event, id, {
@@ -1705,6 +1664,92 @@ onEvent("loaded", e => {
 					mana: typeof mana=="number" ? mana : 500000,
 					fromColor: typeof color[0]=="number" ? color[0] : 0xFFFFFF,
 					toColor: typeof color[1]=="number" ? color[1] : 0x000000
+				})
+			}
+		},
+
+		naturesaura: {
+			altar: (event, output, input, catalyst, is_nether, aura, time, id) => {		
+				let recipe = {
+					type: "naturesaura:altar",
+					input: Ingredient.of(input),
+					output: Ingredient.of(output),
+					aura_type: is_nether === true ? "naturesaura:nether" : "naturesaura:overworld",
+					aura: typeof aura == "number" ? aura : 10000,
+					time: typeof time == "number" ? time : 200
+				}
+
+				if (Item.of(catalyst).id != "minecraft:air") {
+					recipe["catalyst"] = Item.of(catalyst)
+				}
+
+				applyID(event, id, recipe)
+			},
+			animal_spawner: (event, entity, input, aura, time, id) => {		
+				applyID(event, id, {
+    				type: "naturesaura:animal_spawner",
+    				ingredients: ingredientsConvert(arrConvert(input).slice(0, 4)),
+    				entity: entity,
+					aura: typeof aura == "number" ? aura : 10000,
+					time: typeof time == "number" ? time : 200
+				})
+			},
+			offering: (event, output, input, start_item, id) => {		
+				applyID(event, id, {
+					type: "naturesaura:offering",
+					input: Ingredient.of(input),
+					start_item: Ingredient.of(start_item),
+					output: Ingredient.of(output)
+				})
+			},
+			tree_ritual: (event, output, input, sapling, time, id) => {		
+				applyID(event, id, {
+					type: "naturesaura:tree_ritual",
+					ingredients: ingredientsConvert(arrConvert(input).slice(0, 8)),
+					sapling: Ingredient.of(sapling).toJson(),
+					output: Ingredient.of(output).toResultJson(),
+					time: typeof time == "number" ? time : 200
+				})
+			}
+		},
+
+		pedestals: {
+			cobblegen: (event, output, input, silk, id) => {
+				applyID(event, id, {
+					type: silk===true ? "pedestals:pedestal_cobblegensilk" : "pedestals:pedestal_cobblegen",
+					ingredient: Ingredient.of(input),
+					result: Ingredient.of(output)
+				})
+			},
+			crushing: (event, output, input, advanced, id) => {
+				applyID(event, id, {
+					type: advanced===true ? "pedestals:pedestal_crushing_advanced" : "pedestals:pedestal_crushing",
+					ingredient: Ingredient.of(input),
+					result: Ingredient.of(output)
+				})
+			},
+			fluid_to_xp: (event, input, xp_amount, id) => {
+				applyID(event, id, {
+					type: "pedestals:pedestal_fluid_to_xp",
+					ingredient: Ingredient.of(input),
+					result: {
+						item: "minecraft:experience_bottle",
+						count: typeof xp_amount=="number" ? xp_amount : 1
+					}
+				})
+			},
+			sawing: (event, output, input, advanced, id) => {
+				applyID(event, id, {
+					type: advanced===true ? "pedestals:pedestal_sawing_advanced" : "pedestals:pedestal_sawing",
+					ingredient: Ingredient.of(input),
+					result: Ingredient.of(output)
+				})
+			},
+			smelting_advanced: (event, output, input, advanced, id) => {
+				applyID(event, id, {
+					type: "pedestals:pedestal_smelting_advanced",
+					ingredient: Ingredient.of(input),
+					result: Ingredient.of(output)
 				})
 			}
 		},
