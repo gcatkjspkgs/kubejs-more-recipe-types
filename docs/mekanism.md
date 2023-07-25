@@ -36,10 +36,16 @@ global.mrt.mekanism.compressing(event, <Output item>, <Input item>, [<Input gas>
 global.mrt.mekanism.crushing(event, <Output item>, <Input item>, <id>)
 ```
 
+#### Crystallizing
+
+```js
+global.mrt.mekanism.crystallizing(event, <Output item>, [<Input gas or slurry>, <Amount (1 by default)>, <Is gas ? (else slurry, false by default)>], <id>)
+```
+
 #### Dissolution (Chemical Dissolution Chamber)
 
 ```js
-global.mrt.mekanism.dissolution(event, [<Output gas or slurry>, <Amount (100 by default)>, <Is gas ? (else slurry, false by default)>], <Input item>, [<Input gas>, <Amount>], <id>)
+global.mrt.mekanism.dissolution(event, [<Output gas or slurry>, <Amount (1 by default)>, <Is gas ? (else slurry, false by default)>], <Input item>, [<Input gas>, <Amount (100 by default)>], <id>)
 ```
 
 #### Energy Conversion
