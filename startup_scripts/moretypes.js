@@ -7,24 +7,34 @@ function arrConvert(element) {
 
 function ingredientOfNoCount(item) {
 	let ingredient = Ingredient.of(item)
-	let json = ingredient.withCount(1).tag===undefined ?  {item: ingredient.id} : {tag: ingredient.withCount(1).tag}
-	if (ingredient.getNbt()!=null) json["nbt"] = ingredient.getNbt()
-	if (!isNaN(ingredient.getChance())) json["chance"] = ingredient.getChance()
+	let json
+	if (ingredient.withCount(1).tag===undefined){
+		json = {item: ingredient.id}
+		if (ingredient.getNbt()!=null) json["nbt"] = ingredient.getNbt()
+		if (!isNaN(ingredient.getChance())) json["chance"] = ingredient.getChance()
+	} else {
+		json = {tag: ingredient.withCount(1).tag}
+	}
 	return json
 }
 
 function ingredientOfAlwaysIngredient(item) {
 	let ingredient = Ingredient.of(item)
-	let json = ingredient.withCount(1).tag===undefined ?  {ingredient: {item: ingredient.id}} : {ingredient: {tag: ingredient.withCount(1).tag}}
+	let json
+	if (ingredient.withCount(1).tag===undefined){
+		json = {ingredient: {item: ingredient.id}}
+		if (ingredient.getNbt()!=null) json["ingredient"]["nbt"] = ingredient.getNbt()
+		if (!isNaN(ingredient.getChance())) json["ingredient"]["chance"] = ingredient.getChance()
+	} else {
+		json = {ingredient: {tag: ingredient.withCount(1).tag}}
+	}
 	json["count"] = ingredient.getCount()
-	if (ingredient.getNbt()!=null) json["ingredient"]["nbt"] = ingredient.getNbt()
-	if (!isNaN(ingredient.getChance())) json["ingredient"]["chance"] = ingredient.getChance()
 	return json
 }
 
 function ingredientOfAlwaysChance(item) {
-	let ingredient = Ingredient.of(item)
-	let json = ingredient.withCount(1).tag===undefined ?  {item: ingredient.id} : {tag: ingredient.withCount(1).tag}
+	let ingredient = Item.of(item)
+	let json = {item: ingredient.id}
 	json["count"] = ingredient.getCount()
 	json["chance"] = isNaN(ingredient.getChance()) ? 1.0 : ingredient.getChance()
 	if (ingredient.getNbt()!=null) json["nbt"] = ingredient.getNbt()
@@ -775,6 +785,33 @@ onEvent("loaded", e => {
 					input: Ingredient.of(input),
 					template: Ingredient.of(template),
 					output: Ingredient.of(output)
+				})
+			}
+		},
+
+		eidolon: {
+			crucible: (event, output, steps, id) => {
+				final_steps = []
+				arrConvert(steps).forEach(step => {
+					step = arrConvert(step)
+					ingredients = []
+					arrConvert(step[0]).forEach(ingredient => {
+						item = ingredientOfNoCount(ingredient)
+						for (i = 0; i < Ingredient.of(ingredient).getCount(); i++){
+							ingredients.push(item)
+						}
+					})
+
+					final_steps.push({
+						ingredients: ingredients,
+						stirs: typeof step[1] == "number" ? step[1] : 0
+					})
+				})
+
+				applyID(event, id, {
+					type: "eidolon:crucible",
+					result: Ingredient.of(output),
+					steps: final_steps
 				})
 			}
 		},

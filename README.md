@@ -39,6 +39,7 @@ For more info look at the section below.
 
 #### E
 
+- [Eidolon](https://github.com/gcatkjspkgs/kubejs-more-recipe-types/blob/main/docs/eidolon.md) (Requires [Eidolon Data Recipes](https://www.curseforge.com/minecraft/mc-mods/eidolon-data-recipes))
 - [Elemental Craft](https://github.com/gcatkjspkgs/kubejs-more-recipe-types/blob/main/docs/elementalcraft.md)
 - [Evil Craft](https://github.com/gcatkjspkgs/kubejs-more-recipe-types/blob/main/docs/evilcraft.md)
 - [Ex Compressum](https://github.com/gcatkjspkgs/kubejs-more-recipe-types/blob/main/docs/excompressum.md)
