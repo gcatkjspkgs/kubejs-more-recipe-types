@@ -48,7 +48,8 @@ function ingredientsConvert(items) {
 }
 
 function fluidConvert(fluid) {
-	if (typeof fluid == "string") fluid = Fluid.of(fluid, 1000)
+	if (typeof fluid == "string") fluid = Fluid.of(fluid, 1000)	
+	if (fluid.isEmpty()) return fluid
 	return {fluid: fluid.id, amount: fluid.getAmount()}
 }
 
@@ -1373,27 +1374,33 @@ onEvent("loaded", e => {
 				applyID(event, id, recipe)
 			},
 			squeezer: (event, outputItem, outputFluid, input, id) => {
-				applyID(event, id, {
+				recipe = {
 					type: "integrateddynamics:squeezer",
 					item: Ingredient.of(input),
 					result: {
-						items: ingredientsConvert(outputItem),
-					  	fluid: outputFluid
+						items: ingredientsConvert(arrConvert(outputItem)),
 					}
-				})
+				}
+
+				if (!fluidConvert(outputFluid).isEmpty()) recipe["result"]["fluid"] = fluidConvert(outputFluid)
+
+				applyID(event, id, recipe)
 			},
 			mechanical_squeezer: (event, outputItem, outputFluid, input, duration, id) => {
 				if (typeof duration!="number") duration = 10
 
-				applyID(event, id, {
+				recipe = {
 					type: "integrateddynamics:mechanical_squeezer",
 					item: Ingredient.of(input),
 					result: {
-						items: ingredientsConvert(outputItem),
-					  	fluid: outputFluid
+						items: ingredientsConvert(arrConvert(outputItem)),
 					},
 					duration: duration
-				})
+				}
+
+				if (!fluidConvert(outputFluid).isEmpty()) recipe["result"]["fluid"] = fluidConvert(outputFluid)
+
+				applyID(event, id, recipe)
 			},
 		},
 
@@ -1905,7 +1912,7 @@ onEvent("loaded", e => {
 					time: time
 				}
 
-				if (outputFluid.id!=="minecraft:empty") recipe["fluid_output"] = outputFluid
+				if (!outputFluid.isEmpty()) recipe["fluid_output"] = outputFluid
 				if (outputItem.id!=="minecraft:air") recipe["item_output"] = outputItem
 
 				applyID(event, id, recipe)
@@ -1979,12 +1986,12 @@ onEvent("loaded", e => {
 				}
 
 				if (inputItem.id!=="minecraft:air") recipe["item_input"] = inputItem
-				if (inputFluidConverted.id!=="minecraft:empty") {
+				if (!inputFluidConverted.isEmpty()) {
 					recipe["fluid_input"] = Object.assign(fluidConvertWithTag(arrConvert(inputFluid)), {type: "pneumaticcraft:fluid"})
 				}
 
 				if (outputItem.id!=="minecraft:air") recipe["item_output"] = outputItem
-				if (outputFluid.id!=="minecraft:empty") recipe["fluid_output"] = outputFluid
+				if (!outputFluid.isEmpty()) recipe["fluid_output"] = outputFluid
 
 				let temperatures = {}
 				if (typeof temperature[0]=="number") temperatures["min_temp"] = temperature[0]
