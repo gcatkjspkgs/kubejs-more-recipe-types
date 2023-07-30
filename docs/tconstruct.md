@@ -30,6 +30,12 @@ global.mrt.tconstruct.melting(event, Fluid.of(<Output fluid>, <Amount>), <Input 
 global.mrt.tconstruct.molding_table(event, <Output cast>, <Input Cast>, <Input item>, <id>)
 ```
 
+#### Ore Melting
+
+```js
+global.mrt.tconstruct.ore_melting(event, Fluid.of(<Output Fluid>, <Amount (write 144 if smeltery should output 2 ingots)>), [Fluid.of(<Output Fluid>, <Amount>), ...], <Input item>, <Temperature (100 by default)>, <Time in ticks (300 by default)>, <id>)
+```
+
 #### Part Builder
 
 ```js
