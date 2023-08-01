@@ -148,6 +148,17 @@ function addFTBICRecipes(event, output, input, type, id) {
 	})
 }
 
+function addBossToolsRecipes(event, type, output, input, time, id) {
+	applyID(event, id, {
+		type: type,
+
+		input: {ingredient: Ingredient.of(input)},
+		output: Ingredient.of(output),
+
+		cookTime: typeof time == "number" ? time : 200
+	})
+}
+
 function SMIngredientConvert(ingredientArray) {
 	let values = []
 	arrConvert(ingredientArray[0]).forEach(value => {
@@ -565,24 +576,18 @@ onEvent("loaded", e => {
 		
 		boss_tools: {
 			blasting: (event, output, input, time, id) => {
-				applyID(event, id, {
-					type: "boss_tools:blasting",
-
-					input: {ingredient: Ingredient.of(input)},
-					output: Ingredient.of(output),
-
-					cookTime: typeof time == "number" ? time : 200
-				})
+				addBossToolsRecipes(event, "boss_tools:blasting", output, input, time, id)
 			},
 			compressing: (event, output, input, time, id) => {
-				applyID(event, id, {
-					type: "boss_tools:compressing",
-
-					input: {ingredient: Ingredient.of(input)},
-					output: Ingredient.of(output),
-
-					cookTime: typeof time == "number" ? time : 200
-				})
+				addBossToolsRecipes(event, "boss_tools:compressing", output, input, time, id)
+			}
+		},
+		boss_tools_giselle_addon: {
+			extruding: (event, output, input, time, id) => {
+				addBossToolsRecipes(event, "boss_tools_giselle_addon:extruding", output, input, time, id)
+			},
+			rolling: (event, output, input, time, id) => {
+				addBossToolsRecipes(event, "boss_tools_giselle_addon:rolling", output, input, time, id)
 			}
 		},
 
