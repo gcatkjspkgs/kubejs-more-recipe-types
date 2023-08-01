@@ -67,6 +67,10 @@ For more info look at the section below.
 
 - [Nature's Aura](https://github.com/gcatkjspkgs/kubejs-more-recipe-types/blob/main/docs/naturesaura.md)
 
+#### O
+
+- [Occultism](https://github.com/gcatkjspkgs/kubejs-more-recipe-types/blob/main/docs/occultism.md)
+
 #### P
 
 - [Pedestals](https://github.com/gcatkjspkgs/kubejs-more-recipe-types/blob/main/docs/pedestals.md)

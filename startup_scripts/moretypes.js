@@ -8,9 +8,9 @@ function arrConvert(element) {
 function ingredientOfNoCount(item) {
 	let ingredient = Ingredient.of(item)
 	let json
-	if (ingredient.withCount(1).tag===undefined){
+	if (ingredient.withCount(1).tag === undefined){
 		json = {item: ingredient.id}
-		if (ingredient.getNbt()!=null) json["nbt"] = ingredient.getNbt()
+		if (ingredient.getNbt() != null) json["nbt"] = ingredient.getNbt()
 		if (!isNaN(ingredient.getChance())) json["chance"] = ingredient.getChance()
 	} else {
 		json = {tag: ingredient.withCount(1).tag}
@@ -21,9 +21,9 @@ function ingredientOfNoCount(item) {
 function ingredientOfAlwaysIngredient(item) {
 	let ingredient = Ingredient.of(item)
 	let json
-	if (ingredient.withCount(1).tag===undefined){
+	if (ingredient.withCount(1).tag === undefined){
 		json = {ingredient: {item: ingredient.id}}
-		if (ingredient.getNbt()!=null) json["ingredient"]["nbt"] = ingredient.getNbt()
+		if (ingredient.getNbt() != null) json["ingredient"]["nbt"] = ingredient.getNbt()
 		if (!isNaN(ingredient.getChance())) json["ingredient"]["chance"] = ingredient.getChance()
 	} else {
 		json = {ingredient: {tag: ingredient.withCount(1).tag}}
@@ -61,11 +61,11 @@ function fluidsConvert(fluidArray) {
 function fluidConvertWithTag(fluidArray, typeNames, amountName) {
 	Array.isArray(typeNames) ? typeNames = arrConvert(typeNames).slice(0, 2) : typeNames = ["fluid", "tag"]
 	typeNames = typeNames.concat(["fluid", "tag"].slice(typeNames.length, 2))
-	if (typeof amountName!="string") amountName = "amount"
+	if (typeof amountName != "string") amountName = "amount"
 
 	let fluid = {}
-	fluidArray[0].substring(0, 1)==="#" ? fluid[typeNames[1]] = fluidArray[0].substring(1) : fluid[typeNames[0]] = fluidArray[0]
-	fluid[amountName] = typeof fluidArray[1]=="number" ? fluidArray[1] : 1000 
+	fluidArray[0].substring(0, 1) === "#" ? fluid[typeNames[1]] = fluidArray[0].substring(1) : fluid[typeNames[0]] = fluidArray[0]
+	fluid[amountName] = typeof fluidArray[1] == "number" ? fluidArray[1] : 1000 
 	return fluid
 }
 
@@ -81,8 +81,8 @@ function fluidsConvertWithTag(fluidArray, typeNames, amountName) {
 }
 
 function blockConvert(blockString, withType) {
-	let block = blockString.substring(0, 1)==="#" ? {tag: blockString.substring(1)} : {block: blockString}
-	if (withType) block["type"] = blockString.substring(0, 1)==="#" ? "tag" : "block"
+	let block = blockString.substring(0, 1) === "#" ? {tag: blockString.substring(1)} : {block: blockString}
+	if (withType) block["type"] = blockString.substring(0, 1) === "#" ? "tag" : "block"
 	return block
 }
 function blockIngredientsConvert(blockArray, withType) {
@@ -92,7 +92,7 @@ function blockIngredientsConvert(blockArray, withType) {
 }
 
 function applyID(event, id, recipe) {
-	id==null ? event.custom(recipe) : event.custom(recipe).id(id)
+	typeof id == "string" ? event.custom(recipe).id(id) : event.custom(recipe)
 }
 
 // Mod Specific Functions
@@ -1680,6 +1680,49 @@ onEvent("loaded", e => {
 					output: Ingredient.of(output).toResultJson(),
 					time: typeof time == "number" ? time : 200
 				})
+			}
+		},
+
+		occultism: {
+			crushing: (event, output, input, time, id) => {
+				applyID(event, id, {
+					type: "occultism:crushing",
+					ingredient: Ingredient.of(input),
+					result: Ingredient.of(output),
+					crushing_time: typeof time == "number" ? time : 200
+				})
+			},
+			miner: (event, output, weight, isOre, id) => {
+				applyID(event, id, {
+					type: "occultism:miner",
+					ingredient: {tag: isOre === true ? "occultism:miners/ores" : "occultism:miners/basic_resources"},
+					result: Ingredient.of(output),
+					weight: typeof weight == "number" ? weight : 500
+				})
+			},
+			spirit_fire: (event, output, input, id) => {
+				applyID(event, id, {
+					type: "occultism:spirit_fire",
+					ingredient: Ingredient.of(input),
+					result: Ingredient.of(output)
+				})
+			},
+			ritual: (event, output, input, activation_item, ritual_dummy, pentacle_id, ritual_type, time, id) => {
+				let ingredients = []
+				arrConvert(input).forEach(item => {ingredients.push(Ingredient.of(item).withCount(1))})
+
+				applyID(event, id,     {
+					type: "occultism:ritual",
+
+					ritual_dummy: Ingredient.of(ritual_dummy),
+					activation_item: Ingredient.of(activation_item),
+					ingredients: ingredients,
+					result: Ingredient.of(output),
+					pentacle_id: pentacle_id,
+
+					ritual_type: typeof ritual_type == "string" ? ritual_type : "occultism:craft",
+					duration: typeof time == "number" ? time : 200
+				  })
 			}
 		},
 
