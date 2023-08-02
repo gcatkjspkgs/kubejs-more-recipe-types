@@ -709,6 +709,25 @@ onEvent("loaded", e => {
 			}
 		},
 		
+		createaddition: {
+			rolling: (event, output, input, id) => {		
+				applyID(event, id, {
+					type:"createaddition:rolling",
+
+					input: Ingredient.of(input),
+					result: Ingredient.of(output)
+				})
+			},
+			crude_burning: (event, input, time, id) => {		
+				applyID(event, id, {
+					type:"createaddition:crude_burning",
+
+					input: fluidConvertWithTag(arrConvert(input), ["fluid", "fluidTag"]),
+					burnTime: typeof time == "number" ? time : 200
+				})
+			}
+		},
+
 		draconicevolution: {
 			fusion_crafting: (event, output, mainInput, sideInput, tier, energy, id) => {
 				if (typeof tier!="string") tier = "DRACONIUM"

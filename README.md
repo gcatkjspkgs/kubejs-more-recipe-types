@@ -33,6 +33,10 @@ For more info look at the section below.
 - [Botania](https://github.com/gcatkjspkgs/kubejs-more-recipe-types/blob/main/docs/botania.md)
 - [Botany Pots](https://github.com/gcatkjspkgs/kubejs-more-recipe-types/blob/main/docs/botanypots.md)
 
+#### C
+
+- [Create Crafts & Additions](https://github.com/gcatkjspkgs/kubejs-more-recipe-types/blob/main/docs/createaddition.md)
+
 #### D
 
 - [Divine RPG](https://github.com/gcatkjspkgs/kubejs-more-recipe-types/blob/main/docs/divinerpg.md)
