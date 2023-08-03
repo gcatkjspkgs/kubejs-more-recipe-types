@@ -2136,7 +2136,7 @@ onEvent("loaded", e => {
 				applyID(event, id, {
 					type: "tconstruct:alloy",
 
-					inputs: fluidsConvertWithTag(arrConvert(input), "name"),
+					inputs: fluidsConvertWithTag(arrConvert(input), ["name"]),
 					result: fluidConvert(output),
  
 					temperature: typeof temperature == "number" ? temperature : 100
@@ -2148,7 +2148,7 @@ onEvent("loaded", e => {
 				let recipe = {
 					type: isBasin===true ? "tconstruct:casting_basin" : "tconstruct:casting_table",
 
-					fluid: fluidConvertWithTag(arrConvert(inputFluid), "name"),
+					fluid: fluidConvertWithTag(arrConvert(inputFluid), ["name"]),
 					result: Ingredient.of(output),
 					
 					cooling_time: typeof time == "number" ? time : 300,
