@@ -405,15 +405,19 @@ onEvent("loaded", e => {
 				})
 			},
 			glyph_recipe: (event, output, input, tier, id) => {
-				if (typeof tier!="number" && typeof tier!="string") tier = 1
-				tier = ["ONE", "TWO", "THREE"][tier - 1]
+				if (typeof tier=="number"){
+					if (tier < 1 || tier > 3) tier = 1
+					tier = ["ONE", "TWO", "THREE"][tier - 1]
+				} else if (typeof tier=="string"){
+					if(!(["ONE", "TWO", "THREE"].includes(tier))) tier = "ONE"
+				} else {tier = "ONE"}
 
 				applyID(event, id, {
 					type: "ars_nouveau:glyph_recipe",
 					
 					input: Ingredient.of(input),
 					output: Ingredient.of(output),
-					tier: tier === undefined ? "ONE" : tier
+					tier: tier
 				})
 			}
 		},
