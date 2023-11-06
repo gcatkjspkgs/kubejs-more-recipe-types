@@ -129,14 +129,14 @@ function addFTBICRecipes(event, output, input, type, id) {
 
 		if (ingredient.withCount(1).tag===undefined) {
 			ingredientJson = {ingredient: {item: ingredient.id}, count: ingredient.getCount()}
+			if (ingredient.getNbt()!=null){
+				ingredientJson["ingredient"]["type"] = "forge:nbt"
+				ingredientJson["ingredient"]["nbt"] = String(ingredient.getNbt())
+			}
 		} else {
 			ingredientJson = {ingredient: {tag: ingredient.withCount(1).tag}, count: ingredient.getCount()}
 		}
-
-		if (ingredient.getNbt()!=null){
-			ingredientJson["ingredient"]["type"] = "forge:nbt"
-			ingredientJson["ingredient"]["nbt"] = String(ingredient.getNbt())
-		}
+		
 		ingredients.push(ingredientJson)
 	})
 
