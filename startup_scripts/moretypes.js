@@ -101,7 +101,8 @@ function gasConvert(gasArray, withChemicalType, gasAmountPerAmount, defaultAmoun
 	if (typeof gasAmountPerAmount!="number") gasAmountPerAmount = 1
 	if (typeof defaultAmount!="number") defaultAmount = 1
 
-	let gas = {amount: typeof gasArray[1]=="number" ? Math.round(gasArray[1]/gasAmountPerAmount) : defaultAmount}
+	let amount = typeof gasArray[1]=="number" ? Math.round(gasArray[1]/gasAmountPerAmount) : defaultAmount
+	let gas = {amount: amount===0 ? 1 : amount}
 	gasArray[0].substring(0, 1)==="#" ? gas["tag"] = gasArray[0].substring(1) : gas["gas"] = gasArray[0] 
 	if (withChemicalType===true) gas["chemicalType"] = "gas"
 	return gas
@@ -111,7 +112,8 @@ function slurryConvert(slurryArray, withChemicalType, slurryAmountPerAmount, def
 	if (typeof slurryAmountPerAmount!="number") slurryAmountPerAmount = 1
 	if (typeof defaultAmount!="number") defaultAmount = 1
 
-	let slurry = {amount: typeof slurryArray[1]=="number" ? Math.round(slurryArray[1]/slurryAmountPerAmount) : defaultAmount}
+	let amount = typeof slurryArray[1]=="number" ? Math.round(slurryArray[1]/slurryAmountPerAmount) : defaultAmount
+	let slurry = {amount: amount===0 ? 1 : amount}
 	slurryArray[0].substring(0, 1)==="#" ? slurry["tag"] = slurryArray[0].substring(1) : slurry["slurry"] = slurryArray[0] 
 	if (withChemicalType===true) slurry["chemicalType"] = "slurry"
 	return slurry
@@ -591,7 +593,14 @@ onEvent("loaded", e => {
 				addBossToolsRecipes(event, "boss_tools_giselle_addon:extruding", output, input, time, id)
 			},
 			rolling: (event, output, input, time, id) => {
-				addBossToolsRecipes(event, "boss_tools_giselle_addon:rolling", output, input, time, id)
+				applyID(event, id, {
+					type: "boss_tools_giselle_addon:rolling",
+			
+					input: Ingredient.of(input),
+					output: Ingredient.of(output),
+			
+					cookTime: typeof time == "number" ? time : 200
+				})
 			}
 		},
 
@@ -1344,7 +1353,7 @@ onEvent("loaded", e => {
 					type: "integrateddynamics:squeezer",
 					item: Ingredient.of(input),
 					result: {
-						items: ingredientsConvert(outputItem),
+						items: ingredientsConvert(arrConvert(outputItem)),
 					  	fluid: outputFluid
 					}
 				})
@@ -1354,7 +1363,7 @@ onEvent("loaded", e => {
 					type: "integrateddynamics:mechanical_squeezer",
 					item: Ingredient.of(input),
 					result: {
-						items: ingredientsConvert(outputItem),
+						items: ingredientsConvert(arrConvert(outputItem)),
 					  	fluid: outputFluid
 					},
 					duration: typeof time == "number" ? time : 10
@@ -1471,8 +1480,6 @@ onEvent("loaded", e => {
 				})
 			},		
 			injecting: (event, output, inputItem, inputGas, id) => {
-				output = arrConvert(output)
-
 				applyID(event, id, {
 					type:"mekanism:injecting",
 					itemInput: Ingredient.of(inputItem),
