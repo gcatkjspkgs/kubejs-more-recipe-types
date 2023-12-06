@@ -1349,9 +1349,12 @@ onEvent("loaded", e => {
 				applyID(event, id, recipe)
 			},
 			squeezer: (event, outputItems, outputFluid, input, id) => {
+				outputItems = ingredientsConvert(arrConvert(outputItems))
+				outputFluid = fluidConvert(outputFluid)
+
 				let result = {}
-				if(outputItems!=null) result["items"] = ingredientsConvert(arrConvert(outputItems))
-				if(outputFluid!=null) result["fluid"] = fluidConvert(outputFluid)
+				if(outputItems.length > 0) result["items"] = outputItems
+				if(outputFluid.fluid != "minecraft:empty") result["fluid"] = outputFluid
 				
 				applyID(event, id, {
 					type: "integrateddynamics:squeezer",
@@ -1360,9 +1363,12 @@ onEvent("loaded", e => {
 				})
 			},
 			mechanical_squeezer: (event, outputItems, outputFluid, input, time, id) => {
+				outputItems = ingredientsConvert(arrConvert(outputItems))
+				outputFluid = fluidConvert(outputFluid)
+
 				let result = {}
-				if(outputItems!=null) result["items"] = ingredientsConvert(arrConvert(outputItems))
-				if(outputFluid!=null) result["fluid"] = fluidConvert(outputFluid)
+				if(outputItems.length > 0) result["items"] = outputItems
+				if(outputFluid.fluid != "minecraft:empty") result["fluid"] = outputFluid
 				
 				applyID(event, id, {
 					type: "integrateddynamics:mechanical_squeezer",
