@@ -1348,27 +1348,29 @@ onEvent("loaded", e => {
 
 				applyID(event, id, recipe)
 			},
-			squeezer: (event, outputItem, outputFluid, input, id) => {
+			squeezer: (event, outputItems, outputFluid, input, id) => {
+				let result = {}
+				if(outputItems!=null) result["items"] = ingredientsConvert(arrConvert(outputItems))
+				if(outputFluid!=null) result["fluid"] = fluidConvert(outputFluid)
+				
 				applyID(event, id, {
 					type: "integrateddynamics:squeezer",
 					item: Ingredient.of(input),
-					result: {
-						items: ingredientsConvert(arrConvert(outputItem)),
-					  	fluid: outputFluid
-					}
+					result: result
 				})
 			},
-			mechanical_squeezer: (event, outputItem, outputFluid, input, time, id) => {
+			mechanical_squeezer: (event, outputItems, outputFluid, input, time, id) => {
+				let result = {}
+				if(outputItems!=null) result["items"] = ingredientsConvert(arrConvert(outputItems))
+				if(outputFluid!=null) result["fluid"] = fluidConvert(outputFluid)
+				
 				applyID(event, id, {
 					type: "integrateddynamics:mechanical_squeezer",
 					item: Ingredient.of(input),
-					result: {
-						items: ingredientsConvert(arrConvert(outputItem)),
-					  	fluid: outputFluid
-					},
+					result: result,
 					duration: typeof time == "number" ? time : 10
 				})
-			},
+			}
 		},
 
 		mekanism: {
