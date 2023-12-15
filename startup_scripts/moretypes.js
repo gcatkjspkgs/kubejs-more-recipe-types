@@ -593,14 +593,7 @@ onEvent("loaded", e => {
 				addBossToolsRecipes(event, "boss_tools_giselle_addon:extruding", output, input, time, id)
 			},
 			rolling: (event, output, input, time, id) => {
-				applyID(event, id, {
-					type: "boss_tools_giselle_addon:rolling",
-			
-					input: Ingredient.of(input),
-					output: Ingredient.of(output),
-			
-					cookTime: typeof time == "number" ? time : 200
-				})
+				addBossToolsRecipes(event, "boss_tools_giselle_addon:rolling", output, input, time, id)
 			}
 		},
 
