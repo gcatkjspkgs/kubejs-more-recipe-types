@@ -1991,7 +1991,7 @@ onEvent("loaded", e => {
 				let temperatures = {}
 				if (typeof temperature[0]=="number") temperatures["min_temp"] = temperature[0]
 				if (typeof temperature[1]=="number") temperatures["max_temp"] = temperature[1]
-				if (Object.keys(temperatures).length === 0) recipe["temperature"] = temperatures
+				if (Object.keys(temperatures).length !== 0) recipe["temperature"] = temperatures
 
 				if (typeof pressure=="number") recipe["pressure"] = pressure
 
