@@ -62,6 +62,10 @@ For more info look at the section below.
 - [Industrial Foregoing](https://github.com/gcatkjspkgs/kubejs-more-recipe-types/blob/main/docs/industrialforegoing.md)
 - [Integrated Dynamics](https://github.com/gcatkjspkgs/kubejs-more-recipe-types/blob/main/docs/integrateddynamics.md)
 
+#### L 
+
+- [Lazier AE2](https://github.com/gcatkjspkgs/kubejs-more-recipe-types/blob/main/docs/lazierae2.md)
+
 #### M
 
 - [Mekanism](https://github.com/gcatkjspkgs/kubejs-more-recipe-types/blob/main/docs/mekanism.md)

@@ -163,11 +163,10 @@ function addBossToolsRecipes(event, type, output, input, time, id) {
 
 function SMIngredientConvert(ingredientArray) {
 	let values = []
-	arrConvert(ingredientArray[0]).forEach(value => {
-		values.push(Ingredient.of(value).toJson())
+	arrConvert(ingredientArray).forEach(value => {
+		values.push(Ingredient.of(value).withCount(1).toJson())
 	})
-	if (typeof ingredientArray[1]!="number") ingredientArray[1] = 1
-	return {value: values, count: ingredientArray[1]}
+	return {value: values, count: Ingredient.of(ingredientArray[0]).count}
 }
 
 function exCompressumLootTable(items) {
@@ -398,7 +397,6 @@ onEvent("loaded", e => {
 				applyID(event, id, recipe)
 			},
 			crush: (event, output, input, id) => {
-
 				applyID(event, id, {
 					type: "ars_nouveau:crush",
 					
@@ -1372,6 +1370,45 @@ onEvent("loaded", e => {
 			}
 		},
 
+		lazierae2: {
+			aggregator: (event, output, inputs, time, energy, id) => {
+				applyID(event, id, {
+					type: "lazierae2:aggregator",
+					process_time: typeof time == "number" ? time : 200,
+					energy_cost: typeof energy == "number" ? energy : 1000,
+					output: Item.of(output),
+					input: ingredientsConvert(arrConvert(inputs).slice(0, 3))
+				})
+			},
+			centrifuge: (event, output, input, time, energy, id) => {
+				applyID(event, id, {
+					type: "lazierae2:centrifuge",
+					process_time: typeof time == "number" ? time : 200,
+					energy_cost: typeof energy == "number" ? energy : 1000,
+					output: Item.of(output),
+					input: [Ingredient.of(input)]
+				})
+			},
+			energizer: (event, output, input, time, energy, id) => {
+				applyID(event, id, {
+					type: "lazierae2:energizer",
+					process_time: typeof time == "number" ? time : 200,
+					energy_cost: typeof energy == "number" ? energy : 1000,
+					output: Item.of(output),
+					input: [Ingredient.of(input)]
+				})
+			},
+			etcher: (event, output, inputs, time, energy, id) => {
+				applyID(event, id, {
+					type: "lazierae2:etcher",
+					process_time: typeof time == "number" ? time : 200,
+					energy_cost: typeof energy == "number" ? energy : 1000,
+					output: Item.of(output),
+					input: ingredientsConvert(arrConvert(inputs).slice(0, 3))
+				})
+			}
+		},
+
 		mekanism: {
 			activating: (event, output, input, id) => {
 				applyID(event, id, {
@@ -1991,7 +2028,7 @@ onEvent("loaded", e => {
 				let temperatures = {}
 				if (typeof temperature[0]=="number") temperatures["min_temp"] = temperature[0]
 				if (typeof temperature[1]=="number") temperatures["max_temp"] = temperature[1]
-				if (Object.keys(temperatures).length !== 0) recipe["temperature"] = temperatures
+				if (Object.keys(temperatures).length === 0) recipe["temperature"] = temperatures
 
 				if (typeof pressure=="number") recipe["pressure"] = pressure
 
